@@ -389,7 +389,6 @@
             overflow: hidden;
         }
 
-        /* Front - Polaroid Photo */
         .polaroid-front {
             background: #f5f0e8;
             padding: 12px 12px 50px 12px;
@@ -436,7 +435,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Back - Flip side with text */
         .polaroid-back {
             background: linear-gradient(145deg, #fdf6e3, #f5ede0);
             transform: rotateY(180deg);
@@ -491,7 +489,7 @@
             letter-spacing: 1px;
         }
 
-        /* --- "Want More" Button --- */
+        /* --- Load More Button --- */
         .load-more-container {
             text-align: center;
             padding: 40px 20px 60px;
@@ -570,6 +568,478 @@
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
         }
 
+        /* ======================================== */
+        /* ====== VIDEO PAGE STYLES ====== */
+        /* ======================================== */
+        .video-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%);
+            z-index: 300;
+            overflow-y: auto;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+        .video-page.active {
+            display: block;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 60px auto 40px;
+            padding: 20px;
+        }
+
+        .video-header {
+            text-align: center;
+            color: #fff9e6;
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Aesthetic Video Frame */
+        .video-frame {
+            position: relative;
+            background: linear-gradient(145deg, #2a1a2a, #1a0a1a);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 60px rgba(255, 59, 111, 0.2),
+                inset 0 0 60px rgba(255, 59, 111, 0.05);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .video-frame::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 22px;
+            background: linear-gradient(45deg, #ff3b6f, #ffd166, #ff3b6f);
+            background-size: 300% 300%;
+            animation: gradientBorder 4s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .video-frame:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 80px rgba(255, 59, 111, 0.3);
+        }
+
+        .video-frame .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-frame .video-wrapper video,
+        .video-frame .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* Video Decorative Elements */
+        .video-frame .deco-corner {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            color: #ff6b8a;
+        }
+
+        .video-frame .deco-corner.tl { top: 10px; left: 15px; }
+        .video-frame .deco-corner.tr { top: 10px; right: 15px; }
+        .video-frame .deco-corner.bl { bottom: 10px; left: 15px; }
+        .video-frame .deco-corner.br { bottom: 10px; right: 15px; }
+
+        .video-caption {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* Navigation buttons on video page */
+        .video-nav {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .video-nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff9e6;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .video-nav-btn:hover {
+            background: rgba(255, 105, 180, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+        }
+
+        /* ======================================== */
+        /* ====== REMINDERS PAGE STYLES ====== */
+        /* ======================================== */
+        .reminders-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%);
+            z-index: 400;
+            overflow-y: auto;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+        .reminders-page.active {
+            display: block;
+        }
+
+        .reminders-header {
+            text-align: center;
+            color: #fff9e6;
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin: 40px 0 30px;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+        }
+
+        .reminders-header span {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        /* Icon Grid */
+        .reminder-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+
+        .reminder-icon {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            min-width: 150px;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .reminder-icon:hover {
+            transform: translateY(-10px) scale(1.03);
+            background: rgba(255, 105, 180, 0.1);
+            border-color: rgba(255, 105, 180, 0.3);
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.15);
+        }
+
+        .reminder-icon .icon-emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .reminder-icon .icon-label {
+            color: #fff9e6;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        /* Content Sections */
+        .reminder-content {
+            display: none;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            animation: fadeIn 0.6s ease;
+        }
+        .reminder-content.active {
+            display: block;
+        }
+
+        .reminder-content .section-title {
+            text-align: center;
+            color: #fff9e6;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+        }
+
+        /* Music Section */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .music-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-item::before {
+            content: '♪';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.05;
+            color: #ff6b8a;
+        }
+
+        .music-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 105, 180, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-item .music-embed {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 12px;
+        }
+
+        .music-item .music-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .music-item .music-title {
+            color: #fff9e6;
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* Food Section */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .food-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-item::before {
+            content: '🍽️';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 6rem;
+            opacity: 0.05;
+        }
+
+        .food-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .food-item .food-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background: #1a1a2a;
+            position: relative;
+        }
+
+        .food-item .food-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .food-item:hover .food-image img {
+            transform: scale(1.05);
+        }
+
+        .food-item .food-name {
+            color: #ffd166;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+        }
+
+        .food-item .food-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        /* Place Section */
+        .place-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .place-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .place-item::before {
+            content: '📍';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 6rem;
+            opacity: 0.05;
+        }
+
+        .place-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(100, 200, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .place-item .place-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            background: #1a1a2a;
+            position: relative;
+        }
+
+        .place-item .place-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .place-item:hover .place-image img {
+            transform: scale(1.05);
+        }
+
+        .place-item .place-name {
+            color: #6c9eff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+        }
+
+        .place-item .place-desc {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            margin-top: 5px;
+        }
+
+        /* Back button for reminders */
+        .reminders-back {
+            text-align: center;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .reminders-back-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff9e6;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .reminders-back-btn:hover {
+            background: rgba(255, 105, 180, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+        }
+
         /* --- Responsive for Gallery --- */
         @media (max-width: 768px) {
             .memory-grid {
@@ -593,6 +1063,30 @@
                 font-size: 1.4rem;
                 padding: 15px 35px;
             }
+            .reminder-icons {
+                gap: 15px;
+            }
+            .reminder-icon {
+                padding: 20px;
+                min-width: 100px;
+            }
+            .reminder-icon .icon-emoji {
+                font-size: 3rem;
+            }
+            .video-container {
+                padding: 10px;
+                margin: 40px auto 20px;
+            }
+            .video-frame {
+                padding: 12px;
+            }
+            .video-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .video-nav-btn {
+                width: 80%;
+            }
         }
 
         @media (max-width: 480px) {
@@ -613,6 +1107,18 @@
                 right: 10px;
                 padding: 8px 18px;
                 font-size: 1rem;
+            }
+            .music-grid,
+            .food-grid,
+            .place-grid {
+                grid-template-columns: 1fr;
+            }
+            .reminder-icon {
+                min-width: 80px;
+                padding: 15px;
+            }
+            .reminder-icon .icon-emoji {
+                font-size: 2.5rem;
             }
         }
     </style>
@@ -649,7 +1155,7 @@
         </div>
     </div>
 
-    <!-- ====== MEMORY GALLERY PAGE (index.php) ====== -->
+    <!-- ====== MEMORY GALLERY PAGE ====== -->
     <div id="memory-page" class="memory-page">
         <button class="back-to-heart" id="back-to-heart-btn">❤️ Back to Heart</button>
         
@@ -658,12 +1164,152 @@
             <span style="font-size: 1.5rem; display: block; font-family: 'Playfair Display', serif; opacity: 0.7;">Click a photo to flip and read the memory</span>
         </div>
 
-        <div id="memory-grid" class="memory-grid">
-            <!-- Memory cards will be inserted here by JavaScript -->
-        </div>
+        <div id="memory-grid" class="memory-grid"></div>
 
         <div class="load-more-container">
             <button class="load-more-btn" id="load-more-btn">🎀 Want More? 🎀</button>
+        </div>
+    </div>
+
+    <!-- ====== VIDEO PAGE ====== -->
+    <div id="video-page" class="video-page">
+        <button class="back-to-heart" id="video-back-btn" style="position:fixed; top:20px; right:20px; z-index:301;">❤️ Back</button>
+        
+        <div class="video-container">
+            <div class="video-header">🎬 A Special Message For You</div>
+            
+            <div class="video-frame">
+                <span class="deco-corner tl">✦</span>
+                <span class="deco-corner tr">✦</span>
+                <span class="deco-corner bl">✦</span>
+                <span class="deco-corner br">✦</span>
+                
+                <div class="video-wrapper">
+                    <!-- Replace src with your own video URL -->
+                    <video controls playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            
+            <div class="video-caption">💕 A minute of memories, a lifetime of love 💕</div>
+            
+            <div class="video-nav">
+                <button class="video-nav-btn" id="to-reminders-btn">💝 Things That Remind Me of You</button>
+                <button class="video-nav-btn" id="video-back-to-memory-btn">📸 Back to Memories</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== REMINDERS PAGE ====== -->
+    <div id="reminders-page" class="reminders-page">
+        <button class="back-to-heart" id="reminders-back-btn" style="position:fixed; top:20px; right:20px; z-index:401;">❤️ Back</button>
+        
+        <div class="reminders-header">
+            💝 Things That Remind Me of You
+            <span>Click an icon to explore</span>
+        </div>
+
+        <!-- Icon Navigation -->
+        <div class="reminder-icons">
+            <div class="reminder-icon" data-section="music">
+                <span class="icon-emoji">🎵</span>
+                <span class="icon-label">Music</span>
+            </div>
+            <div class="reminder-icon" data-section="food">
+                <span class="icon-emoji">🍕</span>
+                <span class="icon-label">Food</span>
+            </div>
+            <div class="reminder-icon" data-section="place">
+                <span class="icon-emoji">🌅</span>
+                <span class="icon-label">Places</span>
+            </div>
+        </div>
+
+        <!-- Music Section -->
+        <div id="music-section" class="reminder-content">
+            <div class="section-title">🎵 Songs That Make Me Think of You</div>
+            <div class="music-grid">
+                <div class="music-item">
+                    <div class="music-embed">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                    </div>
+                    <div class="music-title">Our Song ❤️</div>
+                </div>
+                <div class="music-item">
+                    <div class="music-embed">
+                        <iframe src="https://www.youtube.com/embed/fJ9rUzIMcZQ" allowfullscreen></iframe>
+                    </div>
+                    <div class="music-title">The One That Makes Me Smile</div>
+                </div>
+                <div class="music-item">
+                    <div class="music-embed">
+                        <iframe src="https://www.youtube.com/embed/hT_nvWreIhg" allowfullscreen></iframe>
+                    </div>
+                    <div class="music-title">Our Dance Anthem</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Food Section -->
+        <div id="food-section" class="reminder-content">
+            <div class="section-title">🍕 Foods We Love Together</div>
+            <div class="food-grid">
+                <div class="food-item">
+                    <div class="food-image">
+                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop" alt="Pizza">
+                    </div>
+                    <div class="food-name">🍕 Pizza</div>
+                    <div class="food-desc">Our first date meal. Still our favorite!</div>
+                </div>
+                <div class="food-item">
+                    <div class="food-image">
+                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" alt="Pasta">
+                    </div>
+                    <div class="food-name">🍝 Pasta</div>
+                    <div class="food-desc">The night you cooked for me. Perfection.</div>
+                </div>
+                <div class="food-item">
+                    <div class="food-image">
+                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=400&h=300&fit=crop" alt="Ice Cream">
+                    </div>
+                    <div class="food-name">🍦 Ice Cream</div>
+                    <div class="food-desc">Late night walks and sweet treats.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Place Section -->
+        <div id="place-section" class="reminder-content">
+            <div class="section-title">🌅 Places That Hold Our Memories</div>
+            <div class="place-grid">
+                <div class="place-item">
+                    <div class="place-image">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop" alt="Beach">
+                    </div>
+                    <div class="place-name">🏖️ The Beach</div>
+                    <div class="place-desc">Where we watched our first sunset together.</div>
+                </div>
+                <div class="place-item">
+                    <div class="place-image">
+                        <img src="https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=400&h=300&fit=crop" alt="Cafe">
+                    </div>
+                    <div class="place-name">☕ Our Cafe</div>
+                    <div class="place-desc">Our little corner of the world.</div>
+                </div>
+                <div class="place-item">
+                    <div class="place-image">
+                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=300&fit=crop" alt="Park">
+                    </div>
+                    <div class="place-name">🌳 The Park</div>
+                    <div class="place-desc">Where we had our first picnic.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reminders-back">
+            <button class="reminders-back-btn" id="reminders-back-to-video-btn">🎬 Back to Video</button>
         </div>
     </div>
 
@@ -1004,85 +1650,108 @@
         }
 
         // ==========================================
-        // ====== MEMORY GALLERY LOGIC ======
+        // ====== PAGE NAVIGATION LOGIC ======
         // ==========================================
 
-        // --- Sample Memory Data (Replace with your own photos and texts) ---
+        // DOM References
+        const memoryPage = document.getElementById('memory-page');
+        const videoPage = document.getElementById('video-page');
+        const remindersPage = document.getElementById('reminders-page');
+        const memoryGrid = document.getElementById('memory-grid');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const backToHeartBtn = document.getElementById('back-to-heart-btn');
+        const celebrateBtn = document.getElementById('celebrate-btn');
+        const wishCardOverlay = document.getElementById('wish-card-overlay');
+        const closeCardBtn = document.getElementById('close-card-btn');
+        const videoBackBtn = document.getElementById('video-back-btn');
+        const toRemindersBtn = document.getElementById('to-reminders-btn');
+        const videoBackToMemoryBtn = document.getElementById('video-back-to-memory-btn');
+        const remindersBackBtn = document.getElementById('reminders-back-btn');
+        const remindersBackToVideoBtn = document.getElementById('reminders-back-to-video-btn');
+
+        // Reminder icons
+        const reminderIcons = document.querySelectorAll('.reminder-icon');
+        const reminderSections = {
+            music: document.getElementById('music-section'),
+            food: document.getElementById('food-section'),
+            place: document.getElementById('place-section')
+        };
+
+        // --- Memory Data ---
         const memoryData = [
             {
-                photo: 'https://via.placeholder.com/400x400/ff6b8a/ffffff?text=Photo+1',
+                photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop',
                 text: 'Our first date at the beach. The sunset was beautiful, but you were even more stunning. 🌅'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ffaa88/ffffff?text=Photo+2',
+                photo: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop',
                 text: 'That time we got lost in the city and found this hidden cafe. Best coffee and even better company. ☕'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ffd166/ffffff?text=Photo+3',
+                photo: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=400&fit=crop',
                 text: 'Our first vacation together. You made every moment magical. ✈️'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/6c9eff/ffffff?text=Photo+4',
+                photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop',
                 text: 'Date night at the rooftop restaurant. The view was amazing, but you were the real star. 🌃'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/aa88ff/ffffff?text=Photo+5',
+                photo: 'https://images.unsplash.com/photo-1558618666-fcd25c85f2d6?w=400&h=400&fit=crop',
                 text: 'That rainy afternoon we spent dancing in the kitchen. My favorite kind of weather. 💃'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ff3b6f/ffffff?text=Photo+6',
+                photo: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&h=400&fit=crop',
                 text: 'Our first New Year\'s Eve together. You made my heart skip a beat at midnight. 🎆'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ff8a9e/ffffff?text=Photo+7',
+                photo: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=400&fit=crop',
                 text: 'Spring blossoms and your smile - the perfect combination. 🌸'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ffaa66/ffffff?text=Photo+8',
+                photo: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400&h=400&fit=crop',
                 text: 'That spontaneous road trip we took. Best decision ever! 🚗'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/6cb4ff/ffffff?text=Photo+9',
+                photo: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=400&fit=crop',
                 text: 'Cozy movie nights with you are my favorite thing in the world. 🎬'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/c9a0ff/ffffff?text=Photo+10',
+                photo: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop',
                 text: 'You make even the ordinary days feel extraordinary. 🌟'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ff8c94/ffffff?text=Photo+11',
+                photo: 'https://images.unsplash.com/photo-1512389142860-9c449e58a714?w=400&h=400&fit=crop',
                 text: 'Our first Christmas together. You made it so special. 🎄'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/f4c542/ffffff?text=Photo+12',
+                photo: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop',
                 text: 'Every day with you is a new adventure. I love you endlessly. ❤️'
             }
         ];
 
-        // Additional memories for "Want More" button
         const moreMemories = [
             {
-                photo: 'https://via.placeholder.com/400x400/ff6b8a/ffffff?text=Memory+13',
+                photo: 'https://images.unsplash.com/photo-1531844251246-9a1bfaae09fc?w=400&h=400&fit=crop',
                 text: 'Remember that time we stayed up all night just talking? I cherish those moments. 🌙'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ffaa88/ffffff?text=Memory+14',
+                photo: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=400&fit=crop',
                 text: 'Our first picnic in the park. Simple, perfect, unforgettable. 🌳'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ffd166/ffffff?text=Memory+15',
+                photo: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=400&h=400&fit=crop',
                 text: 'You surprised me with this trip. You are the most thoughtful person I know. 🎁'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/6c9eff/ffffff?text=Memory+16',
+                photo: 'https://images.unsplash.com/photo-1506863530036-1efeddceb993?w=400&h=400&fit=crop',
                 text: 'Lazy Sundays with you are my paradise. ☀️'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/aa88ff/ffffff?text=Memory+17',
+                photo: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400&h=400&fit=crop',
                 text: 'Your laugh is my favorite sound in the world. 😊'
             },
             {
-                photo: 'https://via.placeholder.com/400x400/ff3b6f/ffffff?text=Memory+18',
+                photo: 'https://images.unsplash.com/photo-1516455590571-18256e4bb9ff?w=400&h=400&fit=crop',
                 text: 'Every moment with you feels like a dream I never want to wake up from. 💭'
             }
         ];
@@ -1090,15 +1759,6 @@
         let allMemories = [...memoryData];
         let currentBatch = 0;
         const perBatch = 6;
-
-        // --- DOM References ---
-        const memoryPage = document.getElementById('memory-page');
-        const memoryGrid = document.getElementById('memory-grid');
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        const backToHeartBtn = document.getElementById('back-to-heart-btn');
-        const celebrateBtn = document.getElementById('celebrate-btn');
-        const wishCardOverlay = document.getElementById('wish-card-overlay');
-        const closeCardBtn = document.getElementById('close-card-btn');
 
         // --- Helper: Create a Polaroid Card ---
         function createPolaroidCard(data, index) {
@@ -1121,9 +1781,7 @@
                 </div>
             `;
 
-            // Flip on click
             card.addEventListener('click', function(e) {
-                // Prevent flipping if clicking on the close button or other interactive elements
                 if (e.target.closest('.close-card-btn') || e.target.closest('.load-more-btn')) {
                     return;
                 }
@@ -1145,7 +1803,6 @@
 
             memoryGrid.appendChild(fragment);
 
-            // Update button state
             if (endIndex >= allMemories.length) {
                 loadMoreBtn.disabled = true;
                 loadMoreBtn.textContent = '✨ All Memories Shown ✨';
@@ -1155,7 +1812,6 @@
                 loadMoreBtn.textContent = `🎀 Want More? (${allMemories.length - endIndex} more) 🎀`;
             }
 
-            // Trigger entrance animation for new cards
             const newCards = memoryGrid.querySelectorAll('.polaroid-card:not(.animated)');
             newCards.forEach((card, idx) => {
                 card.style.opacity = '0';
@@ -1179,12 +1835,9 @@
             currentBatch++;
         }
 
-        // --- Show Memory Page ---
+        // --- Page Navigation Functions ---
         function showMemoryPage() {
-            // Hide wish card if open
             wishCardOverlay.classList.remove('active');
-            
-            // Reset gallery if first time
             if (currentBatch === 0) {
                 memoryGrid.innerHTML = '';
                 allMemories = [...memoryData];
@@ -1194,28 +1847,38 @@
                 loadMoreBtn.style.opacity = '1';
                 loadMore();
             }
-            
             memoryPage.classList.add('active');
+            videoPage.classList.remove('active');
+            remindersPage.classList.remove('active');
             document.body.style.overflow = 'hidden';
         }
 
-        // --- Hide Memory Page ---
-        function hideMemoryPage() {
+        function showVideoPage() {
             memoryPage.classList.remove('active');
+            videoPage.classList.add('active');
+            remindersPage.classList.remove('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showRemindersPage() {
+            videoPage.classList.remove('active');
+            remindersPage.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideAllPages() {
+            memoryPage.classList.remove('active');
+            videoPage.classList.remove('active');
+            remindersPage.classList.remove('active');
+            wishCardOverlay.classList.remove('active');
             document.body.style.overflow = 'hidden';
         }
 
         // --- Event Listeners ---
-        // "Back to Magic" from wish card -> Show Memory Page
-        closeCardBtn.addEventListener('click', function() {
-            wishCardOverlay.classList.remove('active');
-            showMemoryPage();
-        });
 
-        // "Make a Wish" button -> Show Wish Card
+        // "Make a Wish" button
         celebrateBtn.addEventListener('click', function() {
             wishCardOverlay.classList.add('active');
-            // Fire confetti
             import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js')
                 .then(module => {
                     const confetti = module.default;
@@ -1256,11 +1919,11 @@
             }, 3000);
         });
 
-        // Load More Button
-        loadMoreBtn.addEventListener('click', loadMore);
-
-        // Back to Heart Button
-        backToHeartBtn.addEventListener('click', hideMemoryPage);
+        // Close wish card
+        closeCardBtn.addEventListener('click', function() {
+            wishCardOverlay.classList.remove('active');
+            showMemoryPage();
+        });
 
         // Close wish card on overlay click
         wishCardOverlay.addEventListener('click', function(e) {
@@ -1269,13 +1932,60 @@
             }
         });
 
+        // Back to Heart from Memory
+        backToHeartBtn.addEventListener('click', hideAllPages);
+
+        // Load More
+        loadMoreBtn.addEventListener('click', function() {
+            if (!this.disabled) {
+                loadMore();
+            }
+        });
+
+        // Video navigation
+        videoBackBtn.addEventListener('click', hideAllPages);
+        
+        videoBackToMemoryBtn.addEventListener('click', showMemoryPage);
+        
+        toRemindersBtn.addEventListener('click', showRemindersPage);
+
+        // Reminders navigation
+        remindersBackBtn.addEventListener('click', hideAllPages);
+        
+        remindersBackToVideoBtn.addEventListener('click', showVideoPage);
+
+        // Reminder Icons - Toggle sections
+        reminderIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                const section = this.dataset.section;
+                
+                // Hide all sections
+                Object.values(reminderSections).forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Show selected section
+                if (reminderSections[section]) {
+                    reminderSections[section].classList.add('active');
+                }
+                
+                // Highlight selected icon
+                reminderIcons.forEach(i => i.style.borderColor = 'rgba(255,255,255,0.1)');
+                this.style.borderColor = 'rgba(255,105,180,0.5)';
+            });
+        });
+
         // Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 if (wishCardOverlay.classList.contains('active')) {
                     wishCardOverlay.classList.remove('active');
+                } else if (remindersPage.classList.contains('active')) {
+                    showVideoPage();
+                } else if (videoPage.classList.contains('active')) {
+                    hideAllPages();
                 } else if (memoryPage.classList.contains('active')) {
-                    hideMemoryPage();
+                    hideAllPages();
                 }
             }
         });
