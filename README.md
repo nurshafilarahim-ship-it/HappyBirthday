@@ -155,6 +155,7 @@
             padding-bottom: 15px;
         }
 
+        /* --- Editable Wish Text Styles --- */
         .wish-card-body {
             font-family: 'Caveat', 'Playfair Display', cursive;
             font-size: 1.6rem;
@@ -169,6 +170,28 @@
         .wish-card-body p {
             margin-bottom: 15px;
             text-indent: 30px;
+            outline: none;
+            border-radius: 4px;
+            padding: 4px 6px;
+            transition: background 0.2s ease;
+            cursor: text;
+            min-height: 2.5rem;
+        }
+
+        .wish-card-body p:hover {
+            background: rgba(139, 58, 58, 0.05);
+        }
+
+        .wish-card-body p:focus {
+            background: rgba(139, 58, 58, 0.08);
+            box-shadow: 0 0 0 2px rgba(139, 58, 58, 0.15);
+        }
+
+        .wish-card-body p:empty::before {
+            content: "✏️ Click to write your wish...";
+            color: #999;
+            font-style: italic;
+            font-weight: 300;
         }
 
         .wish-card-body .signature {
@@ -180,6 +203,41 @@
             text-indent: 0;
             border-top: 1px solid #d4c5a0;
             padding-top: 15px;
+            outline: none;
+            cursor: text;
+            min-height: 3.5rem;
+        }
+
+        .wish-card-body .signature:hover {
+            background: rgba(139, 58, 58, 0.05);
+            border-radius: 4px;
+        }
+
+        .wish-card-body .signature:focus {
+            background: rgba(139, 58, 58, 0.08);
+            box-shadow: 0 0 0 2px rgba(139, 58, 58, 0.15);
+            border-radius: 4px;
+        }
+
+        .wish-card-body .signature:empty::before {
+            content: "✏️ Your name here...";
+            color: #999;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* Edit hint badge */
+        .edit-hint {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #8b3a3a;
+            opacity: 0.6;
+            margin-top: 8px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            border-top: 1px dashed #d4c5a0;
+            padding-top: 12px;
         }
 
         .wish-card-footer {
@@ -283,27 +341,16 @@
                     💌 My Dearest Love
                 </div>
                 <div class="wish-card-body">
-                    <p>
-                        On this special day, I just want to remind you how incredibly amazing you are.
-                        You light up my world in ways you'll never fully understand.
-                    </p>
-                    <p>
-                        Every moment with you is a treasure, every laugh shared is a melody,
-                        and every day I spend with you is a gift I'm eternally grateful for.
-                    </p>
-                    <p>
-                        Today, we celebrate you — the most beautiful soul I've ever known.
-                        May your year ahead be filled with as much joy and wonder as you bring
-                        into my life every single day.
-                    </p>
-                    <p>
-                        I love you more than words can say, more than stars in the sky,
-                        and more than all the birthdays to come.
-                    </p>
-                    <div class="signature">
+                    <!-- Editable paragraphs - Just click and type! -->
+                    <p contenteditable="true">On this special day, I just want to remind you how incredibly amazing you are. You light up my world in ways you'll never fully understand.</p>
+                    <p contenteditable="true">Every moment with you is a treasure, every laugh shared is a melody, and every day I spend with you is a gift I'm eternally grateful for.</p>
+                    <p contenteditable="true">Today, we celebrate you — the most beautiful soul I've ever known. May your year ahead be filled with as much joy and wonder as you bring into my life every single day.</p>
+                    <p contenteditable="true">I love you more than words can say, more than stars in the sky, and more than all the birthdays to come.</p>
+                    <div class="signature" contenteditable="true">
                         Forever yours, <br>
                         ❤️ [Your Name]
                     </div>
+                    <div class="edit-hint">✏️ Click any text above to edit your personal wish</div>
                 </div>
                 <div class="wish-card-footer">
                     <button class="close-card-btn" id="close-card-btn">✨ Back to the Magic ✨</button>
