@@ -312,7 +312,7 @@
             }
         }
 
-        /* --- MEMORY GALLERY PAGE (index.php) STYLES --- */
+        /* --- MEMORY GALLERY PAGE --- */
         .memory-page {
             display: none;
             position: fixed;
@@ -537,10 +537,14 @@
             transform: scale(0.95);
         }
 
-        .load-more-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
+        .load-more-btn.all-shown {
+            background: linear-gradient(145deg, #ffd166, #ff8a9e);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.8); }
         }
 
         /* --- Back to Heart Button --- */
@@ -603,7 +607,6 @@
             text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
         }
 
-        /* Aesthetic Video Frame */
         .video-frame {
             position: relative;
             background: linear-gradient(145deg, #2a1a2a, #1a0a1a);
@@ -645,7 +648,7 @@
         .video-frame .video-wrapper {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             background: #000;
             border-radius: 12px;
             overflow: hidden;
@@ -662,7 +665,6 @@
             border-radius: 12px;
         }
 
-        /* Video Decorative Elements */
         .video-frame .deco-corner {
             position: absolute;
             font-size: 1.5rem;
@@ -685,7 +687,6 @@
             letter-spacing: 1px;
         }
 
-        /* Navigation buttons on video page */
         .video-nav {
             text-align: center;
             margin-top: 30px;
@@ -752,7 +753,6 @@
             margin-top: 5px;
         }
 
-        /* Icon Grid */
         .reminder-icons {
             display: flex;
             justify-content: center;
@@ -796,7 +796,6 @@
             letter-spacing: 1px;
         }
 
-        /* Content Sections */
         .reminder-content {
             display: none;
             max-width: 1000px;
@@ -817,65 +816,264 @@
             text-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
         }
 
-        /* Music Section */
-        .music-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 900px;
+        /* ======================================== */
+        /* ====== VINYL RECORD PLAYER ====== */
+        /* ======================================== */
+        .vinyl-player {
+            max-width: 600px;
             margin: 0 auto;
-        }
-
-        .music-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
+            background: linear-gradient(145deg, #1a1a2a, #2a1a2a);
+            border-radius: 30px;
+            padding: 40px 35px 35px;
+            border: 2px solid rgba(255, 105, 180, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
         }
 
-        .music-item::before {
-            content: '♪';
+        .vinyl-player::before {
+            content: '';
             position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 8rem;
-            opacity: 0.05;
-            color: #ff6b8a;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 105, 180, 0.03) 0%, transparent 70%);
+            animation: rotateBg 20s linear infinite;
         }
 
-        .music-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 105, 180, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .music-item .music-embed {
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-            margin-bottom: 12px;
+        .vinyl-player .player-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
         }
 
-        .music-item .music-embed iframe {
+        .vinyl-player .player-header .song-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #fff9e6;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .vinyl-player .player-header .song-artist {
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 2px;
+        }
+
+        /* --- Vinyl Record --- */
+        .vinyl-record {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 25px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .vinyl-record .record-disc {
             width: 100%;
             height: 100%;
-            border: none;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 50%, 
+                #1a1a1a 0%, 
+                #2a2a2a 15%, 
+                #1a1a1a 20%, 
+                #2a2a2a 25%, 
+                #1a1a1a 30%,
+                #2a2a2a 35%,
+                #1a1a1a 40%,
+                #2a2a2a 45%,
+                #1a1a1a 50%,
+                #2a2a2a 55%,
+                #1a1a1a 60%,
+                #2a2a2a 65%,
+                #1a1a1a 70%,
+                #2a2a2a 75%,
+                #1a1a1a 80%,
+                #2a2a2a 85%,
+                #1a1a1a 90%,
+                #2a2a2a 95%,
+                #1a1a1a 100%
+            );
+            box-shadow: 
+                0 0 60px rgba(255, 105, 180, 0.15),
+                inset 0 0 40px rgba(0, 0, 0, 0.8),
+                inset 0 0 80px rgba(0, 0, 0, 0.5);
+            position: relative;
+            transition: transform 0.1s linear;
+            animation: recordSpin 0s linear infinite;
         }
 
-        .music-item .music-title {
+        .vinyl-record .record-disc.playing {
+            animation: recordSpin 2s linear infinite;
+        }
+
+        @keyframes recordSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Record label in center */
+        .vinyl-record .record-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff6b8a, #ff3b6f);
+            box-shadow: 0 0 30px rgba(255, 59, 111, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .vinyl-record .record-label .label-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 0.7rem;
             color: #fff9e6;
-            font-family: 'Caveat', cursive;
-            font-size: 1.2rem;
             text-align: center;
-            opacity: 0.8;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
         }
 
-        /* Food Section */
+        .vinyl-record .record-label .label-heart {
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+
+        /* Center hole */
+        .vinyl-record .center-hole {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0a0a1a;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+        }
+
+        /* --- Vinyl Tone Arm --- */
+        .vinyl-player .tone-arm {
+            position: absolute;
+            top: 30px;
+            right: 60px;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, #888, #ccc);
+            transform-origin: right center;
+            transform: rotate(-45deg);
+            border-radius: 2px;
+            z-index: 5;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .vinyl-player .tone-arm.playing {
+            transform: rotate(-20deg);
+        }
+
+        .vinyl-player .tone-arm::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ddd, #999);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl-player .tone-arm .arm-base {
+            position: absolute;
+            right: -12px;
+            top: -14px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #bbb, #777);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- Play Button --- */
+        .vinyl-player .play-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 18px 50px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            background: linear-gradient(145deg, #ff8a9e, #ff3b6f);
+            color: white;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 40px rgba(255, 59, 111, 0.3);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .vinyl-player .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(255, 59, 111, 0.5);
+        }
+
+        .vinyl-player .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        .vinyl-player .play-btn.playing {
+            background: linear-gradient(145deg, #ffd166, #ff8a9e);
+            animation: pulseGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
+        }
+
+        /* --- YouTube Embed (hidden initially) --- */
+        .vinyl-player .video-embed-container {
+            display: none;
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .vinyl-player .video-embed-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .vinyl-player .video-embed-container iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border: none;
+            display: block;
+        }
+
+        /* --- Food Section --- */
         .food-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -944,7 +1142,7 @@
             margin-top: 5px;
         }
 
-        /* Place Section */
+        /* --- Place Section --- */
         .place-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1013,7 +1211,6 @@
             margin-top: 5px;
         }
 
-        /* Back button for reminders */
         .reminders-back {
             text-align: center;
             margin-top: 40px;
@@ -1040,7 +1237,7 @@
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
         }
 
-        /* --- Responsive for Gallery --- */
+        /* --- Responsive --- */
         @media (max-width: 768px) {
             .memory-grid {
                 grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1087,6 +1284,33 @@
             .video-nav-btn {
                 width: 80%;
             }
+
+            /* Vinyl responsive */
+            .vinyl-record {
+                width: 220px;
+                height: 220px;
+            }
+            .vinyl-record .record-label {
+                width: 65px;
+                height: 65px;
+            }
+            .vinyl-record .record-label .label-text {
+                font-size: 0.6rem;
+            }
+            .vinyl-player {
+                padding: 30px 20px 25px;
+            }
+            .vinyl-player .player-header .song-title {
+                font-size: 1.6rem;
+            }
+            .vinyl-player .play-btn {
+                padding: 14px 35px;
+                font-size: 1.4rem;
+            }
+            .vinyl-player .tone-arm {
+                right: 30px;
+                width: 40px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1108,7 +1332,6 @@
                 padding: 8px 18px;
                 font-size: 1rem;
             }
-            .music-grid,
             .food-grid,
             .place-grid {
                 grid-template-columns: 1fr;
@@ -1119,6 +1342,22 @@
             }
             .reminder-icon .icon-emoji {
                 font-size: 2.5rem;
+            }
+            .vinyl-record {
+                width: 180px;
+                height: 180px;
+            }
+            .vinyl-record .record-label {
+                width: 55px;
+                height: 55px;
+            }
+            .vinyl-record .record-label .label-text {
+                font-size: 0.5rem;
+            }
+            .vinyl-player .tone-arm {
+                right: 15px;
+                width: 30px;
+                top: 15px;
             }
         }
     </style>
@@ -1185,7 +1424,6 @@
                 <span class="deco-corner br">✦</span>
                 
                 <div class="video-wrapper">
-                    <!-- Replace src with your own video URL -->
                     <video controls playsinline>
                         <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                         Your browser does not support the video tag.
@@ -1211,7 +1449,6 @@
             <span>Click an icon to explore</span>
         </div>
 
-        <!-- Icon Navigation -->
         <div class="reminder-icons">
             <div class="reminder-icon" data-section="music">
                 <span class="icon-emoji">🎵</span>
@@ -1227,32 +1464,50 @@
             </div>
         </div>
 
-        <!-- Music Section -->
+        <!-- ====== MUSIC SECTION - VINYL RECORD PLAYER ====== -->
         <div id="music-section" class="reminder-content">
-            <div class="section-title">🎵 Songs That Make Me Think of You</div>
-            <div class="music-grid">
-                <div class="music-item">
-                    <div class="music-embed">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                    </div>
-                    <div class="music-title">Our Song ❤️</div>
+            <div class="section-title">🎵 The Song That Makes Me Think of You</div>
+            
+            <div class="vinyl-player">
+                <div class="player-header">
+                    <div class="song-title">❤️ My Heart</div>
+                    <div class="song-artist">A song that speaks of you</div>
                 </div>
-                <div class="music-item">
-                    <div class="music-embed">
-                        <iframe src="https://www.youtube.com/embed/fJ9rUzIMcZQ" allowfullscreen></iframe>
+
+                <!-- Vinyl Record -->
+                <div class="vinyl-record" id="vinylRecord">
+                    <div class="record-disc" id="recordDisc">
+                        <div class="record-label">
+                            <span class="label-text">For You</span>
+                            <span class="label-heart">❤️</span>
+                        </div>
                     </div>
-                    <div class="music-title">The One That Makes Me Smile</div>
+                    <div class="center-hole"></div>
                 </div>
-                <div class="music-item">
-                    <div class="music-embed">
-                        <iframe src="https://www.youtube.com/embed/hT_nvWreIhg" allowfullscreen></iframe>
-                    </div>
-                    <div class="music-title">Our Dance Anthem</div>
+
+                <!-- Tone Arm -->
+                <div class="tone-arm" id="toneArm">
+                    <div class="arm-base"></div>
+                </div>
+
+                <!-- Play Button -->
+                <button class="play-btn" id="playBtn">▶ Play the Song</button>
+
+                <!-- YouTube Embed (hidden initially) -->
+                <div class="video-embed-container" id="videoEmbed">
+                    <iframe 
+                        src="https://www.youtube.com/embed/VR4UM-LsPiU?si=p4tay8ly2AJk1yCV" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
+                    </iframe>
                 </div>
             </div>
         </div>
 
-        <!-- Food Section -->
+        <!-- ====== FOOD SECTION ====== -->
         <div id="food-section" class="reminder-content">
             <div class="section-title">🍕 Foods We Love Together</div>
             <div class="food-grid">
@@ -1280,7 +1535,7 @@
             </div>
         </div>
 
-        <!-- Place Section -->
+        <!-- ====== PLACE SECTION ====== -->
         <div id="place-section" class="reminder-content">
             <div class="section-title">🌅 Places That Hold Our Memories</div>
             <div class="place-grid">
@@ -1650,6 +1905,61 @@
         }
 
         // ==========================================
+        // ====== VINYL PLAYER LOGIC ======
+        // ==========================================
+        const playBtn = document.getElementById('playBtn');
+        const recordDisc = document.getElementById('recordDisc');
+        const toneArm = document.getElementById('toneArm');
+        const videoEmbed = document.getElementById('videoEmbed');
+        const vinylRecord = document.getElementById('vinylRecord');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', function() {
+            if (!isPlaying) {
+                // Start playing
+                isPlaying = true;
+                this.textContent = '⏹ Stop';
+                this.classList.add('playing');
+                recordDisc.classList.add('playing');
+                toneArm.classList.add('playing');
+                videoEmbed.classList.add('active');
+                
+                // Auto-play the YouTube video by loading it with autoplay
+                const iframe = videoEmbed.querySelector('iframe');
+                const src = iframe.src;
+                // Add autoplay parameter if not already there
+                if (!src.includes('autoplay=1')) {
+                    iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
+                }
+                
+                // Add visual feedback on the record
+                vinylRecord.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    vinylRecord.style.transform = 'scale(1)';
+                }, 300);
+                
+            } else {
+                // Stop playing
+                isPlaying = false;
+                this.textContent = '▶ Play the Song';
+                this.classList.remove('playing');
+                recordDisc.classList.remove('playing');
+                toneArm.classList.remove('playing');
+                videoEmbed.classList.remove('active');
+                
+                // Reset the iframe to stop video
+                const iframe = videoEmbed.querySelector('iframe');
+                const src = iframe.src.replace('&autoplay=1', '').replace('autoplay=1&', '').replace('autoplay=1', '');
+                iframe.src = src;
+            }
+        });
+
+        // Also allow clicking on the record to toggle play
+        vinylRecord.addEventListener('click', function() {
+            playBtn.click();
+        });
+
+        // ==========================================
         // ====== PAGE NAVIGATION LOGIC ======
         // ==========================================
 
@@ -1729,33 +2039,6 @@
             }
         ];
 
-        const moreMemories = [
-            {
-                photo: 'https://images.unsplash.com/photo-1531844251246-9a1bfaae09fc?w=400&h=400&fit=crop',
-                text: 'Remember that time we stayed up all night just talking? I cherish those moments. 🌙'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&h=400&fit=crop',
-                text: 'Our first picnic in the park. Simple, perfect, unforgettable. 🌳'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=400&h=400&fit=crop',
-                text: 'You surprised me with this trip. You are the most thoughtful person I know. 🎁'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1506863530036-1efeddceb993?w=400&h=400&fit=crop',
-                text: 'Lazy Sundays with you are my paradise. ☀️'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400&h=400&fit=crop',
-                text: 'Your laugh is my favorite sound in the world. 😊'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1516455590571-18256e4bb9ff?w=400&h=400&fit=crop',
-                text: 'Every moment with you feels like a dream I never want to wake up from. 💭'
-            }
-        ];
-
         let allMemories = [...memoryData];
         let currentBatch = 0;
         const perBatch = 6;
@@ -1804,12 +2087,15 @@
             memoryGrid.appendChild(fragment);
 
             if (endIndex >= allMemories.length) {
-                loadMoreBtn.disabled = true;
-                loadMoreBtn.textContent = '✨ All Memories Shown ✨';
-                loadMoreBtn.style.opacity = '0.6';
+                loadMoreBtn.textContent = '🎬 Watch Our Video 🎬';
+                loadMoreBtn.className = 'load-more-btn all-shown';
+                loadMoreBtn.disabled = false;
+                loadMoreBtn.dataset.allShown = 'true';
             } else {
                 loadMoreBtn.disabled = false;
                 loadMoreBtn.textContent = `🎀 Want More? (${allMemories.length - endIndex} more) 🎀`;
+                loadMoreBtn.className = 'load-more-btn';
+                loadMoreBtn.dataset.allShown = 'false';
             }
 
             const newCards = memoryGrid.querySelectorAll('.polaroid-card:not(.animated)');
@@ -1825,8 +2111,13 @@
             });
         }
 
-        // --- Load More ---
-        function loadMore() {
+        // --- Load More / Navigate to Video ---
+        function handleLoadMore() {
+            if (loadMoreBtn.dataset.allShown === 'true') {
+                showVideoPage();
+                return;
+            }
+
             const start = currentBatch * perBatch;
             if (start >= allMemories.length) {
                 return;
@@ -1842,9 +2133,9 @@
                 memoryGrid.innerHTML = '';
                 allMemories = [...memoryData];
                 currentBatch = 0;
-                loadMoreBtn.disabled = false;
                 loadMoreBtn.textContent = '🎀 Want More? 🎀';
-                loadMoreBtn.style.opacity = '1';
+                loadMoreBtn.className = 'load-more-btn';
+                loadMoreBtn.dataset.allShown = 'false';
                 loadMore();
             }
             memoryPage.classList.add('active');
@@ -1874,9 +2165,17 @@
             document.body.style.overflow = 'hidden';
         }
 
+        function loadMore() {
+            const start = currentBatch * perBatch;
+            if (start >= allMemories.length) {
+                return;
+            }
+            renderBatch(start);
+            currentBatch++;
+        }
+
         // --- Event Listeners ---
 
-        // "Make a Wish" button
         celebrateBtn.addEventListener('click', function() {
             wishCardOverlay.classList.add('active');
             import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js')
@@ -1919,63 +2218,44 @@
             }, 3000);
         });
 
-        // Close wish card
         closeCardBtn.addEventListener('click', function() {
             wishCardOverlay.classList.remove('active');
             showMemoryPage();
         });
 
-        // Close wish card on overlay click
         wishCardOverlay.addEventListener('click', function(e) {
             if (e.target === this) {
                 wishCardOverlay.classList.remove('active');
             }
         });
 
-        // Back to Heart from Memory
         backToHeartBtn.addEventListener('click', hideAllPages);
+        loadMoreBtn.addEventListener('click', handleLoadMore);
 
-        // Load More
-        loadMoreBtn.addEventListener('click', function() {
-            if (!this.disabled) {
-                loadMore();
-            }
-        });
-
-        // Video navigation
         videoBackBtn.addEventListener('click', hideAllPages);
-        
         videoBackToMemoryBtn.addEventListener('click', showMemoryPage);
-        
         toRemindersBtn.addEventListener('click', showRemindersPage);
 
-        // Reminders navigation
         remindersBackBtn.addEventListener('click', hideAllPages);
-        
         remindersBackToVideoBtn.addEventListener('click', showVideoPage);
 
-        // Reminder Icons - Toggle sections
         reminderIcons.forEach(icon => {
             icon.addEventListener('click', function() {
                 const section = this.dataset.section;
                 
-                // Hide all sections
                 Object.values(reminderSections).forEach(el => {
                     el.classList.remove('active');
                 });
                 
-                // Show selected section
                 if (reminderSections[section]) {
                     reminderSections[section].classList.add('active');
                 }
                 
-                // Highlight selected icon
                 reminderIcons.forEach(i => i.style.borderColor = 'rgba(255,255,255,0.1)');
                 this.style.borderColor = 'rgba(255,105,180,0.5)';
             });
         });
 
-        // Escape key
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 if (wishCardOverlay.classList.contains('active')) {
@@ -1990,8 +2270,10 @@
             }
         });
 
+        loadMore();
+
         console.log('❤️ Happy Birthday! Made with love. ❤️');
-        console.log('📸 Memory Gallery loaded with ' + allMemories.length + ' memories.');
+        console.log('🎵 Vinyl record player loaded! Click play to listen.');
     </script>
 </body>
 </html>
