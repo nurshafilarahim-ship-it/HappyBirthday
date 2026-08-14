@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Happy Birthday, My Love ❤️</title>
-    <!-- Google Font for a beautiful style -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&family=Caveat:wght@600&display=swap" rel="stylesheet">
     <style>
         /* --- Reset & Body Setup --- */
@@ -78,7 +78,7 @@
             transform: translateX(-50%) scale(0.95);
         }
 
-        /* --- Wish Card Overlay (Hidden by default) --- */
+        /* --- Wish Card Overlay --- */
         #wish-card-overlay {
             position: fixed;
             top: 0;
@@ -124,7 +124,6 @@
             transform: rotate(0deg) scale(1.01);
         }
 
-        /* Paper texture overlay */
         .wish-card::before {
             content: '';
             position: absolute;
@@ -155,7 +154,6 @@
             padding-bottom: 15px;
         }
 
-        /* --- Editable Wish Text Styles --- */
         .wish-card-body {
             font-family: 'Caveat', 'Playfair Display', cursive;
             font-size: 1.6rem;
@@ -226,7 +224,6 @@
             font-weight: 300;
         }
 
-        /* Edit hint badge */
         .edit-hint {
             text-align: center;
             font-size: 0.8rem;
@@ -263,7 +260,6 @@
             box-shadow: 0 6px 25px rgba(139, 58, 58, 0.6);
         }
 
-        /* Decorative elements */
         .wish-card .deco-left {
             position: absolute;
             top: 20px;
@@ -281,7 +277,6 @@
             transform: rotate(15deg);
         }
 
-        /* Scrollbar styling for the card */
         .wish-card::-webkit-scrollbar {
             width: 6px;
         }
@@ -294,13 +289,11 @@
             border-radius: 10px;
         }
 
-        /* --- Animations --- */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Responsive adjustments --- */
         @media (max-width: 600px) {
             .wish-card {
                 padding: 30px 20px;
@@ -318,38 +311,335 @@
                 font-size: 1.6rem;
             }
         }
+
+        /* --- MEMORY GALLERY PAGE (index.php) STYLES --- */
+        .memory-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a1a 50%, #0a0a1a 100%);
+            z-index: 200;
+            overflow-y: auto;
+            padding: 80px 20px 40px;
+            animation: fadeIn 0.8s ease;
+        }
+        .memory-page.active {
+            display: block;
+        }
+
+        .memory-header {
+            text-align: center;
+            color: #fff9e6;
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin-bottom: 40px;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+            position: relative;
+        }
+
+        .memory-header::after {
+            content: '❤️';
+            display: block;
+            font-size: 2rem;
+            margin-top: 5px;
+            opacity: 0.5;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Polaroid Flip Card --- */
+        .polaroid-card {
+            perspective: 1500px;
+            height: 380px;
+            cursor: pointer;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .polaroid-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .polaroid-card.flipped .polaroid-inner {
+            transform: rotateY(180deg);
+        }
+
+        .polaroid-front, .polaroid-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        /* Front - Polaroid Photo */
+        .polaroid-front {
+            background: #f5f0e8;
+            padding: 12px 12px 50px 12px;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .polaroid-front:hover {
+            transform: rotate(0deg) scale(1.03);
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
+        }
+
+        .polaroid-front .photo-container {
+            width: 100%;
+            height: 85%;
+            overflow: hidden;
+            border-radius: 4px;
+            background: #ddd;
+            position: relative;
+        }
+
+        .polaroid-front .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .polaroid-front:hover .photo-container img {
+            transform: scale(1.05);
+        }
+
+        .polaroid-front .photo-caption {
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 1.1rem;
+            color: #3d2b1f;
+            padding: 8px 5px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Back - Flip side with text */
+        .polaroid-back {
+            background: linear-gradient(145deg, #fdf6e3, #f5ede0);
+            transform: rotateY(180deg);
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(139, 58, 58, 0.2);
+            box-shadow: inset 0 0 30px rgba(180, 150, 100, 0.1);
+        }
+
+        .polaroid-back::before {
+            content: '✧';
+            font-size: 2rem;
+            color: #8b3a3a;
+            opacity: 0.3;
+            margin-bottom: 10px;
+        }
+
+        .polaroid-back .memory-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            color: #3d2b1f;
+            text-align: center;
+            font-weight: 600;
+            padding: 10px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .polaroid-back .memory-text::-webkit-scrollbar {
+            width: 4px;
+        }
+        .polaroid-back .memory-text::-webkit-scrollbar-track {
+            background: #e8d5b5;
+            border-radius: 10px;
+        }
+        .polaroid-back .memory-text::-webkit-scrollbar-thumb {
+            background: #8b3a3a;
+            border-radius: 10px;
+        }
+
+        .polaroid-back .flip-hint {
+            font-size: 0.7rem;
+            color: #8b3a3a;
+            opacity: 0.4;
+            margin-top: 10px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* --- "Want More" Button --- */
+        .load-more-container {
+            text-align: center;
+            padding: 40px 20px 60px;
+        }
+
+        .load-more-btn {
+            background: linear-gradient(145deg, #ff8a9e, #ff3b6f);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.8rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 40px rgba(255, 59, 111, 0.4);
+            letter-spacing: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .load-more-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .load-more-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(255, 59, 111, 0.6);
+        }
+
+        .load-more-btn:active {
+            transform: scale(0.95);
+        }
+
+        .load-more-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* --- Back to Heart Button --- */
+        .back-to-heart {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 300;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff9e6;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .back-to-heart:hover {
+            background: rgba(255, 105, 180, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+        }
+
+        /* --- Responsive for Gallery --- */
+        @media (max-width: 768px) {
+            .memory-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 30px 20px;
+                padding: 10px;
+            }
+            .polaroid-card {
+                height: 340px;
+                max-width: 280px;
+            }
+            .polaroid-back .memory-text {
+                font-size: 1.2rem;
+                line-height: 1.6rem;
+            }
+            .memory-header {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            .load-more-btn {
+                font-size: 1.4rem;
+                padding: 15px 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .memory-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 25px 15px;
+            }
+            .polaroid-card {
+                height: 300px;
+                max-width: 240px;
+            }
+            .polaroid-back .memory-text {
+                font-size: 1rem;
+                line-height: 1.4rem;
+            }
+            .back-to-heart {
+                top: 10px;
+                right: 10px;
+                padding: 8px 18px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 1. Main Title Overlay -->
+    <!-- ====== MAIN PAGE ====== -->
     <div id="title">
         <h1>🎂 Happy Birthday, [Your Partner's Name]!</h1>
         <p>You are my everything. My world shines brighter with you. ✨</p>
     </div>
 
-    <!-- 2. Celebrate Button -->
     <button id="celebrate-btn">🎉 Make a Wish!</button>
 
-    <!-- 3. Wish Card Overlay -->
+    <!-- Wish Card Overlay -->
     <div id="wish-card-overlay">
         <div class="wish-card">
             <span class="deco-left">🌸</span>
             <span class="deco-right">🌹</span>
             <div class="wish-card-content">
-                <div class="wish-card-header">
-                    💌 My Dearest Love
-                </div>
+                <div class="wish-card-header">💌 My Dearest Love</div>
                 <div class="wish-card-body">
-                    <!-- Editable paragraphs - Just click and type! -->
                     <p contenteditable="true">On this special day, I just want to remind you how incredibly amazing you are. You light up my world in ways you'll never fully understand.</p>
                     <p contenteditable="true">Every moment with you is a treasure, every laugh shared is a melody, and every day I spend with you is a gift I'm eternally grateful for.</p>
                     <p contenteditable="true">Today, we celebrate you — the most beautiful soul I've ever known. May your year ahead be filled with as much joy and wonder as you bring into my life every single day.</p>
                     <p contenteditable="true">I love you more than words can say, more than stars in the sky, and more than all the birthdays to come.</p>
-                    <div class="signature" contenteditable="true">
-                        Forever yours, <br>
-                        ❤️ [Your Name]
-                    </div>
+                    <div class="signature" contenteditable="true">Forever yours, <br> ❤️ [Your Name]</div>
                     <div class="edit-hint">✏️ Click any text above to edit your personal wish</div>
                 </div>
                 <div class="wish-card-footer">
@@ -359,10 +649,28 @@
         </div>
     </div>
 
-    <!-- 4. Container for 3D Scene -->
+    <!-- ====== MEMORY GALLERY PAGE (index.php) ====== -->
+    <div id="memory-page" class="memory-page">
+        <button class="back-to-heart" id="back-to-heart-btn">❤️ Back to Heart</button>
+        
+        <div class="memory-header">
+            📸 Our Beautiful Memories
+            <span style="font-size: 1.5rem; display: block; font-family: 'Playfair Display', serif; opacity: 0.7;">Click a photo to flip and read the memory</span>
+        </div>
+
+        <div id="memory-grid" class="memory-grid">
+            <!-- Memory cards will be inserted here by JavaScript -->
+        </div>
+
+        <div class="load-more-container">
+            <button class="load-more-btn" id="load-more-btn">🎀 Want More? 🎀</button>
+        </div>
+    </div>
+
+    <!-- 3D Scene Container -->
     <div id="three-container"></div>
 
-    <!-- 5. Load Three.js library and the main script -->
+    <!-- Import Three.js -->
     <script type="importmap">
         {
             "imports": {
@@ -374,7 +682,7 @@
     <script type="module">
         import * as THREE from 'three';
 
-        // --- 1. Setup Scene, Camera, Renderer ---
+        // --- THREE.JS SCENE SETUP ---
         const container = document.getElementById('three-container');
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0a0a1a);
@@ -390,7 +698,7 @@
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
 
-        // --- 2. Add Lights ---
+        // --- Lights ---
         const ambientLight = new THREE.AmbientLight(0x404060);
         scene.add(ambientLight);
 
@@ -406,7 +714,7 @@
         light3.position.set(0, -2, -8);
         scene.add(light3);
 
-        // --- 3. Create the Heart ---
+        // --- Create Heart ---
         function createHeart() {
             const heartGroup = new THREE.Group();
             const geometry = new THREE.SphereGeometry(1, 64, 64);
@@ -489,7 +797,7 @@
         scene.add(heart);
         heart.scale.set(0.8, 0.8, 0.8);
 
-        // --- 4. Create Floating Particles ---
+        // --- Particles ---
         function createParticles() {
             const particleCount = 800;
             const positions = new Float32Array(particleCount * 3);
@@ -543,7 +851,7 @@
         const particleSystem = createParticles();
         scene.add(particleSystem);
 
-        // --- 5. Create Floating Text Sprites ---
+        // --- Floating Sprites ---
         function createTextSprite(text, color = '#ffaabb', size = 0.4) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -618,7 +926,7 @@
             noteSprites.push(sprite);
         });
 
-        // --- 6. Add a subtle background glow ---
+        // --- Glow ---
         function createGlow() {
             const canvas = document.createElement('canvas');
             canvas.width = 512;
@@ -644,9 +952,7 @@
         }
         scene.add(createGlow());
 
-        // --- 7. Animation Loop ---
-        let clock = new THREE.Clock();
-
+        // --- Animation Loop ---
         function animate() {
             const delta = clock.getDelta();
             const elapsedTime = performance.now() / 1000;
@@ -686,9 +992,10 @@
             requestAnimationFrame(animate);
         }
 
+        const clock = new THREE.Clock();
         animate();
 
-        // --- 8. Handle Window Resize ---
+        // --- Resize Handler ---
         window.addEventListener('resize', onWindowResize, false);
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -696,15 +1003,218 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        // --- 9. Button Logic: Show Wish Card & Confetti ---
+        // ==========================================
+        // ====== MEMORY GALLERY LOGIC ======
+        // ==========================================
+
+        // --- Sample Memory Data (Replace with your own photos and texts) ---
+        const memoryData = [
+            {
+                photo: 'https://via.placeholder.com/400x400/ff6b8a/ffffff?text=Photo+1',
+                text: 'Our first date at the beach. The sunset was beautiful, but you were even more stunning. 🌅'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ffaa88/ffffff?text=Photo+2',
+                text: 'That time we got lost in the city and found this hidden cafe. Best coffee and even better company. ☕'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ffd166/ffffff?text=Photo+3',
+                text: 'Our first vacation together. You made every moment magical. ✈️'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/6c9eff/ffffff?text=Photo+4',
+                text: 'Date night at the rooftop restaurant. The view was amazing, but you were the real star. 🌃'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/aa88ff/ffffff?text=Photo+5',
+                text: 'That rainy afternoon we spent dancing in the kitchen. My favorite kind of weather. 💃'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ff3b6f/ffffff?text=Photo+6',
+                text: 'Our first New Year\'s Eve together. You made my heart skip a beat at midnight. 🎆'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ff8a9e/ffffff?text=Photo+7',
+                text: 'Spring blossoms and your smile - the perfect combination. 🌸'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ffaa66/ffffff?text=Photo+8',
+                text: 'That spontaneous road trip we took. Best decision ever! 🚗'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/6cb4ff/ffffff?text=Photo+9',
+                text: 'Cozy movie nights with you are my favorite thing in the world. 🎬'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/c9a0ff/ffffff?text=Photo+10',
+                text: 'You make even the ordinary days feel extraordinary. 🌟'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ff8c94/ffffff?text=Photo+11',
+                text: 'Our first Christmas together. You made it so special. 🎄'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/f4c542/ffffff?text=Photo+12',
+                text: 'Every day with you is a new adventure. I love you endlessly. ❤️'
+            }
+        ];
+
+        // Additional memories for "Want More" button
+        const moreMemories = [
+            {
+                photo: 'https://via.placeholder.com/400x400/ff6b8a/ffffff?text=Memory+13',
+                text: 'Remember that time we stayed up all night just talking? I cherish those moments. 🌙'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ffaa88/ffffff?text=Memory+14',
+                text: 'Our first picnic in the park. Simple, perfect, unforgettable. 🌳'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ffd166/ffffff?text=Memory+15',
+                text: 'You surprised me with this trip. You are the most thoughtful person I know. 🎁'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/6c9eff/ffffff?text=Memory+16',
+                text: 'Lazy Sundays with you are my paradise. ☀️'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/aa88ff/ffffff?text=Memory+17',
+                text: 'Your laugh is my favorite sound in the world. 😊'
+            },
+            {
+                photo: 'https://via.placeholder.com/400x400/ff3b6f/ffffff?text=Memory+18',
+                text: 'Every moment with you feels like a dream I never want to wake up from. 💭'
+            }
+        ];
+
+        let allMemories = [...memoryData];
+        let currentBatch = 0;
+        const perBatch = 6;
+
+        // --- DOM References ---
+        const memoryPage = document.getElementById('memory-page');
+        const memoryGrid = document.getElementById('memory-grid');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const backToHeartBtn = document.getElementById('back-to-heart-btn');
         const celebrateBtn = document.getElementById('celebrate-btn');
         const wishCardOverlay = document.getElementById('wish-card-overlay');
         const closeCardBtn = document.getElementById('close-card-btn');
 
-        function showWishCard() {
-            // Show the wish card
-            wishCardOverlay.classList.add('active');
+        // --- Helper: Create a Polaroid Card ---
+        function createPolaroidCard(data, index) {
+            const card = document.createElement('div');
+            card.className = 'polaroid-card';
+            card.dataset.index = index;
 
+            card.innerHTML = `
+                <div class="polaroid-inner">
+                    <div class="polaroid-front">
+                        <div class="photo-container">
+                            <img src="${data.photo}" alt="Memory ${index + 1}" loading="lazy">
+                        </div>
+                        <div class="photo-caption">✧ Click to flip ✧</div>
+                    </div>
+                    <div class="polaroid-back">
+                        <div class="memory-text">${data.text}</div>
+                        <div class="flip-hint">click to flip back</div>
+                    </div>
+                </div>
+            `;
+
+            // Flip on click
+            card.addEventListener('click', function(e) {
+                // Prevent flipping if clicking on the close button or other interactive elements
+                if (e.target.closest('.close-card-btn') || e.target.closest('.load-more-btn')) {
+                    return;
+                }
+                this.classList.toggle('flipped');
+            });
+
+            return card;
+        }
+
+        // --- Render Batch ---
+        function renderBatch(startIndex) {
+            const endIndex = Math.min(startIndex + perBatch, allMemories.length);
+            const fragment = document.createDocumentFragment();
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const card = createPolaroidCard(allMemories[i], i);
+                fragment.appendChild(card);
+            }
+
+            memoryGrid.appendChild(fragment);
+
+            // Update button state
+            if (endIndex >= allMemories.length) {
+                loadMoreBtn.disabled = true;
+                loadMoreBtn.textContent = '✨ All Memories Shown ✨';
+                loadMoreBtn.style.opacity = '0.6';
+            } else {
+                loadMoreBtn.disabled = false;
+                loadMoreBtn.textContent = `🎀 Want More? (${allMemories.length - endIndex} more) 🎀`;
+            }
+
+            // Trigger entrance animation for new cards
+            const newCards = memoryGrid.querySelectorAll('.polaroid-card:not(.animated)');
+            newCards.forEach((card, idx) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                    card.classList.add('animated');
+                }, 100 + idx * 80);
+            });
+        }
+
+        // --- Load More ---
+        function loadMore() {
+            const start = currentBatch * perBatch;
+            if (start >= allMemories.length) {
+                return;
+            }
+            renderBatch(start);
+            currentBatch++;
+        }
+
+        // --- Show Memory Page ---
+        function showMemoryPage() {
+            // Hide wish card if open
+            wishCardOverlay.classList.remove('active');
+            
+            // Reset gallery if first time
+            if (currentBatch === 0) {
+                memoryGrid.innerHTML = '';
+                allMemories = [...memoryData];
+                currentBatch = 0;
+                loadMoreBtn.disabled = false;
+                loadMoreBtn.textContent = '🎀 Want More? 🎀';
+                loadMoreBtn.style.opacity = '1';
+                loadMore();
+            }
+            
+            memoryPage.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // --- Hide Memory Page ---
+        function hideMemoryPage() {
+            memoryPage.classList.remove('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // --- Event Listeners ---
+        // "Back to Magic" from wish card -> Show Memory Page
+        closeCardBtn.addEventListener('click', function() {
+            wishCardOverlay.classList.remove('active');
+            showMemoryPage();
+        });
+
+        // "Make a Wish" button -> Show Wish Card
+        celebrateBtn.addEventListener('click', function() {
+            wishCardOverlay.classList.add('active');
             // Fire confetti
             import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js')
                 .then(module => {
@@ -736,39 +1246,42 @@
                         });
                     }, 200);
                 })
-                .catch(err => console.log('Confetti library failed to load, but the heart is still there!'));
+                .catch(err => console.log('Confetti library failed to load'));
 
-            // Change button text
             celebrateBtn.textContent = '🎉 Wishes Coming True! ✨';
             celebrateBtn.style.background = 'linear-gradient(145deg, #ffd166, #ff3b6f)';
             setTimeout(() => {
                 celebrateBtn.textContent = '🎉 Make Another Wish!';
                 celebrateBtn.style.background = 'linear-gradient(145deg, #ff8a9e, #ff3b6f)';
             }, 3000);
-        }
+        });
 
-        function hideWishCard() {
-            wishCardOverlay.classList.remove('active');
-        }
+        // Load More Button
+        loadMoreBtn.addEventListener('click', loadMore);
 
-        celebrateBtn.addEventListener('click', showWishCard);
-        closeCardBtn.addEventListener('click', hideWishCard);
+        // Back to Heart Button
+        backToHeartBtn.addEventListener('click', hideMemoryPage);
 
-        // Close card when clicking outside of it
+        // Close wish card on overlay click
         wishCardOverlay.addEventListener('click', function(e) {
             if (e.target === this) {
-                hideWishCard();
+                wishCardOverlay.classList.remove('active');
             }
         });
 
-        // Close card with Escape key
+        // Escape key
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && wishCardOverlay.classList.contains('active')) {
-                hideWishCard();
+            if (e.key === 'Escape') {
+                if (wishCardOverlay.classList.contains('active')) {
+                    wishCardOverlay.classList.remove('active');
+                } else if (memoryPage.classList.contains('active')) {
+                    hideMemoryPage();
+                }
             }
         });
 
         console.log('❤️ Happy Birthday! Made with love. ❤️');
+        console.log('📸 Memory Gallery loaded with ' + allMemories.length + ' memories.');
     </script>
 </body>
 </html>
