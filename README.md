@@ -31,7 +31,6 @@
             width: 100%;
             text-align: center;
             color: #fff9e6;
-            text-shadow: 0 0 30px rgba(255, 50, 100, 0.8), 0 0 60px rgba(255, 50, 100, 0.4);
             z-index: 10;
             pointer-events: none;
             animation: fadeIn 3s ease-in-out;
@@ -39,26 +38,34 @@
         }
         #title h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(2.5rem, 12vw, 5rem);
+            font-size: clamp(3rem, 14vw, 6rem);
             margin: 0;
             letter-spacing: 2px;
-            background: linear-gradient(45deg, #ff6b8a, #ff3b6f, #ff6b8a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: none;
-            animation: shimmerText 3s ease-in-out infinite;
+            color: #ff6b8a;
+            text-shadow: 
+                0 0 20px rgba(255, 105, 180, 0.8),
+                0 0 40px rgba(255, 105, 180, 0.6),
+                0 0 60px rgba(255, 59, 111, 0.4),
+                0 0 80px rgba(255, 59, 111, 0.2);
+            animation: glowPulse 2s ease-in-out infinite;
+            -webkit-text-fill-color: #ff6b8a;
         }
-        @keyframes shimmerText {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        @keyframes glowPulse {
+            0%, 100% { 
+                text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.6), 0 0 60px rgba(255, 59, 111, 0.4);
+            }
+            50% { 
+                text-shadow: 0 0 30px rgba(255, 105, 180, 1), 0 0 60px rgba(255, 105, 180, 0.8), 0 0 90px rgba(255, 59, 111, 0.6), 0 0 120px rgba(255, 59, 111, 0.3);
+            }
         }
         #title h1 .heart-pulse {
             display: inline-block;
             animation: heartBeat 1.2s ease-in-out infinite;
+            -webkit-text-fill-color: #ff3b6f;
         }
         @keyframes heartBeat {
             0%, 100% { transform: scale(1); }
-            14% { transform: scale(1.3); }
+            14% { transform: scale(1.4); }
             28% { transform: scale(1); }
             42% { transform: scale(1.2); }
             70% { transform: scale(1); }
@@ -69,8 +76,13 @@
             opacity: 0.9;
             font-style: italic;
             color: #ffb6c1;
-            -webkit-text-fill-color: #ffb6c1;
             text-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+            animation: fadeInUp 2s ease 1s both;
+            -webkit-text-fill-color: #ffb6c1;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* --- Confetti Button --- */
@@ -92,9 +104,9 @@
             transition: all 0.3s ease;
             letter-spacing: 2px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: glowPulse 2s ease-in-out infinite;
+            animation: glowPulseBtn 2s ease-in-out infinite;
         }
-        @keyframes glowPulse {
+        @keyframes glowPulseBtn {
             0%, 100% { box-shadow: 0 0 40px rgba(255, 59, 111, 0.6); }
             50% { box-shadow: 0 0 80px rgba(255, 59, 111, 0.9); }
         }
@@ -106,7 +118,7 @@
             transform: translateX(-50%) scale(0.95);
         }
 
-        /* --- Wish Card Overlay --- */
+        /* --- Wish Card Overlay (keeping existing design) --- */
         #wish-card-overlay {
             position: fixed;
             top: 0;
@@ -128,17 +140,14 @@
 
         .wish-card {
             background: #fdf6e3;
-            background-image:
-                linear-gradient(rgba(200, 180, 150, 0.1) 1px, transparent 1px),
+            background-image: linear-gradient(rgba(200, 180, 150, 0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(200, 180, 150, 0.1) 1px, transparent 1px);
             background-size: 30px 30px;
             padding: 50px 45px;
             max-width: 600px;
             width: 100%;
             border-radius: 8px;
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.8),
-                0 0 0 1px #d4c5a0,
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px #d4c5a0,
                 inset 0 0 30px rgba(180, 150, 100, 0.2);
             position: relative;
             transform: rotate(-1deg);
@@ -151,7 +160,6 @@
         .wish-card:hover {
             transform: rotate(0deg) scale(1.01);
         }
-
         .wish-card::before {
             content: '';
             position: absolute;
@@ -159,18 +167,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background:
-                radial-gradient(ellipse at 20% 30%, rgba(255, 215, 150, 0.1) 0%, transparent 60%),
+            background: radial-gradient(ellipse at 20% 30%, rgba(255, 215, 150, 0.1) 0%, transparent 60%),
                 radial-gradient(ellipse at 80% 70%, rgba(200, 170, 120, 0.1) 0%, transparent 50%);
             pointer-events: none;
             border-radius: 6px;
         }
-
         .wish-card-content {
             position: relative;
             z-index: 1;
         }
-
         .wish-card-header {
             text-align: center;
             font-family: 'Dancing Script', cursive;
@@ -181,7 +186,6 @@
             border-bottom: 2px dashed #d4c5a0;
             padding-bottom: 15px;
         }
-
         .wish-card-body {
             font-family: 'Caveat', 'Playfair Display', cursive;
             font-size: 1.6rem;
@@ -192,7 +196,6 @@
             font-weight: 600;
             letter-spacing: 0.5px;
         }
-
         .wish-card-body p {
             margin-bottom: 15px;
             text-indent: 30px;
@@ -203,23 +206,19 @@
             cursor: text;
             min-height: 2.5rem;
         }
-
         .wish-card-body p:hover {
             background: rgba(139, 58, 58, 0.05);
         }
-
         .wish-card-body p:focus {
             background: rgba(139, 58, 58, 0.08);
             box-shadow: 0 0 0 2px rgba(139, 58, 58, 0.15);
         }
-
         .wish-card-body p:empty::before {
             content: "✏️ Click to write your wish...";
             color: #999;
             font-style: italic;
             font-weight: 300;
         }
-
         .wish-card-body .signature {
             text-align: right;
             font-family: 'Dancing Script', cursive;
@@ -233,25 +232,21 @@
             cursor: text;
             min-height: 3.5rem;
         }
-
         .wish-card-body .signature:hover {
             background: rgba(139, 58, 58, 0.05);
             border-radius: 4px;
         }
-
         .wish-card-body .signature:focus {
             background: rgba(139, 58, 58, 0.08);
             box-shadow: 0 0 0 2px rgba(139, 58, 58, 0.15);
             border-radius: 4px;
         }
-
         .wish-card-body .signature:empty::before {
             content: "✏️ Your name here...";
             color: #999;
             font-style: italic;
             font-weight: 300;
         }
-
         .edit-hint {
             text-align: center;
             font-size: 0.8rem;
@@ -264,12 +259,10 @@
             border-top: 1px dashed #d4c5a0;
             padding-top: 12px;
         }
-
         .wish-card-footer {
             text-align: center;
             margin-top: 20px;
         }
-
         .close-card-btn {
             background: linear-gradient(145deg, #8b3a3a, #5a1a1a);
             color: #fdf6e3;
@@ -287,7 +280,6 @@
             transform: scale(1.05);
             box-shadow: 0 6px 25px rgba(139, 58, 58, 0.6);
         }
-
         .wish-card .deco-left {
             position: absolute;
             top: 20px;
@@ -304,7 +296,6 @@
             opacity: 0.3;
             transform: rotate(15deg);
         }
-
         .wish-card::-webkit-scrollbar {
             width: 6px;
         }
@@ -340,7 +331,7 @@
             }
         }
 
-        /* --- MEMORY GALLERY PAGE --- */
+        /* --- Memory Gallery Page (keeping existing) --- */
         .memory-page {
             display: none;
             position: fixed;
@@ -385,7 +376,6 @@
             padding: 20px;
         }
 
-        /* --- Polaroid Flip Card --- */
         .polaroid-card {
             perspective: 1500px;
             height: 380px;
@@ -412,7 +402,7 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 8px 8px 8px 8px;
+            border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
@@ -420,14 +410,7 @@
         .polaroid-front {
             background: #f5f0e8;
             padding: 12px 12px 50px 12px;
-            transform: rotate(0deg);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .polaroid-front:hover {
-            transform: rotate(0deg) scale(1.03);
-            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
         }
 
         .polaroid-front .photo-container {
@@ -436,7 +419,6 @@
             overflow: hidden;
             border-radius: 4px;
             background: #ddd;
-            position: relative;
         }
 
         .polaroid-front .photo-container img {
@@ -460,7 +442,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         .polaroid-back {
@@ -472,15 +453,6 @@
             justify-content: center;
             align-items: center;
             border: 1px solid rgba(139, 58, 58, 0.2);
-            box-shadow: inset 0 0 30px rgba(180, 150, 100, 0.1);
-        }
-
-        .polaroid-back::before {
-            content: '✧';
-            font-size: 2rem;
-            color: #8b3a3a;
-            opacity: 0.3;
-            margin-bottom: 10px;
         }
 
         .polaroid-back .memory-text {
@@ -495,18 +467,6 @@
             overflow-y: auto;
         }
 
-        .polaroid-back .memory-text::-webkit-scrollbar {
-            width: 4px;
-        }
-        .polaroid-back .memory-text::-webkit-scrollbar-track {
-            background: #e8d5b5;
-            border-radius: 10px;
-        }
-        .polaroid-back .memory-text::-webkit-scrollbar-thumb {
-            background: #8b3a3a;
-            border-radius: 10px;
-        }
-
         .polaroid-back .flip-hint {
             font-size: 0.7rem;
             color: #8b3a3a;
@@ -514,10 +474,8 @@
             margin-top: 10px;
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            letter-spacing: 1px;
         }
 
-        /* --- Load More Button --- */
         .load-more-container {
             text-align: center;
             padding: 40px 20px 60px;
@@ -540,31 +498,6 @@
             overflow: hidden;
         }
 
-        .load-more-btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .load-more-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 60px rgba(255, 59, 111, 0.6);
-        }
-
-        .load-more-btn:active {
-            transform: scale(0.95);
-        }
-
         .load-more-btn.all-shown {
             background: linear-gradient(145deg, #ffd166, #ff8a9e);
             animation: pulse-glow 2s ease-in-out infinite;
@@ -575,7 +508,6 @@
             50% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.8); }
         }
 
-        /* --- Back to Heart Button --- */
         .back-to-heart {
             position: fixed;
             top: 20px;
@@ -600,9 +532,7 @@
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
         }
 
-        /* ======================================== */
-        /* ====== REMINDERS PAGE STYLES ====== */
-        /* ======================================== */
+        /* --- Reminders Page --- */
         .reminders-page {
             display: none;
             position: fixed;
@@ -627,14 +557,6 @@
             font-size: clamp(2rem, 6vw, 3.5rem);
             margin: 40px 0 30px;
             text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
-        }
-
-        .reminders-header span {
-            display: block;
-            font-family: 'Playfair Display', serif;
-            font-size: 1rem;
-            opacity: 0.6;
-            margin-top: 5px;
         }
 
         .reminder-icons {
@@ -677,7 +599,6 @@
             color: #fff9e6;
             font-family: 'Dancing Script', cursive;
             font-size: 1.5rem;
-            letter-spacing: 1px;
         }
 
         .reminder-content {
@@ -700,9 +621,7 @@
             text-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
         }
 
-        /* ======================================== */
-        /* ====== VINYL RECORD PLAYER ====== */
-        /* ======================================== */
+        /* --- Vinyl Player --- */
         .vinyl-player {
             max-width: 600px;
             margin: 0 auto;
@@ -710,25 +629,9 @@
             border-radius: 30px;
             padding: 40px 35px 35px;
             border: 2px solid rgba(255, 105, 180, 0.15);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
-        }
-
-        .vinyl-player::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(255, 105, 180, 0.03) 0%, transparent 70%);
-            animation: rotateBg 20s linear infinite;
-        }
-
-        @keyframes rotateBg {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         .vinyl-player .player-header {
@@ -743,14 +646,6 @@
             font-size: 2rem;
             color: #fff9e6;
             text-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .vinyl-player .player-header .song-artist {
-            font-family: 'Caveat', cursive;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 2px;
         }
 
         .vinyl-record {
@@ -772,12 +667,7 @@
                 #1a1a1a 60%, #2a2a2a 65%, #1a1a1a 70%, #2a2a2a 75%, #1a1a1a 80%,
                 #2a2a2a 85%, #1a1a1a 90%, #2a2a2a 95%, #1a1a1a 100%
             );
-            box-shadow: 
-                0 0 60px rgba(255, 105, 180, 0.15),
-                inset 0 0 40px rgba(0, 0, 0, 0.8),
-                inset 0 0 80px rgba(0, 0, 0, 0.5);
-            position: relative;
-            transition: transform 0.1s linear;
+            box-shadow: 0 0 60px rgba(255, 105, 180, 0.15), inset 0 0 40px rgba(0, 0, 0, 0.8);
         }
 
         .vinyl-record .record-disc.playing {
@@ -811,26 +701,6 @@
             font-size: 0.7rem;
             color: #fff9e6;
             text-align: center;
-            line-height: 1.2;
-            letter-spacing: 0.5px;
-        }
-
-        .vinyl-record .record-label .label-heart {
-            font-size: 1.2rem;
-            margin-top: 2px;
-        }
-
-        .vinyl-record .center-hole {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #0a0a1a;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
-            z-index: 2;
         }
 
         .vinyl-player .tone-arm {
@@ -845,34 +715,10 @@
             border-radius: 2px;
             z-index: 5;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         .vinyl-player .tone-arm.playing {
             transform: rotate(-20deg);
-        }
-
-        .vinyl-player .tone-arm::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            top: -6px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ddd, #999);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .vinyl-player .tone-arm .arm-base {
-            position: absolute;
-            right: -12px;
-            top: -14px;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #bbb, #777);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
         }
 
         .vinyl-player .play-btn {
@@ -888,29 +734,13 @@
             cursor: pointer;
             transition: all 0.4s ease;
             box-shadow: 0 0 40px rgba(255, 59, 111, 0.3);
-            letter-spacing: 2px;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .vinyl-player .play-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 60px rgba(255, 59, 111, 0.5);
-        }
-
-        .vinyl-player .play-btn:active {
-            transform: scale(0.95);
         }
 
         .vinyl-player .play-btn.playing {
             background: linear-gradient(145deg, #ffd166, #ff8a9e);
             animation: pulseGlow 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); }
-            50% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         }
 
         .vinyl-player .video-embed-container {
@@ -935,8 +765,8 @@
             display: block;
         }
 
-        /* --- Food Section --- */
-        .food-grid {
+        /* --- Food & Place Sections --- */
+        .food-grid, .place-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
@@ -944,7 +774,7 @@
             margin: 0 auto;
         }
 
-        .food-item {
+        .food-item, .place-item {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 20px;
@@ -955,39 +785,27 @@
             overflow: hidden;
         }
 
-        .food-item::before {
-            content: '🍽️';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 6rem;
-            opacity: 0.05;
-        }
-
-        .food-item:hover {
+        .food-item:hover, .place-item:hover {
             transform: translateY(-5px);
-            border-color: rgba(255, 215, 0, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .food-item .food-image {
+        .food-item .food-image, .place-item .place-image {
             width: 100%;
             height: 200px;
             border-radius: 12px;
             overflow: hidden;
             margin-bottom: 15px;
             background: #1a1a2a;
-            position: relative;
         }
 
-        .food-item .food-image img {
+        .food-item .food-image img, .place-item .place-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
         }
 
-        .food-item:hover .food-image img {
+        .food-item:hover .food-image img, .place-item:hover .place-image img {
             transform: scale(1.05);
         }
 
@@ -997,76 +815,13 @@
             font-size: 1.5rem;
         }
 
-        .food-item .food-desc {
-            color: rgba(255, 255, 255, 0.6);
-            font-family: 'Caveat', cursive;
-            font-size: 1.1rem;
-            margin-top: 5px;
-        }
-
-        /* --- Place Section --- */
-        .place-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .place-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .place-item::before {
-            content: '📍';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 6rem;
-            opacity: 0.05;
-        }
-
-        .place-item:hover {
-            transform: translateY(-5px);
-            border-color: rgba(100, 200, 255, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .place-item .place-image {
-            width: 100%;
-            height: 200px;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 15px;
-            background: #1a1a2a;
-            position: relative;
-        }
-
-        .place-item .place-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .place-item:hover .place-image img {
-            transform: scale(1.05);
-        }
-
         .place-item .place-name {
             color: #6c9eff;
             font-family: 'Dancing Script', cursive;
             font-size: 1.5rem;
         }
 
-        .place-item .place-desc {
+        .food-item .food-desc, .place-item .place-desc {
             color: rgba(255, 255, 255, 0.6);
             font-family: 'Caveat', cursive;
             font-size: 1.1rem;
@@ -1090,7 +845,6 @@
             font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            letter-spacing: 1px;
         }
 
         .reminders-back-btn:hover {
@@ -1099,9 +853,7 @@
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
         }
 
-        /* ======================================== */
-        /* ====== VIDEO PAGE STYLES ====== */
-        /* ======================================== */
+        /* --- Video Page --- */
         .video-page {
             display: none;
             position: fixed;
@@ -1139,37 +891,8 @@
             background: linear-gradient(145deg, #2a1a2a, #1a0a1a);
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 
-                0 0 60px rgba(255, 59, 111, 0.2),
-                inset 0 0 60px rgba(255, 59, 111, 0.05);
+            box-shadow: 0 0 60px rgba(255, 59, 111, 0.2);
             border: 2px solid rgba(255, 105, 180, 0.2);
-            transition: all 0.5s ease;
-        }
-
-        .video-frame::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            border-radius: 22px;
-            background: linear-gradient(45deg, #ff3b6f, #ffd166, #ff3b6f);
-            background-size: 300% 300%;
-            animation: gradientBorder 4s ease-in-out infinite;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        @keyframes gradientBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .video-frame:hover {
-            transform: scale(1.01);
-            box-shadow: 0 0 80px rgba(255, 59, 111, 0.3);
         }
 
         .video-frame .video-wrapper {
@@ -1181,8 +904,7 @@
             overflow: hidden;
         }
 
-        .video-frame .video-wrapper video,
-        .video-frame .video-wrapper iframe {
+        .video-frame .video-wrapper video {
             position: absolute;
             top: 0;
             left: 0;
@@ -1192,18 +914,6 @@
             border-radius: 12px;
         }
 
-        .video-frame .deco-corner {
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.3;
-            color: #ff6b8a;
-        }
-
-        .video-frame .deco-corner.tl { top: 10px; left: 15px; }
-        .video-frame .deco-corner.tr { top: 10px; right: 15px; }
-        .video-frame .deco-corner.bl { bottom: 10px; left: 15px; }
-        .video-frame .deco-corner.br { bottom: 10px; right: 15px; }
-
         .video-caption {
             text-align: center;
             color: rgba(255, 255, 255, 0.6);
@@ -1211,7 +921,6 @@
             font-size: 1.3rem;
             margin-top: 20px;
             font-style: italic;
-            letter-spacing: 1px;
         }
 
         .video-nav {
@@ -1234,7 +943,6 @@
             font-size: 1.3rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            letter-spacing: 1px;
         }
 
         .video-nav-btn:hover {
@@ -1248,23 +956,10 @@
             .memory-grid {
                 grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
                 gap: 30px 20px;
-                padding: 10px;
             }
             .polaroid-card {
                 height: 340px;
                 max-width: 280px;
-            }
-            .polaroid-back .memory-text {
-                font-size: 1.2rem;
-                line-height: 1.6rem;
-            }
-            .memory-header {
-                font-size: 2rem;
-                margin-bottom: 30px;
-            }
-            .load-more-btn {
-                font-size: 1.4rem;
-                padding: 15px 35px;
             }
             .reminder-icons {
                 gap: 15px;
@@ -1276,9 +971,16 @@
             .reminder-icon .icon-emoji {
                 font-size: 3rem;
             }
-            .video-container {
-                padding: 10px;
-                margin: 40px auto 20px;
+            .vinyl-record {
+                width: 220px;
+                height: 220px;
+            }
+            .vinyl-player {
+                padding: 30px 20px 25px;
+            }
+            .vinyl-player .play-btn {
+                padding: 14px 35px;
+                font-size: 1.4rem;
             }
             .video-frame {
                 padding: 12px;
@@ -1289,31 +991,6 @@
             }
             .video-nav-btn {
                 width: 80%;
-            }
-            .vinyl-record {
-                width: 220px;
-                height: 220px;
-            }
-            .vinyl-record .record-label {
-                width: 65px;
-                height: 65px;
-            }
-            .vinyl-record .record-label .label-text {
-                font-size: 0.6rem;
-            }
-            .vinyl-player {
-                padding: 30px 20px 25px;
-            }
-            .vinyl-player .player-header .song-title {
-                font-size: 1.6rem;
-            }
-            .vinyl-player .play-btn {
-                padding: 14px 35px;
-                font-size: 1.4rem;
-            }
-            .vinyl-player .tone-arm {
-                right: 30px;
-                width: 40px;
             }
         }
 
@@ -1326,18 +1003,13 @@
                 height: 300px;
                 max-width: 240px;
             }
-            .polaroid-back .memory-text {
-                font-size: 1rem;
-                line-height: 1.4rem;
-            }
             .back-to-heart {
                 top: 10px;
                 right: 10px;
                 padding: 8px 18px;
                 font-size: 1rem;
             }
-            .food-grid,
-            .place-grid {
+            .food-grid, .place-grid {
                 grid-template-columns: 1fr;
             }
             .reminder-icon {
@@ -1351,18 +1023,6 @@
                 width: 180px;
                 height: 180px;
             }
-            .vinyl-record .record-label {
-                width: 55px;
-                height: 55px;
-            }
-            .vinyl-record .record-label .label-text {
-                font-size: 0.5rem;
-            }
-            .vinyl-player .tone-arm {
-                right: 15px;
-                width: 30px;
-                top: 15px;
-            }
         }
     </style>
 </head>
@@ -1370,7 +1030,7 @@
 
     <!-- ====== MAIN PAGE ====== -->
     <div id="title">
-        <h1>🎂 Happy Birthday <span class="heart-pulse">❤️</span><br>[Your Partner's Name]!</h1>
+        <h1>🎂 Happy Birthday <span class="heart-pulse">❤️</span><br>Love</h1>
         <p>You are my everything. My world shines brighter with you. ✨</p>
     </div>
 
@@ -1398,17 +1058,14 @@
         </div>
     </div>
 
-    <!-- ====== MEMORY GALLERY PAGE ====== -->
+    <!-- ====== MEMORY GALLERY ====== -->
     <div id="memory-page" class="memory-page">
         <button class="back-to-heart" id="memory-back-btn" style="position:fixed; top:20px; right:20px; z-index:201;">❤️ Back</button>
-        
         <div class="memory-header">
             📸 Our Beautiful Memories
             <span style="font-size: 1.5rem; display: block; font-family: 'Playfair Display', serif; opacity: 0.7;">Click a photo to flip and read the memory</span>
         </div>
-
         <div id="memory-grid" class="memory-grid"></div>
-
         <div class="load-more-container">
             <button class="load-more-btn" id="load-more-btn">🎀 Want More? 🎀</button>
         </div>
@@ -1417,12 +1074,10 @@
     <!-- ====== REMINDERS PAGE ====== -->
     <div id="reminders-page" class="reminders-page">
         <button class="back-to-heart" id="reminders-back-btn" style="position:fixed; top:20px; right:20px; z-index:401;">❤️ Back</button>
-        
         <div class="reminders-header">
             💝 Things That Remind Me of You
-            <span>Click an icon to explore</span>
+            <span style="display: block; font-size: 1rem; opacity: 0.6; margin-top: 5px;">Click an icon to explore</span>
         </div>
-
         <div class="reminder-icons">
             <div class="reminder-icon" data-section="music">
                 <span class="icon-emoji">🎵</span>
@@ -1438,95 +1093,67 @@
             </div>
         </div>
 
-        <!-- ====== MUSIC SECTION - VINYL RECORD PLAYER ====== -->
         <div id="music-section" class="reminder-content">
             <div class="section-title">🎵 The Song That Makes Me Think of You</div>
-            
             <div class="vinyl-player">
                 <div class="player-header">
                     <div class="song-title">❤️ My Heart</div>
-                    <div class="song-artist">A song that speaks of you</div>
                 </div>
-
                 <div class="vinyl-record" id="vinylRecord">
                     <div class="record-disc" id="recordDisc">
                         <div class="record-label">
                             <span class="label-text">For You</span>
-                            <span class="label-heart">❤️</span>
+                            <span class="label-heart" style="font-size:1.2rem;">❤️</span>
                         </div>
                     </div>
-                    <div class="center-hole"></div>
+                    <div class="center-hole" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#0a0a1a;box-shadow:inset 0 0 10px rgba(0,0,0,0.8);z-index:2;"></div>
                 </div>
-
                 <div class="tone-arm" id="toneArm">
-                    <div class="arm-base"></div>
+                    <div class="arm-base" style="position:absolute;right:-12px;top:-14px;width:24px;height:24px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #bbb, #777);box-shadow:0 2px 15px rgba(0,0,0,0.4);"></div>
                 </div>
-
                 <button class="play-btn" id="playBtn">▶ Play the Song</button>
-
                 <div class="video-embed-container" id="videoEmbed">
-                    <iframe 
-                        src="https://www.youtube.com/embed/VR4UM-LsPiU?si=p4tay8ly2AJk1yCV" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" 
-                        allowfullscreen>
-                    </iframe>
+                    <iframe src="https://www.youtube.com/embed/VR4UM-LsPiU?si=p4tay8ly2AJk1yCV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
 
-        <!-- ====== FOOD SECTION ====== -->
         <div id="food-section" class="reminder-content">
             <div class="section-title">🍕 Foods We Love Together</div>
             <div class="food-grid">
                 <div class="food-item">
-                    <div class="food-image">
-                        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop" alt="Pizza">
-                    </div>
+                    <div class="food-image"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop" alt="Pizza"></div>
                     <div class="food-name">🍕 Pizza</div>
                     <div class="food-desc">Our first date meal. Still our favorite!</div>
                 </div>
                 <div class="food-item">
-                    <div class="food-image">
-                        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" alt="Pasta">
-                    </div>
+                    <div class="food-image"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop" alt="Pasta"></div>
                     <div class="food-name">🍝 Pasta</div>
                     <div class="food-desc">The night you cooked for me. Perfection.</div>
                 </div>
                 <div class="food-item">
-                    <div class="food-image">
-                        <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=400&h=300&fit=crop" alt="Ice Cream">
-                    </div>
+                    <div class="food-image"><img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=400&h=300&fit=crop" alt="Ice Cream"></div>
                     <div class="food-name">🍦 Ice Cream</div>
                     <div class="food-desc">Late night walks and sweet treats.</div>
                 </div>
             </div>
         </div>
 
-        <!-- ====== PLACE SECTION ====== -->
         <div id="place-section" class="reminder-content">
             <div class="section-title">🌅 Places That Hold Our Memories</div>
             <div class="place-grid">
                 <div class="place-item">
-                    <div class="place-image">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop" alt="Beach">
-                    </div>
+                    <div class="place-image"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop" alt="Beach"></div>
                     <div class="place-name">🏖️ The Beach</div>
                     <div class="place-desc">Where we watched our first sunset together.</div>
                 </div>
                 <div class="place-item">
-                    <div class="place-image">
-                        <img src="https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=400&h=300&fit=crop" alt="Cafe">
-                    </div>
+                    <div class="place-image"><img src="https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?w=400&h=300&fit=crop" alt="Cafe"></div>
                     <div class="place-name">☕ Our Cafe</div>
                     <div class="place-desc">Our little corner of the world.</div>
                 </div>
                 <div class="place-item">
-                    <div class="place-image">
-                        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=300&fit=crop" alt="Park">
-                    </div>
+                    <div class="place-image"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&h=300&fit=crop" alt="Park"></div>
                     <div class="place-name">🌳 The Park</div>
                     <div class="place-desc">Where we had our first picnic.</div>
                 </div>
@@ -1541,16 +1168,9 @@
     <!-- ====== VIDEO PAGE ====== -->
     <div id="video-page" class="video-page">
         <button class="back-to-heart" id="video-back-btn" style="position:fixed; top:20px; right:20px; z-index:301;">❤️ Back</button>
-        
         <div class="video-container">
             <div class="video-header">🎬 A Special Message For You</div>
-            
             <div class="video-frame">
-                <span class="deco-corner tl">✦</span>
-                <span class="deco-corner tr">✦</span>
-                <span class="deco-corner bl">✦</span>
-                <span class="deco-corner br">✦</span>
-                
                 <div class="video-wrapper">
                     <video controls playsinline>
                         <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
@@ -1558,9 +1178,7 @@
                     </video>
                 </div>
             </div>
-            
             <div class="video-caption">💕 A minute of memories, a lifetime of love 💕</div>
-            
             <div class="video-nav">
                 <button class="video-nav-btn" id="video-to-reminders-btn">💝 Back to Things That Remind Me of You</button>
                 <button class="video-nav-btn" id="video-to-heart-btn">❤️ Back to Heart</button>
@@ -1583,7 +1201,7 @@
     <script type="module">
         import * as THREE from 'three';
 
-        // --- THREE.JS SCENE SETUP ---
+        // --- Scene Setup ---
         const container = document.getElementById('three-container');
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0a0a1a);
@@ -1594,7 +1212,6 @@
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = false;
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
 
@@ -1614,7 +1231,7 @@
         light3.position.set(0, -2, -8);
         scene.add(light3);
 
-        // --- Create Heart (Pink Theme) ---
+        // --- Create Glowing Heart ---
         function createHeart() {
             const heartGroup = new THREE.Group();
             const geometry = new THREE.SphereGeometry(1, 64, 64);
@@ -1626,10 +1243,9 @@
                 vertex.y = positionAttribute.getY(i);
                 vertex.z = positionAttribute.getZ(i);
 
-                const x = vertex.x;
-                const y = vertex.y;
-                const z = vertex.z;
-
+                const x = vertex.x,
+                    y = vertex.y,
+                    z = vertex.z;
                 const scaleX = 1.0 + 0.6 * Math.sqrt(Math.max(0, 1 - Math.abs(y))) * (1 - Math.abs(y));
                 const scaleZ = 1.0 + 0.4 * (1 - Math.abs(y)) * (1 - Math.abs(y));
 
@@ -1643,14 +1259,11 @@
                     vertex.x -= Math.sign(vertex.x) * cleft * 0.8;
                     vertex.z -= Math.sign(vertex.z) * cleft * 0.8;
                 }
-
                 vertex.x *= 1.2;
                 vertex.y *= 0.9;
                 vertex.z *= 1.1;
-
                 positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
             }
-
             geometry.computeVertexNormals();
 
             const material = new THREE.MeshPhongMaterial({
@@ -1658,12 +1271,10 @@
                 emissive: 0x550022,
                 shininess: 60,
                 specular: 0xffaa99,
-                flatShading: false,
                 transparent: true,
                 opacity: 0.92,
                 side: THREE.DoubleSide,
             });
-
             const heartMesh = new THREE.Mesh(geometry, material);
             heartGroup.add(heartMesh);
 
@@ -1671,7 +1282,7 @@
                 color: 0xff6b8a,
                 wireframe: true,
                 transparent: true,
-                opacity: 0.15,
+                opacity: 0.12,
             });
             const wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
             heartGroup.add(wireframeMesh);
@@ -1680,9 +1291,9 @@
             const ringMaterial = new THREE.MeshStandardMaterial({
                 color: 0xffaa88,
                 emissive: 0xff3b6f,
-                emissiveIntensity: 0.5,
+                emissiveIntensity: 0.8,
                 transparent: true,
-                opacity: 0.6,
+                opacity: 0.7,
             });
             const ring = new THREE.Mesh(ringGeometry, ringMaterial);
             ring.rotation.x = Math.PI / 2;
@@ -1697,107 +1308,157 @@
         scene.add(heart);
         heart.scale.set(0.8, 0.8, 0.8);
 
-        // --- Falling Rose Petals ---
-        function createRosePetal() {
+        // --- Realistic Flower Blossom Petals ---
+        function createFlowerPetal() {
             const canvas = document.createElement('canvas');
-            canvas.width = 64;
-            canvas.height = 64;
+            canvas.width = 128;
+            canvas.height = 128;
             const ctx = canvas.getContext('2d');
-            
-            ctx.clearRect(0, 0, 64, 64);
-            
-            const gradient = ctx.createRadialGradient(32, 32, 5, 32, 32, 30);
-            gradient.addColorStop(0, 'rgba(255, 182, 193, 1)');
-            gradient.addColorStop(0.5, 'rgba(255, 105, 180, 1)');
-            gradient.addColorStop(1, 'rgba(255, 59, 111, 0.8)');
-            
+
+            // Create a realistic petal shape
+            ctx.clearRect(0, 0, 128, 128);
+
+            // Main petal shape with gradient
+            const gradient = ctx.createRadialGradient(64, 50, 10, 64, 64, 50);
+            gradient.addColorStop(0, 'rgba(255, 220, 230, 1)');
+            gradient.addColorStop(0.3, 'rgba(255, 182, 193, 1)');
+            gradient.addColorStop(0.6, 'rgba(255, 105, 180, 0.9)');
+            gradient.addColorStop(0.85, 'rgba(255, 59, 111, 0.7)');
+            gradient.addColorStop(1, 'rgba(200, 50, 80, 0)');
+
             ctx.beginPath();
-            ctx.ellipse(32, 32, 20, 25, 0, 0, Math.PI * 2);
+            ctx.ellipse(64, 64, 35, 45, 0.2, 0, Math.PI * 2);
             ctx.fillStyle = gradient;
             ctx.fill();
-            
+
+            // Add subtle vein details
             ctx.beginPath();
-            ctx.moveTo(32, 15);
-            ctx.quadraticCurveTo(25, 32, 32, 45);
-            ctx.strokeStyle = 'rgba(200, 50, 80, 0.3)';
+            ctx.moveTo(64, 30);
+            ctx.quadraticCurveTo(55, 50, 50, 70);
+            ctx.strokeStyle = 'rgba(200, 80, 120, 0.2)';
             ctx.lineWidth = 1.5;
             ctx.stroke();
-            
+
+            ctx.beginPath();
+            ctx.moveTo(64, 30);
+            ctx.quadraticCurveTo(73, 50, 78, 70);
+            ctx.stroke();
+
+            // Add a small highlight
+            ctx.beginPath();
+            ctx.ellipse(55, 45, 8, 12, -0.3, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+            ctx.fill();
+
             return new THREE.CanvasTexture(canvas);
         }
 
-        const petalTexture = createRosePetal();
-        
-        function createPetalParticles() {
-            const count = 200;
+        const petalTexture = createFlowerPetal();
+
+        function createFlowerParticles() {
+            const count = 300;
             const positions = new Float32Array(count * 3);
             const rotations = new Float32Array(count);
             const speeds = new Float32Array(count);
-            const drift = new Float32Array(count);
             const sizes = new Float32Array(count);
+            const colors = new Float32Array(count * 3);
+
+            const colorPalette = [
+                [255, 105, 180], // Pink
+                [255, 182, 193], // Light Pink
+                [255, 59, 111], // Hot Pink
+                [255, 20, 147], // Deep Pink
+                [255, 130, 170], // Rose
+                [255, 200, 210], // Blush
+            ];
 
             for (let i = 0; i < count; i++) {
-                const radius = 3 + Math.random() * 6;
+                const radius = 2.5 + Math.random() * 7;
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.acos((Math.random() * 2) - 1);
-                
-                positions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
-                positions[i*3+1] = 2 + Math.random() * 4;
-                positions[i*3+2] = radius * Math.cos(phi);
-                
+
+                positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i * 3 + 1] = 1.5 + Math.random() * 5;
+                positions[i * 3 + 2] = radius * Math.cos(phi);
+
                 rotations[i] = Math.random() * Math.PI * 2;
-                speeds[i] = 0.5 + Math.random() * 1.5;
-                drift[i] = (Math.random() - 0.5) * 0.02;
-                sizes[i] = 0.08 + Math.random() * 0.15;
+                speeds[i] = 0.3 + Math.random() * 1.5;
+                sizes[i] = 0.15 + Math.random() * 0.3;
+
+                const col = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                colors[i * 3] = col[0] / 255;
+                colors[i * 3 + 1] = col[1] / 255;
+                colors[i * 3 + 2] = col[2] / 255;
             }
 
             const geometry = new THREE.BufferGeometry();
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
             geometry.setAttribute('rotation', new THREE.BufferAttribute(rotations, 1));
             geometry.setAttribute('speed', new THREE.BufferAttribute(speeds, 1));
-            geometry.setAttribute('drift', new THREE.BufferAttribute(drift, 1));
             geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
             const material = new THREE.PointsMaterial({
                 map: petalTexture,
-                size: 0.3,
+                size: 0.4,
                 transparent: true,
                 opacity: 0.9,
                 blending: THREE.NormalBlending,
                 depthWrite: false,
                 sizeAttenuation: true,
-                color: 0xff6b8a,
+                vertexColors: true,
             });
 
             const particles = new THREE.Points(geometry, material);
-            particles.userData = { positions, rotations, speeds, drift };
+            particles.userData = { positions, speeds };
             return particles;
         }
 
-        const petalSystem = createPetalParticles();
-        scene.add(petalSystem);
+        const flowerSystem = createFlowerParticles();
+        scene.add(flowerSystem);
 
-        // --- Floating Pink Sprites ---
-        function createPinkSprite(text, color = '#ff6b8a', size = 0.5) {
+        function animateFlowers(time) {
+            const positions = flowerSystem.geometry.attributes.position.array;
+            const data = flowerSystem.userData;
+
+            for (let i = 0; i < positions.length / 3; i++) {
+                // Gentle falling
+                positions[i * 3 + 1] -= data.speeds[i] * 0.004;
+
+                // Swaying motion
+                positions[i * 3] += Math.sin(time * data.speeds[i] * 0.5 + i * 1.5) * 0.003;
+                positions[i * 3 + 2] += Math.cos(time * data.speeds[i] * 0.7 + i * 0.8) * 0.003;
+
+                // Reset when fallen below
+                if (positions[i * 3 + 1] < -3) {
+                    const radius = 2.5 + Math.random() * 7;
+                    const theta = Math.random() * Math.PI * 2;
+                    const phi = Math.acos((Math.random() * 2) - 1);
+                    positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+                    positions[i * 3 + 1] = 3 + Math.random() * 3;
+                    positions[i * 3 + 2] = radius * Math.cos(phi);
+                }
+            }
+            flowerSystem.geometry.attributes.position.needsUpdate = true;
+        }
+
+        // --- Floating Love Symbols ---
+        function createLoveSymbol(text, color = '#ff6b8a', size = 0.5) {
             const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
             canvas.width = 256;
             canvas.height = 128;
-
+            const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.font = 'Bold 50px "Dancing Script", "Playfair Display", cursive';
+            ctx.font = 'Bold 60px "Dancing Script", "Playfair Display", cursive';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-
             ctx.shadowColor = 'rgba(255, 105, 180, 0.8)';
             ctx.shadowBlur = 30;
             ctx.fillStyle = color;
-            ctx.fillText(text, canvas.width/2, canvas.height/2);
-
+            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
             ctx.shadowBlur = 15;
             ctx.fillStyle = '#ffffff';
-            ctx.fillText(text, canvas.width/2, canvas.height/2);
-
+            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
             const texture = new THREE.CanvasTexture(canvas);
             const material = new THREE.SpriteMaterial({
                 map: texture,
@@ -1811,154 +1472,109 @@
             return sprite;
         }
 
-        const loveMessages = [
-            '❤️', '🌸', '💖', '✨', '🌹', '💝', '🌟', '💗'
-        ];
-
-        const messageSprites = [];
-        loveMessages.forEach((msg, index) => {
-            const sprite = createPinkSprite(msg, '#ff6b8a', 0.6 + Math.random() * 0.4);
-            
-            const radius = 2.5 + Math.random() * 4;
+        const loveSymbols = ['❤️', '🌸', '💖', '✨', '🌹', '💝', '🌟', '💗', '😍', '💕'];
+        const symbolSprites = [];
+        loveSymbols.forEach((symbol, index) => {
+            const sprite = createLoveSymbol(symbol, '#ff6b8a', 0.5 + Math.random() * 0.5);
+            const radius = 2 + Math.random() * 5;
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.acos((Math.random() * 2) - 1);
-            
-            sprite.position.x = radius * Math.sin(phi) * Math.cos(theta);
-            sprite.position.y = radius * Math.sin(phi) * Math.sin(theta) * 0.8 + 0.5;
-            sprite.position.z = radius * Math.cos(phi);
-            
+            sprite.position.set(
+                radius * Math.sin(phi) * Math.cos(theta),
+                radius * Math.sin(phi) * Math.sin(theta) * 0.8 + 0.5,
+                radius * Math.cos(phi)
+            );
             sprite.userData = {
                 angle: theta,
                 phi: phi,
                 radius: radius,
-                speed: 0.003 + Math.random() * 0.005,
+                speed: 0.002 + Math.random() * 0.005,
                 floatOffset: Math.random() * Math.PI * 2,
-                rotSpeed: (Math.random() - 0.5) * 0.02,
             };
-            
             scene.add(sprite);
-            messageSprites.push(sprite);
+            symbolSprites.push(sprite);
         });
-
-        // --- Animate Petals ---
-        function animatePetals(time) {
-            const positions = petalSystem.geometry.attributes.position.array;
-            const data = petalSystem.userData;
-            
-            for (let i = 0; i < positions.length / 3; i++) {
-                positions[i*3+1] -= data.speeds[i] * 0.008;
-                positions[i*3] += Math.sin(time * data.speeds[i] + i) * 0.003;
-                positions[i*3+2] += Math.cos(time * data.speeds[i] * 0.7 + i * 0.5) * 0.003;
-                
-                if (positions[i*3+1] < -3) {
-                    const radius = 3 + Math.random() * 6;
-                    const theta = Math.random() * Math.PI * 2;
-                    const phi = Math.acos((Math.random() * 2) - 1);
-                    positions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
-                    positions[i*3+1] = 4 + Math.random() * 2;
-                    positions[i*3+2] = radius * Math.cos(phi);
-                }
-            }
-            petalSystem.geometry.attributes.position.needsUpdate = true;
-        }
 
         // --- Stitch Character ---
         function createStitch() {
             const group = new THREE.Group();
-            
-            const bodyGeo = new THREE.SphereGeometry(0.4, 16, 16);
+            // Body
             const bodyMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
-            const body = new THREE.Mesh(bodyGeo, bodyMat);
+            const body = new THREE.Mesh(new THREE.SphereGeometry(0.4, 16, 16), bodyMat);
             body.scale.set(1, 1.1, 0.8);
             body.position.y = 0.1;
             group.add(body);
-            
-            const headGeo = new THREE.SphereGeometry(0.35, 16, 16);
-            const headMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
-            const head = new THREE.Mesh(headGeo, headMat);
+            // Head
+            const head = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16), bodyMat);
             head.position.y = 0.55;
             head.scale.set(1, 0.9, 0.9);
             group.add(head);
-            
-            const earMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
+            // Ears
+            const earMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0 });
             const earGeo = new THREE.SphereGeometry(0.15, 8, 8);
-            
             const earL = new THREE.Mesh(earGeo, earMat);
             earL.position.set(-0.35, 0.65, 0);
             earL.scale.set(0.7, 1.2, 0.6);
             group.add(earL);
-            
             const earR = new THREE.Mesh(earGeo, earMat);
             earR.position.set(0.35, 0.65, 0);
             earR.scale.set(0.7, 1.2, 0.6);
             group.add(earR);
-            
-            const innerEarMat = new THREE.MeshPhongMaterial({ color: 0xffb6c1, shininess: 20 });
-            const innerEarGeo = new THREE.SphereGeometry(0.08, 8, 8);
-            
-            const innerL = new THREE.Mesh(innerEarGeo, innerEarMat);
+            // Inner Ears
+            const innerMat = new THREE.MeshPhongMaterial({ color: 0xffb6c1 });
+            const innerGeo = new THREE.SphereGeometry(0.08, 8, 8);
+            const innerL = new THREE.Mesh(innerGeo, innerMat);
             innerL.position.set(-0.35, 0.65, 0.07);
             innerL.scale.set(0.5, 0.8, 0.3);
             group.add(innerL);
-            
-            const innerR = new THREE.Mesh(innerEarGeo, innerEarMat);
+            const innerR = new THREE.Mesh(innerGeo, innerMat);
             innerR.position.set(0.35, 0.65, 0.07);
             innerR.scale.set(0.5, 0.8, 0.3);
             group.add(innerR);
-            
-            const eyeWhiteMat = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 80 });
-            const eyePupilMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2a, shininess: 20 });
-            
+            // Eyes
+            const eyeWhite = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 80 });
+            const eyePupil = new THREE.MeshPhongMaterial({ color: 0x1a1a2a });
             const eyeGeo = new THREE.SphereGeometry(0.09, 8, 8);
             const pupilGeo = new THREE.SphereGeometry(0.05, 8, 8);
-            
-            const eyeL = new THREE.Mesh(eyeGeo, eyeWhiteMat);
+            const eyeL = new THREE.Mesh(eyeGeo, eyeWhite);
             eyeL.position.set(-0.14, 0.6, 0.3);
             group.add(eyeL);
-            
-            const pupilL = new THREE.Mesh(pupilGeo, eyePupilMat);
+            const pupilL = new THREE.Mesh(pupilGeo, eyePupil);
             pupilL.position.set(-0.12, 0.58, 0.38);
             group.add(pupilL);
-            
-            const eyeR = new THREE.Mesh(eyeGeo, eyeWhiteMat);
+            const eyeR = new THREE.Mesh(eyeGeo, eyeWhite);
             eyeR.position.set(0.14, 0.6, 0.3);
             group.add(eyeR);
-            
-            const pupilR = new THREE.Mesh(pupilGeo, eyePupilMat);
+            const pupilR = new THREE.Mesh(pupilGeo, eyePupil);
             pupilR.position.set(0.16, 0.58, 0.38);
             group.add(pupilR);
-            
-            const noseMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2a, shininess: 10 });
-            const noseGeo = new THREE.SphereGeometry(0.04, 8, 8);
-            const nose = new THREE.Mesh(noseGeo, noseMat);
+            // Nose
+            const nose = new THREE.Mesh(new THREE.SphereGeometry(0.04, 8, 8),
+                new THREE.MeshPhongMaterial({ color: 0x1a1a2a }));
             nose.position.set(0, 0.55, 0.35);
             nose.scale.set(1.2, 0.8, 0.8);
             group.add(nose);
-            
-            const mouthMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2a });
-            const mouthGeo = new THREE.TorusGeometry(0.06, 0.015, 4, 8);
-            const mouth = new THREE.Mesh(mouthGeo, mouthMat);
+            // Mouth
+            const mouth = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.015, 4, 8),
+                new THREE.MeshPhongMaterial({ color: 0x1a1a2a }));
             mouth.position.set(0, 0.48, 0.35);
             mouth.rotation.x = 0.2;
             mouth.rotation.z = 0.1;
             mouth.scale.set(1, 0.5, 0.5);
             group.add(mouth);
-            
+            // Arms
             const armMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0 });
             const armGeo = new THREE.CylinderGeometry(0.05, 0.07, 0.3);
-            
             const armL = new THREE.Mesh(armGeo, armMat);
             armL.position.set(-0.5, 0.2, 0);
             armL.rotation.z = -0.3;
             armL.rotation.x = -0.2;
             group.add(armL);
-            
             const armR = new THREE.Mesh(armGeo, armMat);
             armR.position.set(0.5, 0.2, 0);
             armR.rotation.z = 0.3;
             armR.rotation.x = 0.2;
             group.add(armR);
-            
             return group;
         }
 
@@ -1976,20 +1592,18 @@
             heart.rotation.x = Math.sin(elapsedTime * 0.1) * 0.1;
             heart.rotation.z = Math.cos(elapsedTime * 0.15) * 0.05;
 
-            animatePetals(elapsedTime);
+            animateFlowers(elapsedTime);
 
-            messageSprites.forEach((sprite, index) => {
+            // Animate symbols
+            symbolSprites.forEach((sprite, index) => {
                 const data = sprite.userData;
                 data.angle += data.speed * delta * 30;
-                
                 const floatY = Math.sin(elapsedTime * 0.8 + data.floatOffset) * 0.2;
-                
-                const x = data.radius * Math.sin(data.phi) * Math.cos(data.angle);
-                const y = data.radius * Math.sin(data.phi) * Math.sin(data.angle) * 0.8 + 0.5 + floatY;
-                const z = data.radius * Math.cos(data.phi);
-                
-                sprite.position.set(x, y, z);
-                
+                sprite.position.set(
+                    data.radius * Math.sin(data.phi) * Math.cos(data.angle),
+                    data.radius * Math.sin(data.phi) * Math.sin(data.angle) * 0.8 + 0.5 + floatY,
+                    data.radius * Math.cos(data.phi)
+                );
                 const pulse = 1 + Math.sin(elapsedTime * 1.2 + index) * 0.05;
                 sprite.scale.set(
                     sprite.scale.x * (0.99 + 0.01 * pulse),
@@ -1998,6 +1612,7 @@
                 );
             });
 
+            // Stitch animation
             stitch.position.y = -1 + Math.sin(elapsedTime * 0.8) * 0.05;
             stitch.rotation.z = Math.sin(elapsedTime * 0.5) * 0.02;
             stitch.rotation.x = Math.sin(elapsedTime * 0.3) * 0.02;
@@ -2019,17 +1634,14 @@
         const clock = new THREE.Clock();
         animate();
 
-        // --- Resize Handler ---
-        window.addEventListener('resize', onWindowResize, false);
-        function onWindowResize() {
+        // --- Resize ---
+        window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-        }
+        });
 
-        // ==========================================
-        // ====== VINYL PLAYER LOGIC ======
-        // ==========================================
+        // --- Vinyl Player Logic ---
         const playBtn = document.getElementById('playBtn');
         const recordDisc = document.getElementById('recordDisc');
         const toneArm = document.getElementById('toneArm');
@@ -2045,18 +1657,13 @@
                 recordDisc.classList.add('playing');
                 toneArm.classList.add('playing');
                 videoEmbed.classList.add('active');
-                
                 const iframe = videoEmbed.querySelector('iframe');
                 const src = iframe.src;
                 if (!src.includes('autoplay=1')) {
                     iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
                 }
-                
                 vinylRecord.style.transform = 'scale(1.02)';
-                setTimeout(() => {
-                    vinylRecord.style.transform = 'scale(1)';
-                }, 300);
-                
+                setTimeout(() => { vinylRecord.style.transform = 'scale(1)'; }, 300);
             } else {
                 isPlaying = false;
                 this.textContent = '▶ Play the Song';
@@ -2064,21 +1671,15 @@
                 recordDisc.classList.remove('playing');
                 toneArm.classList.remove('playing');
                 videoEmbed.classList.remove('active');
-                
                 const iframe = videoEmbed.querySelector('iframe');
                 const src = iframe.src.replace('&autoplay=1', '').replace('autoplay=1&', '').replace('autoplay=1', '');
                 iframe.src = src;
             }
         });
 
-        vinylRecord.addEventListener('click', function() {
-            playBtn.click();
-        });
+        vinylRecord.addEventListener('click', () => playBtn.click());
 
-        // ==========================================
-        // ====== PAGE NAVIGATION LOGIC ======
-        // ==========================================
-
+        // --- Navigation ---
         const wishCardOverlay = document.getElementById('wish-card-overlay');
         const memoryPage = document.getElementById('memory-page');
         const remindersPage = document.getElementById('reminders-page');
@@ -2101,56 +1702,20 @@
             place: document.getElementById('place-section')
         };
 
-        // --- Memory Data (12 photos) ---
+        // --- Memory Data ---
         const memoryData = [
-            {
-                photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop',
-                text: 'Our first date at the beach. The sunset was beautiful, but you were even more stunning. 🌅'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop',
-                text: 'That time we got lost in the city and found this hidden cafe. Best coffee and even better company. ☕'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=400&fit=crop',
-                text: 'Our first vacation together. You made every moment magical. ✈️'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop',
-                text: 'Date night at the rooftop restaurant. The view was amazing, but you were the real star. 🌃'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1558618666-fcd25c85f2d6?w=400&h=400&fit=crop',
-                text: 'That rainy afternoon we spent dancing in the kitchen. My favorite kind of weather. 💃'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&h=400&fit=crop',
-                text: 'Our first New Year\'s Eve together. You made my heart skip a beat at midnight. 🎆'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=400&fit=crop',
-                text: 'Spring blossoms and your smile - the perfect combination. 🌸'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400&h=400&fit=crop',
-                text: 'That spontaneous road trip we took. Best decision ever! 🚗'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=400&fit=crop',
-                text: 'Cozy movie nights with you are my favorite thing in the world. 🎬'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop',
-                text: 'You make even the ordinary days feel extraordinary. 🌟'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1512389142860-9c449e58a714?w=400&h=400&fit=crop',
-                text: 'Our first Christmas together. You made it so special. 🎄'
-            },
-            {
-                photo: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop',
-                text: 'Every day with you is a new adventure. I love you endlessly. ❤️'
-            }
+            { photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop', text: 'Our first date at the beach. The sunset was beautiful, but you were even more stunning. 🌅' },
+            { photo: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop', text: 'That time we got lost in the city and found this hidden cafe. Best coffee and even better company. ☕' },
+            { photo: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=400&fit=crop', text: 'Our first vacation together. You made every moment magical. ✈️' },
+            { photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop', text: 'Date night at the rooftop restaurant. The view was amazing, but you were the real star. 🌃' },
+            { photo: 'https://images.unsplash.com/photo-1558618666-fcd25c85f2d6?w=400&h=400&fit=crop', text: 'That rainy afternoon we spent dancing in the kitchen. My favorite kind of weather. 💃' },
+            { photo: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&h=400&fit=crop', text: 'Our first New Year\'s Eve together. You made my heart skip a beat at midnight. 🎆' },
+            { photo: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=400&fit=crop', text: 'Spring blossoms and your smile - the perfect combination. 🌸' },
+            { photo: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400&h=400&fit=crop', text: 'That spontaneous road trip we took. Best decision ever! 🚗' },
+            { photo: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=400&fit=crop', text: 'Cozy movie nights with you are my favorite thing in the world. 🎬' },
+            { photo: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop', text: 'You make even the ordinary days feel extraordinary. 🌟' },
+            { photo: 'https://images.unsplash.com/photo-1512389142860-9c449e58a714?w=400&h=400&fit=crop', text: 'Our first Christmas together. You made it so special. 🎄' },
+            { photo: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop', text: 'Every day with you is a new adventure. I love you endlessly. ❤️' }
         ];
 
         let allMemories = [...memoryData];
@@ -2161,7 +1726,6 @@
             const card = document.createElement('div');
             card.className = 'polaroid-card';
             card.dataset.index = index;
-
             card.innerHTML = `
                 <div class="polaroid-inner">
                     <div class="polaroid-front">
@@ -2176,40 +1740,29 @@
                     </div>
                 </div>
             `;
-
             card.addEventListener('click', function(e) {
-                if (e.target.closest('.close-card-btn') || e.target.closest('.load-more-btn')) {
-                    return;
-                }
+                if (e.target.closest('.close-card-btn') || e.target.closest('.load-more-btn')) return;
                 this.classList.toggle('flipped');
             });
-
             return card;
         }
 
         function renderBatch(startIndex) {
             const endIndex = Math.min(startIndex + perBatch, allMemories.length);
             const fragment = document.createDocumentFragment();
-
             for (let i = startIndex; i < endIndex; i++) {
-                const card = createPolaroidCard(allMemories[i], i);
-                fragment.appendChild(card);
+                fragment.appendChild(createPolaroidCard(allMemories[i], i));
             }
-
             memoryGrid.appendChild(fragment);
-
             if (endIndex >= allMemories.length) {
                 loadMoreBtn.textContent = '🎬 Watch Our Video 🎬';
                 loadMoreBtn.className = 'load-more-btn all-shown';
-                loadMoreBtn.disabled = false;
                 loadMoreBtn.dataset.allShown = 'true';
             } else {
-                loadMoreBtn.disabled = false;
                 loadMoreBtn.textContent = `🎀 Want More? (${allMemories.length - endIndex} more) 🎀`;
                 loadMoreBtn.className = 'load-more-btn';
                 loadMoreBtn.dataset.allShown = 'false';
             }
-
             const newCards = memoryGrid.querySelectorAll('.polaroid-card:not(.animated)');
             newCards.forEach((card, idx) => {
                 card.style.opacity = '0';
@@ -2228,20 +1781,15 @@
                 showVideoPage();
                 return;
             }
-
             const start = currentBatch * perBatch;
-            if (start >= allMemories.length) {
-                return;
-            }
+            if (start >= allMemories.length) return;
             renderBatch(start);
             currentBatch++;
         }
 
         function loadMore() {
             const start = currentBatch * perBatch;
-            if (start >= allMemories.length) {
-                return;
-            }
+            if (start >= allMemories.length) return;
             renderBatch(start);
             currentBatch++;
         }
@@ -2251,35 +1799,13 @@
             import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js')
                 .then(module => {
                     const confetti = module.default;
-                    confetti({
-                        particleCount: 150,
-                        spread: 70,
-                        origin: { y: 0.6 },
-                        colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e']
-                    });
-                    confetti({
-                        particleCount: 100,
-                        spread: 100,
-                        origin: { y: 0.5, x: 0.3 },
-                        colors: ['#ffaa88', '#ff3b6f', '#ffd166']
-                    });
-                    confetti({
-                        particleCount: 100,
-                        spread: 100,
-                        origin: { y: 0.5, x: 0.7 },
-                        colors: ['#6c9eff', '#aa88ff', '#ff8a9e']
-                    });
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e'] });
+                    confetti({ particleCount: 100, spread: 100, origin: { y: 0.5, x: 0.3 }, colors: ['#ffaa88', '#ff3b6f', '#ffd166'] });
+                    confetti({ particleCount: 100, spread: 100, origin: { y: 0.5, x: 0.7 }, colors: ['#6c9eff', '#aa88ff', '#ff8a9e'] });
                     setTimeout(() => {
-                        confetti({
-                            particleCount: 200,
-                            spread: 120,
-                            origin: { y: 0.4 },
-                            colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e', '#ffffff']
-                        });
+                        confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 }, colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e', '#ffffff'] });
                     }, 200);
-                })
-                .catch(err => console.log('Confetti library failed to load'));
-
+                });
             celebrateBtn.textContent = '🎉 Wishes Coming True! ✨';
             celebrateBtn.style.background = 'linear-gradient(145deg, #ffd166, #ff3b6f)';
             setTimeout(() => {
@@ -2331,12 +1857,9 @@
         celebrateBtn.addEventListener('click', showWishCard);
         closeCardBtn.addEventListener('click', showMemoryPage);
         memoryBackBtn.addEventListener('click', hideAllPages);
-        
         loadMoreBtn.addEventListener('click', handleLoadMore);
-
         remindersBackBtn.addEventListener('click', hideAllPages);
         remindersToVideoBtn.addEventListener('click', showVideoPage);
-
         videoBackBtn.addEventListener('click', hideAllPages);
         videoToRemindersBtn.addEventListener('click', showRemindersPage);
         videoToHeartBtn.addEventListener('click', hideAllPages);
@@ -2344,15 +1867,8 @@
         reminderIcons.forEach(icon => {
             icon.addEventListener('click', function() {
                 const section = this.dataset.section;
-                
-                Object.values(reminderSections).forEach(el => {
-                    el.classList.remove('active');
-                });
-                
-                if (reminderSections[section]) {
-                    reminderSections[section].classList.add('active');
-                }
-                
+                Object.values(reminderSections).forEach(el => el.classList.remove('active'));
+                if (reminderSections[section]) reminderSections[section].classList.add('active');
                 reminderIcons.forEach(i => i.style.borderColor = 'rgba(255,255,255,0.1)');
                 this.style.borderColor = 'rgba(255,105,180,0.5)';
             });
@@ -2360,21 +1876,15 @@
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                if (wishCardOverlay.classList.contains('active')) {
-                    wishCardOverlay.classList.remove('active');
-                } else if (videoPage.classList.contains('active')) {
-                    hideAllPages();
-                } else if (remindersPage.classList.contains('active')) {
-                    hideAllPages();
-                } else if (memoryPage.classList.contains('active')) {
-                    hideAllPages();
-                }
+                if (wishCardOverlay.classList.contains('active')) wishCardOverlay.classList.remove('active');
+                else if (videoPage.classList.contains('active')) hideAllPages();
+                else if (remindersPage.classList.contains('active')) hideAllPages();
+                else if (memoryPage.classList.contains('active')) hideAllPages();
             }
         });
 
         console.log('❤️ Happy Birthday! Made with love. ❤️');
-        console.log('🌸 Pink & red rose theme with Stitch animation!');
-        console.log('📸 Memory Gallery with 12 photos!');
+        console.log('🌸 Realistic flower blossom floating background!');
     </script>
 </body>
 </html>
