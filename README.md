@@ -16,7 +16,7 @@
         body {
             margin: 0;
             overflow: hidden;
-            background-color: #0a0a1a;
+            background: linear-gradient(135deg, #1a0a0a 0%, #2a0a1a 30%, #1a0a0a 100%);
             font-family: 'Playfair Display', serif;
             cursor: default;
             height: 100vh;
@@ -31,7 +31,7 @@
             width: 100%;
             text-align: center;
             color: #fff9e6;
-            text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.4);
+            text-shadow: 0 0 30px rgba(255, 50, 100, 0.8), 0 0 60px rgba(255, 50, 100, 0.4);
             z-index: 10;
             pointer-events: none;
             animation: fadeIn 3s ease-in-out;
@@ -42,12 +42,35 @@
             font-size: clamp(2.5rem, 12vw, 5rem);
             margin: 0;
             letter-spacing: 2px;
+            background: linear-gradient(45deg, #ff6b8a, #ff3b6f, #ff6b8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            animation: shimmerText 3s ease-in-out infinite;
+        }
+        @keyframes shimmerText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        #title h1 .heart-pulse {
+            display: inline-block;
+            animation: heartBeat 1.2s ease-in-out infinite;
+        }
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.2); }
+            70% { transform: scale(1); }
         }
         #title p {
             font-size: clamp(1rem, 4vw, 1.8rem);
             margin: 10px 0 0;
             opacity: 0.9;
             font-style: italic;
+            color: #ffb6c1;
+            -webkit-text-fill-color: #ffb6c1;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
         }
 
         /* --- Confetti Button --- */
@@ -56,23 +79,28 @@
             bottom: 8%;
             left: 50%;
             transform: translateX(-50%);
-            padding: 15px 40px;
+            padding: 18px 50px;
             font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-family: 'Dancing Script', cursive;
-            background: linear-gradient(145deg, #ff8a9e, #ff3b6f);
+            background: linear-gradient(145deg, #ff6b8a, #ff3b6f);
             color: white;
             border: none;
             border-radius: 50px;
-            box-shadow: 0 0 30px rgba(255, 59, 111, 0.6);
+            box-shadow: 0 0 40px rgba(255, 59, 111, 0.6);
             cursor: pointer;
             z-index: 20;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
             letter-spacing: 2px;
             border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(255, 59, 111, 0.6); }
+            50% { box-shadow: 0 0 80px rgba(255, 59, 111, 0.9); }
         }
         #celebrate-btn:hover {
             transform: translateX(-50%) scale(1.05);
-            box-shadow: 0 0 50px rgba(255, 59, 111, 0.9);
+            box-shadow: 0 0 60px rgba(255, 59, 111, 0.9);
         }
         #celebrate-btn:active {
             transform: translateX(-50%) scale(0.95);
@@ -573,150 +601,6 @@
         }
 
         /* ======================================== */
-        /* ====== VIDEO PAGE STYLES ====== */
-        /* ======================================== */
-        .video-page {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%);
-            z-index: 300;
-            overflow-y: auto;
-            padding: 40px 20px;
-            animation: fadeIn 0.8s ease;
-        }
-        .video-page.active {
-            display: block;
-        }
-
-        .video-container {
-            max-width: 900px;
-            margin: 60px auto 40px;
-            padding: 20px;
-        }
-
-        .video-header {
-            text-align: center;
-            color: #fff9e6;
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            margin-bottom: 30px;
-            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
-        }
-
-        .video-frame {
-            position: relative;
-            background: linear-gradient(145deg, #2a1a2a, #1a0a1a);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 
-                0 0 60px rgba(255, 59, 111, 0.2),
-                inset 0 0 60px rgba(255, 59, 111, 0.05);
-            border: 2px solid rgba(255, 105, 180, 0.2);
-            transition: all 0.5s ease;
-        }
-
-        .video-frame::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            border-radius: 22px;
-            background: linear-gradient(45deg, #ff3b6f, #ffd166, #ff3b6f);
-            background-size: 300% 300%;
-            animation: gradientBorder 4s ease-in-out infinite;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        @keyframes gradientBorder {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .video-frame:hover {
-            transform: scale(1.01);
-            box-shadow: 0 0 80px rgba(255, 59, 111, 0.3);
-        }
-
-        .video-frame .video-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .video-frame .video-wrapper video,
-        .video-frame .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            border-radius: 12px;
-        }
-
-        .video-frame .deco-corner {
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0.3;
-            color: #ff6b8a;
-        }
-
-        .video-frame .deco-corner.tl { top: 10px; left: 15px; }
-        .video-frame .deco-corner.tr { top: 10px; right: 15px; }
-        .video-frame .deco-corner.bl { bottom: 10px; left: 15px; }
-        .video-frame .deco-corner.br { bottom: 10px; right: 15px; }
-
-        .video-caption {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.6);
-            font-family: 'Caveat', cursive;
-            font-size: 1.3rem;
-            margin-top: 20px;
-            font-style: italic;
-            letter-spacing: 1px;
-        }
-
-        .video-nav {
-            text-align: center;
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .video-nav-btn {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff9e6;
-            padding: 14px 30px;
-            border-radius: 50px;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-        }
-
-        .video-nav-btn:hover {
-            background: rgba(255, 105, 180, 0.2);
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
-        }
-
-        /* ======================================== */
         /* ====== REMINDERS PAGE STYLES ====== */
         /* ======================================== */
         .reminders-page {
@@ -869,7 +753,6 @@
             margin-top: 2px;
         }
 
-        /* --- Vinyl Record --- */
         .vinyl-record {
             position: relative;
             width: 280px;
@@ -884,25 +767,10 @@
             height: 100%;
             border-radius: 50%;
             background: radial-gradient(circle at 50% 50%, 
-                #1a1a1a 0%, 
-                #2a2a2a 15%, 
-                #1a1a1a 20%, 
-                #2a2a2a 25%, 
-                #1a1a1a 30%,
-                #2a2a2a 35%,
-                #1a1a1a 40%,
-                #2a2a2a 45%,
-                #1a1a1a 50%,
-                #2a2a2a 55%,
-                #1a1a1a 60%,
-                #2a2a2a 65%,
-                #1a1a1a 70%,
-                #2a2a2a 75%,
-                #1a1a1a 80%,
-                #2a2a2a 85%,
-                #1a1a1a 90%,
-                #2a2a2a 95%,
-                #1a1a1a 100%
+                #1a1a1a 0%, #2a2a2a 15%, #1a1a1a 20%, #2a2a2a 25%, #1a1a1a 30%,
+                #2a2a2a 35%, #1a1a1a 40%, #2a2a2a 45%, #1a1a1a 50%, #2a2a2a 55%,
+                #1a1a1a 60%, #2a2a2a 65%, #1a1a1a 70%, #2a2a2a 75%, #1a1a1a 80%,
+                #2a2a2a 85%, #1a1a1a 90%, #2a2a2a 95%, #1a1a1a 100%
             );
             box-shadow: 
                 0 0 60px rgba(255, 105, 180, 0.15),
@@ -965,7 +833,6 @@
             z-index: 2;
         }
 
-        /* --- Vinyl Tone Arm --- */
         .vinyl-player .tone-arm {
             position: absolute;
             top: 30px;
@@ -1008,7 +875,6 @@
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
         }
 
-        /* --- Play Button --- */
         .vinyl-player .play-btn {
             display: block;
             margin: 0 auto;
@@ -1047,7 +913,6 @@
             50% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         }
 
-        /* --- YouTube Embed --- */
         .vinyl-player .video-embed-container {
             display: none;
             margin-top: 20px;
@@ -1234,6 +1099,150 @@
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
         }
 
+        /* ======================================== */
+        /* ====== VIDEO PAGE STYLES ====== */
+        /* ======================================== */
+        .video-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a1a 100%);
+            z-index: 300;
+            overflow-y: auto;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+        .video-page.active {
+            display: block;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 60px auto 40px;
+            padding: 20px;
+        }
+
+        .video-header {
+            text-align: center;
+            color: #fff9e6;
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+        }
+
+        .video-frame {
+            position: relative;
+            background: linear-gradient(145deg, #2a1a2a, #1a0a1a);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 
+                0 0 60px rgba(255, 59, 111, 0.2),
+                inset 0 0 60px rgba(255, 59, 111, 0.05);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .video-frame::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            border-radius: 22px;
+            background: linear-gradient(45deg, #ff3b6f, #ffd166, #ff3b6f);
+            background-size: 300% 300%;
+            animation: gradientBorder 4s ease-in-out infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        @keyframes gradientBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .video-frame:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 80px rgba(255, 59, 111, 0.3);
+        }
+
+        .video-frame .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-frame .video-wrapper video,
+        .video-frame .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        .video-frame .deco-corner {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.3;
+            color: #ff6b8a;
+        }
+
+        .video-frame .deco-corner.tl { top: 10px; left: 15px; }
+        .video-frame .deco-corner.tr { top: 10px; right: 15px; }
+        .video-frame .deco-corner.bl { bottom: 10px; left: 15px; }
+        .video-frame .deco-corner.br { bottom: 10px; right: 15px; }
+
+        .video-caption {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Caveat', cursive;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        .video-nav {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .video-nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff9e6;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .video-nav-btn:hover {
+            background: rgba(255, 105, 180, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+        }
+
         /* --- Responsive --- */
         @media (max-width: 768px) {
             .memory-grid {
@@ -1361,7 +1370,7 @@
 
     <!-- ====== MAIN PAGE ====== -->
     <div id="title">
-        <h1>🎂 Happy Birthday, [Your Partner's Name]!</h1>
+        <h1>🎂 Happy Birthday <span class="heart-pulse">❤️</span><br>[Your Partner's Name]!</h1>
         <p>You are my everything. My world shines brighter with you. ✨</p>
     </div>
 
@@ -1383,7 +1392,7 @@
                     <div class="edit-hint">✏️ Click any text above to edit your personal wish</div>
                 </div>
                 <div class="wish-card-footer">
-                    <button class="close-card-btn" id="close-card-btn">✨ Back to the Magic ✨</button>
+                    <button class="close-card-btn" id="close-card-btn">📸 Our Beautiful Memories</button>
                 </div>
             </div>
         </div>
@@ -1391,7 +1400,7 @@
 
     <!-- ====== MEMORY GALLERY PAGE ====== -->
     <div id="memory-page" class="memory-page">
-        <button class="back-to-heart" id="back-to-heart-btn">❤️ Back to Heart</button>
+        <button class="back-to-heart" id="memory-back-btn" style="position:fixed; top:20px; right:20px; z-index:201;">❤️ Back</button>
         
         <div class="memory-header">
             📸 Our Beautiful Memories
@@ -1402,36 +1411,6 @@
 
         <div class="load-more-container">
             <button class="load-more-btn" id="load-more-btn">🎀 Want More? 🎀</button>
-        </div>
-    </div>
-
-    <!-- ====== VIDEO PAGE ====== -->
-    <div id="video-page" class="video-page">
-        <button class="back-to-heart" id="video-back-btn" style="position:fixed; top:20px; right:20px; z-index:301;">❤️ Back</button>
-        
-        <div class="video-container">
-            <div class="video-header">🎬 A Special Message For You</div>
-            
-            <div class="video-frame">
-                <span class="deco-corner tl">✦</span>
-                <span class="deco-corner tr">✦</span>
-                <span class="deco-corner bl">✦</span>
-                <span class="deco-corner br">✦</span>
-                
-                <div class="video-wrapper">
-                    <video controls playsinline>
-                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-            
-            <div class="video-caption">💕 A minute of memories, a lifetime of love 💕</div>
-            
-            <div class="video-nav">
-                <button class="video-nav-btn" id="to-reminders-btn">💝 Things That Remind Me of You</button>
-                <button class="video-nav-btn" id="video-back-to-memory-btn">📸 Back to Memories</button>
-            </div>
         </div>
     </div>
 
@@ -1469,7 +1448,6 @@
                     <div class="song-artist">A song that speaks of you</div>
                 </div>
 
-                <!-- Vinyl Record -->
                 <div class="vinyl-record" id="vinylRecord">
                     <div class="record-disc" id="recordDisc">
                         <div class="record-label">
@@ -1480,15 +1458,12 @@
                     <div class="center-hole"></div>
                 </div>
 
-                <!-- Tone Arm -->
                 <div class="tone-arm" id="toneArm">
                     <div class="arm-base"></div>
                 </div>
 
-                <!-- Play Button -->
                 <button class="play-btn" id="playBtn">▶ Play the Song</button>
 
-                <!-- YouTube Embed -->
                 <div class="video-embed-container" id="videoEmbed">
                     <iframe 
                         src="https://www.youtube.com/embed/VR4UM-LsPiU?si=p4tay8ly2AJk1yCV" 
@@ -1559,7 +1534,37 @@
         </div>
 
         <div class="reminders-back">
-            <button class="reminders-back-btn" id="reminders-back-to-video-btn">🎬 Back to Video</button>
+            <button class="reminders-back-btn" id="reminders-to-video-btn">🎬 Watch Our Video</button>
+        </div>
+    </div>
+
+    <!-- ====== VIDEO PAGE ====== -->
+    <div id="video-page" class="video-page">
+        <button class="back-to-heart" id="video-back-btn" style="position:fixed; top:20px; right:20px; z-index:301;">❤️ Back</button>
+        
+        <div class="video-container">
+            <div class="video-header">🎬 A Special Message For You</div>
+            
+            <div class="video-frame">
+                <span class="deco-corner tl">✦</span>
+                <span class="deco-corner tr">✦</span>
+                <span class="deco-corner bl">✦</span>
+                <span class="deco-corner br">✦</span>
+                
+                <div class="video-wrapper">
+                    <video controls playsinline>
+                        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            
+            <div class="video-caption">💕 A minute of memories, a lifetime of love 💕</div>
+            
+            <div class="video-nav">
+                <button class="video-nav-btn" id="video-to-reminders-btn">💝 Back to Things That Remind Me of You</button>
+                <button class="video-nav-btn" id="video-to-heart-btn">❤️ Back to Heart</button>
+            </div>
         </div>
     </div>
 
@@ -1582,7 +1587,6 @@
         const container = document.getElementById('three-container');
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0a0a1a);
-        scene.fog = new THREE.FogExp2(0x0a0a1a, 0.002);
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 2, 12);
@@ -1610,7 +1614,7 @@
         light3.position.set(0, -2, -8);
         scene.add(light3);
 
-        // --- Create Heart ---
+        // --- Create Heart (Pink Theme) ---
         function createHeart() {
             const heartGroup = new THREE.Group();
             const geometry = new THREE.SphereGeometry(1, 64, 64);
@@ -1693,78 +1697,104 @@
         scene.add(heart);
         heart.scale.set(0.8, 0.8, 0.8);
 
-        // --- Particles ---
-        function createParticles() {
-            const particleCount = 800;
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            const sizes = new Float32Array(particleCount);
+        // --- Falling Rose Petals ---
+        function createRosePetal() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, 64, 64);
+            
+            const gradient = ctx.createRadialGradient(32, 32, 5, 32, 32, 30);
+            gradient.addColorStop(0, 'rgba(255, 182, 193, 1)');
+            gradient.addColorStop(0.5, 'rgba(255, 105, 180, 1)');
+            gradient.addColorStop(1, 'rgba(255, 59, 111, 0.8)');
+            
+            ctx.beginPath();
+            ctx.ellipse(32, 32, 20, 25, 0, 0, Math.PI * 2);
+            ctx.fillStyle = gradient;
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.moveTo(32, 15);
+            ctx.quadraticCurveTo(25, 32, 32, 45);
+            ctx.strokeStyle = 'rgba(200, 50, 80, 0.3)';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+            
+            return new THREE.CanvasTexture(canvas);
+        }
 
-            const colorPalette = [
-                new THREE.Color(0xff6b8a),
-                new THREE.Color(0xffaa88),
-                new THREE.Color(0xffd166),
-                new THREE.Color(0x6c9eff),
-                new THREE.Color(0xaa88ff),
-                new THREE.Color(0xff3b6f),
-            ];
+        const petalTexture = createRosePetal();
+        
+        function createPetalParticles() {
+            const count = 200;
+            const positions = new Float32Array(count * 3);
+            const rotations = new Float32Array(count);
+            const speeds = new Float32Array(count);
+            const drift = new Float32Array(count);
+            const sizes = new Float32Array(count);
 
-            for (let i = 0; i < particleCount; i++) {
-                const radius = 3.5 + Math.random() * 4;
+            for (let i = 0; i < count; i++) {
+                const radius = 3 + Math.random() * 6;
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.acos((Math.random() * 2) - 1);
-
+                
                 positions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
-                positions[i*3+1] = radius * Math.sin(phi) * Math.sin(theta) * 0.8;
+                positions[i*3+1] = 2 + Math.random() * 4;
                 positions[i*3+2] = radius * Math.cos(phi);
-
-                const col = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-                colors[i*3] = col.r;
-                colors[i*3+1] = col.g;
-                colors[i*3+2] = col.b;
-
-                sizes[i] = 0.05 + Math.random() * 0.15;
+                
+                rotations[i] = Math.random() * Math.PI * 2;
+                speeds[i] = 0.5 + Math.random() * 1.5;
+                drift[i] = (Math.random() - 0.5) * 0.02;
+                sizes[i] = 0.08 + Math.random() * 0.15;
             }
 
             const geometry = new THREE.BufferGeometry();
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('rotation', new THREE.BufferAttribute(rotations, 1));
+            geometry.setAttribute('speed', new THREE.BufferAttribute(speeds, 1));
+            geometry.setAttribute('drift', new THREE.BufferAttribute(drift, 1));
             geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
             const material = new THREE.PointsMaterial({
-                size: 0.15,
-                vertexColors: true,
+                map: petalTexture,
+                size: 0.3,
                 transparent: true,
-                opacity: 0.8,
-                blending: THREE.AdditiveBlending,
+                opacity: 0.9,
+                blending: THREE.NormalBlending,
                 depthWrite: false,
                 sizeAttenuation: true,
+                color: 0xff6b8a,
             });
 
-            return new THREE.Points(geometry, material);
+            const particles = new THREE.Points(geometry, material);
+            particles.userData = { positions, rotations, speeds, drift };
+            return particles;
         }
 
-        const particleSystem = createParticles();
-        scene.add(particleSystem);
+        const petalSystem = createPetalParticles();
+        scene.add(petalSystem);
 
-        // --- Floating Sprites ---
-        function createTextSprite(text, color = '#ffaabb', size = 0.4) {
+        // --- Floating Pink Sprites ---
+        function createPinkSprite(text, color = '#ff6b8a', size = 0.5) {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             canvas.width = 256;
             canvas.height = 128;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.font = 'Bold 40px "Dancing Script", "Playfair Display", cursive';
+            ctx.font = 'Bold 50px "Dancing Script", "Playfair Display", cursive';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
 
             ctx.shadowColor = 'rgba(255, 105, 180, 0.8)';
-            ctx.shadowBlur = 20;
+            ctx.shadowBlur = 30;
             ctx.fillStyle = color;
             ctx.fillText(text, canvas.width/2, canvas.height/2);
 
-            ctx.shadowBlur = 10;
+            ctx.shadowBlur = 15;
             ctx.fillStyle = '#ffffff';
             ctx.fillText(text, canvas.width/2, canvas.height/2);
 
@@ -1777,76 +1807,165 @@
                 blending: THREE.AdditiveBlending,
             });
             const sprite = new THREE.Sprite(material);
-            sprite.scale.set(size * 2, size, 1);
+            sprite.scale.set(size * 2.5, size * 1.3, 1);
             return sprite;
         }
 
-        const loveNotes = [
-            { text: '❤️', color: '#ff3b6f', size: 0.8 },
-            { text: '✨', color: '#ffd166', size: 0.6 },
-            { text: '🌸', color: '#ff8a9e', size: 0.7 },
-            { text: '💖', color: '#ff6b8a', size: 0.7 },
-            { text: '🌟', color: '#ffaa66', size: 0.6 },
-            { text: '💫', color: '#aa88ff', size: 0.6 },
-            { text: '🌹', color: '#ff3b6f', size: 0.8 },
-            { text: '💝', color: '#ff6b8a', size: 0.7 },
-            { text: 'My Love', color: '#ffaabb', size: 0.9 },
-            { text: 'You & Me', color: '#ffd166', size: 0.9 },
-            { text: 'Forever', color: '#6c9eff', size: 0.9 },
-            { text: '❤️', color: '#ff3b6f', size: 0.8 },
-            { text: '✨', color: '#ffd166', size: 0.6 },
-            { text: '🌸', color: '#ff8a9e', size: 0.7 },
+        const loveMessages = [
+            '❤️', '🌸', '💖', '✨', '🌹', '💝', '🌟', '💗'
         ];
 
-        const noteSprites = [];
-        loveNotes.forEach((note, index) => {
-            const sprite = createTextSprite(note.text, note.color, note.size);
-
-            const radius = 2.5 + Math.random() * 3.5;
+        const messageSprites = [];
+        loveMessages.forEach((msg, index) => {
+            const sprite = createPinkSprite(msg, '#ff6b8a', 0.6 + Math.random() * 0.4);
+            
+            const radius = 2.5 + Math.random() * 4;
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.acos((Math.random() * 2) - 1);
-
+            
             sprite.position.x = radius * Math.sin(phi) * Math.cos(theta);
-            sprite.position.y = radius * Math.sin(phi) * Math.sin(theta) * 0.9;
+            sprite.position.y = radius * Math.sin(phi) * Math.sin(theta) * 0.8 + 0.5;
             sprite.position.z = radius * Math.cos(phi);
-
+            
             sprite.userData = {
                 angle: theta,
                 phi: phi,
                 radius: radius,
-                speed: 0.001 + Math.random() * 0.002,
+                speed: 0.003 + Math.random() * 0.005,
                 floatOffset: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 0.02,
             };
-
+            
             scene.add(sprite);
-            noteSprites.push(sprite);
+            messageSprites.push(sprite);
         });
 
-        // --- Glow ---
-        function createGlow() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
-            const ctx = canvas.getContext('2d');
-            const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-            gradient.addColorStop(0, 'rgba(255, 59, 111, 0.3)');
-            gradient.addColorStop(0.3, 'rgba(255, 107, 138, 0.15)');
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, 512, 512);
-
-            const texture = new THREE.CanvasTexture(canvas);
-            const material = new THREE.SpriteMaterial({
-                map: texture,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false,
-            });
-            const sprite = new THREE.Sprite(material);
-            sprite.scale.set(20, 20, 1);
-            sprite.position.set(0, 0, -5);
-            return sprite;
+        // --- Animate Petals ---
+        function animatePetals(time) {
+            const positions = petalSystem.geometry.attributes.position.array;
+            const data = petalSystem.userData;
+            
+            for (let i = 0; i < positions.length / 3; i++) {
+                positions[i*3+1] -= data.speeds[i] * 0.008;
+                positions[i*3] += Math.sin(time * data.speeds[i] + i) * 0.003;
+                positions[i*3+2] += Math.cos(time * data.speeds[i] * 0.7 + i * 0.5) * 0.003;
+                
+                if (positions[i*3+1] < -3) {
+                    const radius = 3 + Math.random() * 6;
+                    const theta = Math.random() * Math.PI * 2;
+                    const phi = Math.acos((Math.random() * 2) - 1);
+                    positions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
+                    positions[i*3+1] = 4 + Math.random() * 2;
+                    positions[i*3+2] = radius * Math.cos(phi);
+                }
+            }
+            petalSystem.geometry.attributes.position.needsUpdate = true;
         }
-        scene.add(createGlow());
+
+        // --- Stitch Character ---
+        function createStitch() {
+            const group = new THREE.Group();
+            
+            const bodyGeo = new THREE.SphereGeometry(0.4, 16, 16);
+            const bodyMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
+            const body = new THREE.Mesh(bodyGeo, bodyMat);
+            body.scale.set(1, 1.1, 0.8);
+            body.position.y = 0.1;
+            group.add(body);
+            
+            const headGeo = new THREE.SphereGeometry(0.35, 16, 16);
+            const headMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
+            const head = new THREE.Mesh(headGeo, headMat);
+            head.position.y = 0.55;
+            head.scale.set(1, 0.9, 0.9);
+            group.add(head);
+            
+            const earMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
+            const earGeo = new THREE.SphereGeometry(0.15, 8, 8);
+            
+            const earL = new THREE.Mesh(earGeo, earMat);
+            earL.position.set(-0.35, 0.65, 0);
+            earL.scale.set(0.7, 1.2, 0.6);
+            group.add(earL);
+            
+            const earR = new THREE.Mesh(earGeo, earMat);
+            earR.position.set(0.35, 0.65, 0);
+            earR.scale.set(0.7, 1.2, 0.6);
+            group.add(earR);
+            
+            const innerEarMat = new THREE.MeshPhongMaterial({ color: 0xffb6c1, shininess: 20 });
+            const innerEarGeo = new THREE.SphereGeometry(0.08, 8, 8);
+            
+            const innerL = new THREE.Mesh(innerEarGeo, innerEarMat);
+            innerL.position.set(-0.35, 0.65, 0.07);
+            innerL.scale.set(0.5, 0.8, 0.3);
+            group.add(innerL);
+            
+            const innerR = new THREE.Mesh(innerEarGeo, innerEarMat);
+            innerR.position.set(0.35, 0.65, 0.07);
+            innerR.scale.set(0.5, 0.8, 0.3);
+            group.add(innerR);
+            
+            const eyeWhiteMat = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 80 });
+            const eyePupilMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2a, shininess: 20 });
+            
+            const eyeGeo = new THREE.SphereGeometry(0.09, 8, 8);
+            const pupilGeo = new THREE.SphereGeometry(0.05, 8, 8);
+            
+            const eyeL = new THREE.Mesh(eyeGeo, eyeWhiteMat);
+            eyeL.position.set(-0.14, 0.6, 0.3);
+            group.add(eyeL);
+            
+            const pupilL = new THREE.Mesh(pupilGeo, eyePupilMat);
+            pupilL.position.set(-0.12, 0.58, 0.38);
+            group.add(pupilL);
+            
+            const eyeR = new THREE.Mesh(eyeGeo, eyeWhiteMat);
+            eyeR.position.set(0.14, 0.6, 0.3);
+            group.add(eyeR);
+            
+            const pupilR = new THREE.Mesh(pupilGeo, eyePupilMat);
+            pupilR.position.set(0.16, 0.58, 0.38);
+            group.add(pupilR);
+            
+            const noseMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2a, shininess: 10 });
+            const noseGeo = new THREE.SphereGeometry(0.04, 8, 8);
+            const nose = new THREE.Mesh(noseGeo, noseMat);
+            nose.position.set(0, 0.55, 0.35);
+            nose.scale.set(1.2, 0.8, 0.8);
+            group.add(nose);
+            
+            const mouthMat = new THREE.MeshPhongMaterial({ color: 0x1a1a2a });
+            const mouthGeo = new THREE.TorusGeometry(0.06, 0.015, 4, 8);
+            const mouth = new THREE.Mesh(mouthGeo, mouthMat);
+            mouth.position.set(0, 0.48, 0.35);
+            mouth.rotation.x = 0.2;
+            mouth.rotation.z = 0.1;
+            mouth.scale.set(1, 0.5, 0.5);
+            group.add(mouth);
+            
+            const armMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0 });
+            const armGeo = new THREE.CylinderGeometry(0.05, 0.07, 0.3);
+            
+            const armL = new THREE.Mesh(armGeo, armMat);
+            armL.position.set(-0.5, 0.2, 0);
+            armL.rotation.z = -0.3;
+            armL.rotation.x = -0.2;
+            group.add(armL);
+            
+            const armR = new THREE.Mesh(armGeo, armMat);
+            armR.position.set(0.5, 0.2, 0);
+            armR.rotation.z = 0.3;
+            armR.rotation.x = 0.2;
+            group.add(armR);
+            
+            return group;
+        }
+
+        const stitch = createStitch();
+        stitch.position.set(1.2, -1, -1.5);
+        stitch.scale.set(0.8, 0.8, 0.8);
+        scene.add(stitch);
 
         // --- Animation Loop ---
         function animate() {
@@ -1857,28 +1976,37 @@
             heart.rotation.x = Math.sin(elapsedTime * 0.1) * 0.1;
             heart.rotation.z = Math.cos(elapsedTime * 0.15) * 0.05;
 
-            particleSystem.rotation.y += 0.0005;
-            particleSystem.rotation.x = Math.sin(elapsedTime * 0.02) * 0.05;
+            animatePetals(elapsedTime);
 
-            noteSprites.forEach((sprite, index) => {
+            messageSprites.forEach((sprite, index) => {
                 const data = sprite.userData;
                 data.angle += data.speed * delta * 30;
-
-                const floatY = Math.sin(elapsedTime * 0.8 + data.floatOffset) * 0.15;
-
+                
+                const floatY = Math.sin(elapsedTime * 0.8 + data.floatOffset) * 0.2;
+                
                 const x = data.radius * Math.sin(data.phi) * Math.cos(data.angle);
-                const y = data.radius * Math.sin(data.phi) * Math.sin(data.angle) * 0.9 + floatY;
+                const y = data.radius * Math.sin(data.phi) * Math.sin(data.angle) * 0.8 + 0.5 + floatY;
                 const z = data.radius * Math.cos(data.phi);
-
+                
                 sprite.position.set(x, y, z);
-
-                const pulse = 1 + Math.sin(elapsedTime * 1.5 + index) * 0.05;
+                
+                const pulse = 1 + Math.sin(elapsedTime * 1.2 + index) * 0.05;
                 sprite.scale.set(
                     sprite.scale.x * (0.99 + 0.01 * pulse),
                     sprite.scale.y * (0.99 + 0.01 * pulse),
                     1
                 );
             });
+
+            stitch.position.y = -1 + Math.sin(elapsedTime * 0.8) * 0.05;
+            stitch.rotation.z = Math.sin(elapsedTime * 0.5) * 0.02;
+            stitch.rotation.x = Math.sin(elapsedTime * 0.3) * 0.02;
+            const armL = stitch.children[10];
+            const armR = stitch.children[11];
+            if (armL && armR) {
+                armL.rotation.x = -0.2 + Math.sin(elapsedTime * 1.5) * 0.1;
+                armR.rotation.x = 0.2 + Math.sin(elapsedTime * 1.5 + 1) * 0.1;
+            }
 
             camera.position.x = Math.sin(elapsedTime * 0.05) * 1.2;
             camera.position.y = 2 + Math.sin(elapsedTime * 0.1) * 0.3;
@@ -1951,20 +2079,20 @@
         // ====== PAGE NAVIGATION LOGIC ======
         // ==========================================
 
-        const memoryPage = document.getElementById('memory-page');
-        const videoPage = document.getElementById('video-page');
-        const remindersPage = document.getElementById('reminders-page');
-        const memoryGrid = document.getElementById('memory-grid');
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        const backToHeartBtn = document.getElementById('back-to-heart-btn');
-        const celebrateBtn = document.getElementById('celebrate-btn');
         const wishCardOverlay = document.getElementById('wish-card-overlay');
+        const memoryPage = document.getElementById('memory-page');
+        const remindersPage = document.getElementById('reminders-page');
+        const videoPage = document.getElementById('video-page');
+        const celebrateBtn = document.getElementById('celebrate-btn');
         const closeCardBtn = document.getElementById('close-card-btn');
-        const videoBackBtn = document.getElementById('video-back-btn');
-        const toRemindersBtn = document.getElementById('to-reminders-btn');
-        const videoBackToMemoryBtn = document.getElementById('video-back-to-memory-btn');
+        const memoryBackBtn = document.getElementById('memory-back-btn');
         const remindersBackBtn = document.getElementById('reminders-back-btn');
-        const remindersBackToVideoBtn = document.getElementById('reminders-back-to-video-btn');
+        const remindersToVideoBtn = document.getElementById('reminders-to-video-btn');
+        const videoBackBtn = document.getElementById('video-back-btn');
+        const videoToRemindersBtn = document.getElementById('video-to-reminders-btn');
+        const videoToHeartBtn = document.getElementById('video-to-heart-btn');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const memoryGrid = document.getElementById('memory-grid');
 
         const reminderIcons = document.querySelectorAll('.reminder-icon');
         const reminderSections = {
@@ -1973,6 +2101,7 @@
             place: document.getElementById('place-section')
         };
 
+        // --- Memory Data (12 photos) ---
         const memoryData = [
             {
                 photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop',
@@ -2108,44 +2237,6 @@
             currentBatch++;
         }
 
-        function showMemoryPage() {
-            wishCardOverlay.classList.remove('active');
-            if (currentBatch === 0) {
-                memoryGrid.innerHTML = '';
-                allMemories = [...memoryData];
-                currentBatch = 0;
-                loadMoreBtn.textContent = '🎀 Want More? 🎀';
-                loadMoreBtn.className = 'load-more-btn';
-                loadMoreBtn.dataset.allShown = 'false';
-                loadMore();
-            }
-            memoryPage.classList.add('active');
-            videoPage.classList.remove('active');
-            remindersPage.classList.remove('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function showVideoPage() {
-            memoryPage.classList.remove('active');
-            videoPage.classList.add('active');
-            remindersPage.classList.remove('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function showRemindersPage() {
-            videoPage.classList.remove('active');
-            remindersPage.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideAllPages() {
-            memoryPage.classList.remove('active');
-            videoPage.classList.remove('active');
-            remindersPage.classList.remove('active');
-            wishCardOverlay.classList.remove('active');
-            document.body.style.overflow = 'hidden';
-        }
-
         function loadMore() {
             const start = currentBatch * perBatch;
             if (start >= allMemories.length) {
@@ -2155,9 +2246,7 @@
             currentBatch++;
         }
 
-        // --- Event Listeners ---
-
-        celebrateBtn.addEventListener('click', function() {
+        function showWishCard() {
             wishCardOverlay.classList.add('active');
             import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js')
                 .then(module => {
@@ -2194,31 +2283,63 @@
             celebrateBtn.textContent = '🎉 Wishes Coming True! ✨';
             celebrateBtn.style.background = 'linear-gradient(145deg, #ffd166, #ff3b6f)';
             setTimeout(() => {
-                celebrateBtn.textContent = '🎉 Make Another Wish!';
+                celebrateBtn.textContent = '🎉 Make a Wish!';
                 celebrateBtn.style.background = 'linear-gradient(145deg, #ff8a9e, #ff3b6f)';
             }, 3000);
-        });
+        }
 
-        closeCardBtn.addEventListener('click', function() {
+        function showMemoryPage() {
             wishCardOverlay.classList.remove('active');
-            showMemoryPage();
-        });
-
-        wishCardOverlay.addEventListener('click', function(e) {
-            if (e.target === this) {
-                wishCardOverlay.classList.remove('active');
+            if (currentBatch === 0) {
+                memoryGrid.innerHTML = '';
+                allMemories = [...memoryData];
+                currentBatch = 0;
+                loadMoreBtn.textContent = '🎀 Want More? 🎀';
+                loadMoreBtn.className = 'load-more-btn';
+                loadMoreBtn.dataset.allShown = 'false';
+                loadMore();
             }
-        });
+            memoryPage.classList.add('active');
+            remindersPage.classList.remove('active');
+            videoPage.classList.remove('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-        backToHeartBtn.addEventListener('click', hideAllPages);
+        function showRemindersPage() {
+            memoryPage.classList.remove('active');
+            remindersPage.classList.add('active');
+            videoPage.classList.remove('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function showVideoPage() {
+            memoryPage.classList.remove('active');
+            remindersPage.classList.remove('active');
+            videoPage.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideAllPages() {
+            wishCardOverlay.classList.remove('active');
+            memoryPage.classList.remove('active');
+            remindersPage.classList.remove('active');
+            videoPage.classList.remove('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // --- Event Listeners ---
+        celebrateBtn.addEventListener('click', showWishCard);
+        closeCardBtn.addEventListener('click', showMemoryPage);
+        memoryBackBtn.addEventListener('click', hideAllPages);
+        
         loadMoreBtn.addEventListener('click', handleLoadMore);
 
-        videoBackBtn.addEventListener('click', hideAllPages);
-        videoBackToMemoryBtn.addEventListener('click', showMemoryPage);
-        toRemindersBtn.addEventListener('click', showRemindersPage);
-
         remindersBackBtn.addEventListener('click', hideAllPages);
-        remindersBackToVideoBtn.addEventListener('click', showVideoPage);
+        remindersToVideoBtn.addEventListener('click', showVideoPage);
+
+        videoBackBtn.addEventListener('click', hideAllPages);
+        videoToRemindersBtn.addEventListener('click', showRemindersPage);
+        videoToHeartBtn.addEventListener('click', hideAllPages);
 
         reminderIcons.forEach(icon => {
             icon.addEventListener('click', function() {
@@ -2241,9 +2362,9 @@
             if (e.key === 'Escape') {
                 if (wishCardOverlay.classList.contains('active')) {
                     wishCardOverlay.classList.remove('active');
-                } else if (remindersPage.classList.contains('active')) {
-                    showVideoPage();
                 } else if (videoPage.classList.contains('active')) {
+                    hideAllPages();
+                } else if (remindersPage.classList.contains('active')) {
                     hideAllPages();
                 } else if (memoryPage.classList.contains('active')) {
                     hideAllPages();
@@ -2251,9 +2372,9 @@
             }
         });
 
-        loadMore();
-
         console.log('❤️ Happy Birthday! Made with love. ❤️');
+        console.log('🌸 Pink & red rose theme with Stitch animation!');
+        console.log('📸 Memory Gallery with 12 photos!');
     </script>
 </body>
 </html>
