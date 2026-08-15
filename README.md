@@ -23,6 +23,15 @@
             width: 100vw;
         }
 
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
         /* --- Main Title Overlay --- */
         #title {
             position: absolute;
@@ -30,7 +39,6 @@
             left: 0;
             width: 100%;
             text-align: center;
-            color: #fff9e6;
             z-index: 10;
             pointer-events: none;
             animation: fadeIn 3s ease-in-out;
@@ -48,7 +56,6 @@
                 0 0 60px rgba(255, 59, 111, 0.4),
                 0 0 80px rgba(255, 59, 111, 0.2);
             animation: glowPulse 2s ease-in-out infinite;
-            -webkit-text-fill-color: #ff6b8a;
         }
         @keyframes glowPulse {
             0%, 100% { 
@@ -61,7 +68,6 @@
         #title h1 .heart-pulse {
             display: inline-block;
             animation: heartBeat 1.2s ease-in-out infinite;
-            -webkit-text-fill-color: #ff3b6f;
         }
         @keyframes heartBeat {
             0%, 100% { transform: scale(1); }
@@ -78,10 +84,13 @@
             color: #ffb6c1;
             text-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
             animation: fadeInUp 2s ease 1s both;
-            -webkit-text-fill-color: #ffb6c1;
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -308,30 +317,7 @@
             border-radius: 10px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 600px) {
-            .wish-card {
-                padding: 30px 20px;
-                margin: 10px;
-            }
-            .wish-card-header {
-                font-size: 2rem;
-            }
-            .wish-card-body {
-                font-size: 1.3rem;
-                line-height: 1.8rem;
-                padding: 15px 5px;
-            }
-            .wish-card-body .signature {
-                font-size: 1.6rem;
-            }
-        }
-
-        /* --- Memory Gallery Page (keeping existing) --- */
+        /* --- Memory Gallery Page --- */
         .memory-page {
             display: none;
             position: fixed;
@@ -1189,457 +1175,446 @@
     <!-- 3D Scene Container -->
     <div id="three-container"></div>
 
-    <!-- Import Three.js -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
-            }
-        }
+    <!-- Load Three.js from reliable CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
     </script>
 
-    <script type="module">
-        import * as THREE from 'three';
+    <script>
+        // Wait for Three.js to load
+        function initScene() {
+            if (typeof THREE === 'undefined') {
+                console.log('Three.js not loaded yet, retrying...');
+                setTimeout(initScene, 500);
+                return;
+            }
 
-        // --- Scene Setup ---
-        const container = document.getElementById('three-container');
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0a0a1a);
+            console.log('Three.js loaded successfully!');
 
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 2, 12);
-        camera.lookAt(0, 0, 0);
+            // --- Scene Setup ---
+            const container = document.getElementById('three-container');
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a1a);
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 2, 12);
+            camera.lookAt(0, 0, 0);
 
-        // --- Lights ---
-        const ambientLight = new THREE.AmbientLight(0x404060);
-        scene.add(ambientLight);
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
 
-        const light1 = new THREE.PointLight(0xff6b8a, 1.5, 30);
-        light1.position.set(5, 5, 5);
-        scene.add(light1);
+            // --- Lights ---
+            const ambientLight = new THREE.AmbientLight(0x404060);
+            scene.add(ambientLight);
 
-        const light2 = new THREE.PointLight(0x4a8cff, 1, 30);
-        light2.position.set(-5, 3, 5);
-        scene.add(light2);
+            const light1 = new THREE.PointLight(0xff6b8a, 1.5, 30);
+            light1.position.set(5, 5, 5);
+            scene.add(light1);
 
-        const light3 = new THREE.PointLight(0xffaa66, 0.8, 20);
-        light3.position.set(0, -2, -8);
-        scene.add(light3);
+            const light2 = new THREE.PointLight(0x4a8cff, 1, 30);
+            light2.position.set(-5, 3, 5);
+            scene.add(light2);
 
-        // --- Create Glowing Heart ---
-        function createHeart() {
-            const heartGroup = new THREE.Group();
-            const geometry = new THREE.SphereGeometry(1, 64, 64);
-            const positionAttribute = geometry.attributes.position;
-            const vertex = new THREE.Vector3();
+            const light3 = new THREE.PointLight(0xffaa66, 0.8, 20);
+            light3.position.set(0, -2, -8);
+            scene.add(light3);
 
-            for (let i = 0; i < positionAttribute.count; i++) {
-                vertex.x = positionAttribute.getX(i);
-                vertex.y = positionAttribute.getY(i);
-                vertex.z = positionAttribute.getZ(i);
+            // --- Create Heart ---
+            function createHeart() {
+                const heartGroup = new THREE.Group();
+                const geometry = new THREE.SphereGeometry(1, 64, 64);
+                const positionAttribute = geometry.attributes.position;
+                const vertex = new THREE.Vector3();
 
-                const x = vertex.x,
-                    y = vertex.y,
-                    z = vertex.z;
-                const scaleX = 1.0 + 0.6 * Math.sqrt(Math.max(0, 1 - Math.abs(y))) * (1 - Math.abs(y));
-                const scaleZ = 1.0 + 0.4 * (1 - Math.abs(y)) * (1 - Math.abs(y));
+                for (let i = 0; i < positionAttribute.count; i++) {
+                    vertex.x = positionAttribute.getX(i);
+                    vertex.y = positionAttribute.getY(i);
+                    vertex.z = positionAttribute.getZ(i);
 
-                vertex.x = x * scaleX * 1.2;
-                vertex.y = y * 1.1;
-                vertex.z = z * scaleZ * 1.2;
+                    const x = vertex.x,
+                        y = vertex.y,
+                        z = vertex.z;
+                    const scaleX = 1.0 + 0.6 * Math.sqrt(Math.max(0, 1 - Math.abs(y))) * (1 - Math.abs(y));
+                    const scaleZ = 1.0 + 0.4 * (1 - Math.abs(y)) * (1 - Math.abs(y));
 
-                if (vertex.y > 0.2) {
-                    const cleftFactor = Math.max(0, (vertex.y - 0.2) / 0.8);
-                    const cleft = 0.25 * cleftFactor * cleftFactor;
-                    vertex.x -= Math.sign(vertex.x) * cleft * 0.8;
-                    vertex.z -= Math.sign(vertex.z) * cleft * 0.8;
+                    vertex.x = x * scaleX * 1.2;
+                    vertex.y = y * 1.1;
+                    vertex.z = z * scaleZ * 1.2;
+
+                    if (vertex.y > 0.2) {
+                        const cleftFactor = Math.max(0, (vertex.y - 0.2) / 0.8);
+                        const cleft = 0.25 * cleftFactor * cleftFactor;
+                        vertex.x -= Math.sign(vertex.x) * cleft * 0.8;
+                        vertex.z -= Math.sign(vertex.z) * cleft * 0.8;
+                    }
+                    vertex.x *= 1.2;
+                    vertex.y *= 0.9;
+                    vertex.z *= 1.1;
+                    positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
                 }
-                vertex.x *= 1.2;
-                vertex.y *= 0.9;
-                vertex.z *= 1.1;
-                positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
-            }
-            geometry.computeVertexNormals();
+                geometry.computeVertexNormals();
 
-            const material = new THREE.MeshPhongMaterial({
-                color: 0xff3b6f,
-                emissive: 0x550022,
-                shininess: 60,
-                specular: 0xffaa99,
-                transparent: true,
-                opacity: 0.92,
-                side: THREE.DoubleSide,
-            });
-            const heartMesh = new THREE.Mesh(geometry, material);
-            heartGroup.add(heartMesh);
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0xff3b6f,
+                    emissive: 0x550022,
+                    shininess: 60,
+                    specular: 0xffaa99,
+                    transparent: true,
+                    opacity: 0.92,
+                    side: THREE.DoubleSide,
+                });
+                const heartMesh = new THREE.Mesh(geometry, material);
+                heartGroup.add(heartMesh);
 
-            const wireframeMaterial = new THREE.MeshBasicMaterial({
-                color: 0xff6b8a,
-                wireframe: true,
-                transparent: true,
-                opacity: 0.12,
-            });
-            const wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
-            heartGroup.add(wireframeMesh);
+                const wireframeMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xff6b8a,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.12,
+                });
+                const wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
+                heartGroup.add(wireframeMesh);
 
-            const ringGeometry = new THREE.TorusGeometry(1.5, 0.03, 16, 64);
-            const ringMaterial = new THREE.MeshStandardMaterial({
-                color: 0xffaa88,
-                emissive: 0xff3b6f,
-                emissiveIntensity: 0.8,
-                transparent: true,
-                opacity: 0.7,
-            });
-            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-            ring.rotation.x = Math.PI / 2;
-            ring.rotation.z = Math.PI / 6;
-            ring.position.y = -0.1;
-            heartGroup.add(ring);
+                const ringGeometry = new THREE.TorusGeometry(1.5, 0.03, 16, 64);
+                const ringMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xffaa88,
+                    emissive: 0xff3b6f,
+                    emissiveIntensity: 0.8,
+                    transparent: true,
+                    opacity: 0.7,
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2;
+                ring.rotation.z = Math.PI / 6;
+                ring.position.y = -0.1;
+                heartGroup.add(ring);
 
-            return heartGroup;
-        }
-
-        const heart = createHeart();
-        scene.add(heart);
-        heart.scale.set(0.8, 0.8, 0.8);
-
-        // --- Realistic Flower Blossom Petals ---
-        function createFlowerPetal() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 128;
-            canvas.height = 128;
-            const ctx = canvas.getContext('2d');
-
-            // Create a realistic petal shape
-            ctx.clearRect(0, 0, 128, 128);
-
-            // Main petal shape with gradient
-            const gradient = ctx.createRadialGradient(64, 50, 10, 64, 64, 50);
-            gradient.addColorStop(0, 'rgba(255, 220, 230, 1)');
-            gradient.addColorStop(0.3, 'rgba(255, 182, 193, 1)');
-            gradient.addColorStop(0.6, 'rgba(255, 105, 180, 0.9)');
-            gradient.addColorStop(0.85, 'rgba(255, 59, 111, 0.7)');
-            gradient.addColorStop(1, 'rgba(200, 50, 80, 0)');
-
-            ctx.beginPath();
-            ctx.ellipse(64, 64, 35, 45, 0.2, 0, Math.PI * 2);
-            ctx.fillStyle = gradient;
-            ctx.fill();
-
-            // Add subtle vein details
-            ctx.beginPath();
-            ctx.moveTo(64, 30);
-            ctx.quadraticCurveTo(55, 50, 50, 70);
-            ctx.strokeStyle = 'rgba(200, 80, 120, 0.2)';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.moveTo(64, 30);
-            ctx.quadraticCurveTo(73, 50, 78, 70);
-            ctx.stroke();
-
-            // Add a small highlight
-            ctx.beginPath();
-            ctx.ellipse(55, 45, 8, 12, -0.3, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-            ctx.fill();
-
-            return new THREE.CanvasTexture(canvas);
-        }
-
-        const petalTexture = createFlowerPetal();
-
-        function createFlowerParticles() {
-            const count = 300;
-            const positions = new Float32Array(count * 3);
-            const rotations = new Float32Array(count);
-            const speeds = new Float32Array(count);
-            const sizes = new Float32Array(count);
-            const colors = new Float32Array(count * 3);
-
-            const colorPalette = [
-                [255, 105, 180], // Pink
-                [255, 182, 193], // Light Pink
-                [255, 59, 111], // Hot Pink
-                [255, 20, 147], // Deep Pink
-                [255, 130, 170], // Rose
-                [255, 200, 210], // Blush
-            ];
-
-            for (let i = 0; i < count; i++) {
-                const radius = 2.5 + Math.random() * 7;
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos((Math.random() * 2) - 1);
-
-                positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-                positions[i * 3 + 1] = 1.5 + Math.random() * 5;
-                positions[i * 3 + 2] = radius * Math.cos(phi);
-
-                rotations[i] = Math.random() * Math.PI * 2;
-                speeds[i] = 0.3 + Math.random() * 1.5;
-                sizes[i] = 0.15 + Math.random() * 0.3;
-
-                const col = colorPalette[Math.floor(Math.random() * colorPalette.length)];
-                colors[i * 3] = col[0] / 255;
-                colors[i * 3 + 1] = col[1] / 255;
-                colors[i * 3 + 2] = col[2] / 255;
+                return heartGroup;
             }
 
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('rotation', new THREE.BufferAttribute(rotations, 1));
-            geometry.setAttribute('speed', new THREE.BufferAttribute(speeds, 1));
-            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            const heart = createHeart();
+            scene.add(heart);
+            heart.scale.set(0.8, 0.8, 0.8);
 
-            const material = new THREE.PointsMaterial({
-                map: petalTexture,
-                size: 0.4,
-                transparent: true,
-                opacity: 0.9,
-                blending: THREE.NormalBlending,
-                depthWrite: false,
-                sizeAttenuation: true,
-                vertexColors: true,
-            });
+            // --- Flower Petals ---
+            function createFlowerPetal() {
+                const canvas = document.createElement('canvas');
+                canvas.width = 128;
+                canvas.height = 128;
+                const ctx = canvas.getContext('2d');
 
-            const particles = new THREE.Points(geometry, material);
-            particles.userData = { positions, speeds };
-            return particles;
-        }
+                ctx.clearRect(0, 0, 128, 128);
 
-        const flowerSystem = createFlowerParticles();
-        scene.add(flowerSystem);
+                const gradient = ctx.createRadialGradient(64, 50, 10, 64, 64, 50);
+                gradient.addColorStop(0, 'rgba(255, 220, 230, 1)');
+                gradient.addColorStop(0.3, 'rgba(255, 182, 193, 1)');
+                gradient.addColorStop(0.6, 'rgba(255, 105, 180, 0.9)');
+                gradient.addColorStop(0.85, 'rgba(255, 59, 111, 0.7)');
+                gradient.addColorStop(1, 'rgba(200, 50, 80, 0)');
 
-        function animateFlowers(time) {
-            const positions = flowerSystem.geometry.attributes.position.array;
-            const data = flowerSystem.userData;
+                ctx.beginPath();
+                ctx.ellipse(64, 64, 35, 45, 0.2, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
 
-            for (let i = 0; i < positions.length / 3; i++) {
-                // Gentle falling
-                positions[i * 3 + 1] -= data.speeds[i] * 0.004;
+                ctx.beginPath();
+                ctx.moveTo(64, 30);
+                ctx.quadraticCurveTo(55, 50, 50, 70);
+                ctx.strokeStyle = 'rgba(200, 80, 120, 0.2)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
 
-                // Swaying motion
-                positions[i * 3] += Math.sin(time * data.speeds[i] * 0.5 + i * 1.5) * 0.003;
-                positions[i * 3 + 2] += Math.cos(time * data.speeds[i] * 0.7 + i * 0.8) * 0.003;
+                ctx.beginPath();
+                ctx.moveTo(64, 30);
+                ctx.quadraticCurveTo(73, 50, 78, 70);
+                ctx.stroke();
 
-                // Reset when fallen below
-                if (positions[i * 3 + 1] < -3) {
+                ctx.beginPath();
+                ctx.ellipse(55, 45, 8, 12, -0.3, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.fill();
+
+                return new THREE.CanvasTexture(canvas);
+            }
+
+            const petalTexture = createFlowerPetal();
+
+            function createFlowerParticles() {
+                const count = 300;
+                const positions = new Float32Array(count * 3);
+                const speeds = new Float32Array(count);
+                const sizes = new Float32Array(count);
+                const colors = new Float32Array(count * 3);
+
+                const colorPalette = [
+                    [255, 105, 180],
+                    [255, 182, 193],
+                    [255, 59, 111],
+                    [255, 20, 147],
+                    [255, 130, 170],
+                    [255, 200, 210],
+                ];
+
+                for (let i = 0; i < count; i++) {
                     const radius = 2.5 + Math.random() * 7;
                     const theta = Math.random() * Math.PI * 2;
                     const phi = Math.acos((Math.random() * 2) - 1);
+
                     positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-                    positions[i * 3 + 1] = 3 + Math.random() * 3;
+                    positions[i * 3 + 1] = 1.5 + Math.random() * 5;
                     positions[i * 3 + 2] = radius * Math.cos(phi);
+
+                    speeds[i] = 0.3 + Math.random() * 1.5;
+                    sizes[i] = 0.15 + Math.random() * 0.3;
+
+                    const col = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                    colors[i * 3] = col[0] / 255;
+                    colors[i * 3 + 1] = col[1] / 255;
+                    colors[i * 3 + 2] = col[2] / 255;
                 }
+
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.setAttribute('speed', new THREE.BufferAttribute(speeds, 1));
+                geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+                geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                const material = new THREE.PointsMaterial({
+                    map: petalTexture,
+                    size: 0.4,
+                    transparent: true,
+                    opacity: 0.9,
+                    blending: THREE.NormalBlending,
+                    depthWrite: false,
+                    sizeAttenuation: true,
+                    vertexColors: true,
+                });
+
+                const particles = new THREE.Points(geometry, material);
+                particles.userData = { positions, speeds };
+                return particles;
             }
-            flowerSystem.geometry.attributes.position.needsUpdate = true;
-        }
 
-        // --- Floating Love Symbols ---
-        function createLoveSymbol(text, color = '#ff6b8a', size = 0.5) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 256;
-            canvas.height = 128;
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.font = 'Bold 60px "Dancing Script", "Playfair Display", cursive';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.shadowColor = 'rgba(255, 105, 180, 0.8)';
-            ctx.shadowBlur = 30;
-            ctx.fillStyle = color;
-            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-            ctx.shadowBlur = 15;
-            ctx.fillStyle = '#ffffff';
-            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-            const texture = new THREE.CanvasTexture(canvas);
-            const material = new THREE.SpriteMaterial({
-                map: texture,
-                transparent: true,
-                depthTest: false,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending,
-            });
-            const sprite = new THREE.Sprite(material);
-            sprite.scale.set(size * 2.5, size * 1.3, 1);
-            return sprite;
-        }
+            const flowerSystem = createFlowerParticles();
+            scene.add(flowerSystem);
 
-        const loveSymbols = ['❤️', '🌸', '💖', '✨', '🌹', '💝', '🌟', '💗', '😍', '💕'];
-        const symbolSprites = [];
-        loveSymbols.forEach((symbol, index) => {
-            const sprite = createLoveSymbol(symbol, '#ff6b8a', 0.5 + Math.random() * 0.5);
-            const radius = 2 + Math.random() * 5;
-            const theta = Math.random() * Math.PI * 2;
-            const phi = Math.acos((Math.random() * 2) - 1);
-            sprite.position.set(
-                radius * Math.sin(phi) * Math.cos(theta),
-                radius * Math.sin(phi) * Math.sin(theta) * 0.8 + 0.5,
-                radius * Math.cos(phi)
-            );
-            sprite.userData = {
-                angle: theta,
-                phi: phi,
-                radius: radius,
-                speed: 0.002 + Math.random() * 0.005,
-                floatOffset: Math.random() * Math.PI * 2,
-            };
-            scene.add(sprite);
-            symbolSprites.push(sprite);
-        });
+            function animateFlowers(time) {
+                const positions = flowerSystem.geometry.attributes.position.array;
+                const data = flowerSystem.userData;
 
-        // --- Stitch Character ---
-        function createStitch() {
-            const group = new THREE.Group();
-            // Body
-            const bodyMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
-            const body = new THREE.Mesh(new THREE.SphereGeometry(0.4, 16, 16), bodyMat);
-            body.scale.set(1, 1.1, 0.8);
-            body.position.y = 0.1;
-            group.add(body);
-            // Head
-            const head = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16), bodyMat);
-            head.position.y = 0.55;
-            head.scale.set(1, 0.9, 0.9);
-            group.add(head);
-            // Ears
-            const earMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0 });
-            const earGeo = new THREE.SphereGeometry(0.15, 8, 8);
-            const earL = new THREE.Mesh(earGeo, earMat);
-            earL.position.set(-0.35, 0.65, 0);
-            earL.scale.set(0.7, 1.2, 0.6);
-            group.add(earL);
-            const earR = new THREE.Mesh(earGeo, earMat);
-            earR.position.set(0.35, 0.65, 0);
-            earR.scale.set(0.7, 1.2, 0.6);
-            group.add(earR);
-            // Inner Ears
-            const innerMat = new THREE.MeshPhongMaterial({ color: 0xffb6c1 });
-            const innerGeo = new THREE.SphereGeometry(0.08, 8, 8);
-            const innerL = new THREE.Mesh(innerGeo, innerMat);
-            innerL.position.set(-0.35, 0.65, 0.07);
-            innerL.scale.set(0.5, 0.8, 0.3);
-            group.add(innerL);
-            const innerR = new THREE.Mesh(innerGeo, innerMat);
-            innerR.position.set(0.35, 0.65, 0.07);
-            innerR.scale.set(0.5, 0.8, 0.3);
-            group.add(innerR);
-            // Eyes
-            const eyeWhite = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 80 });
-            const eyePupil = new THREE.MeshPhongMaterial({ color: 0x1a1a2a });
-            const eyeGeo = new THREE.SphereGeometry(0.09, 8, 8);
-            const pupilGeo = new THREE.SphereGeometry(0.05, 8, 8);
-            const eyeL = new THREE.Mesh(eyeGeo, eyeWhite);
-            eyeL.position.set(-0.14, 0.6, 0.3);
-            group.add(eyeL);
-            const pupilL = new THREE.Mesh(pupilGeo, eyePupil);
-            pupilL.position.set(-0.12, 0.58, 0.38);
-            group.add(pupilL);
-            const eyeR = new THREE.Mesh(eyeGeo, eyeWhite);
-            eyeR.position.set(0.14, 0.6, 0.3);
-            group.add(eyeR);
-            const pupilR = new THREE.Mesh(pupilGeo, eyePupil);
-            pupilR.position.set(0.16, 0.58, 0.38);
-            group.add(pupilR);
-            // Nose
-            const nose = new THREE.Mesh(new THREE.SphereGeometry(0.04, 8, 8),
-                new THREE.MeshPhongMaterial({ color: 0x1a1a2a }));
-            nose.position.set(0, 0.55, 0.35);
-            nose.scale.set(1.2, 0.8, 0.8);
-            group.add(nose);
-            // Mouth
-            const mouth = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.015, 4, 8),
-                new THREE.MeshPhongMaterial({ color: 0x1a1a2a }));
-            mouth.position.set(0, 0.48, 0.35);
-            mouth.rotation.x = 0.2;
-            mouth.rotation.z = 0.1;
-            mouth.scale.set(1, 0.5, 0.5);
-            group.add(mouth);
-            // Arms
-            const armMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0 });
-            const armGeo = new THREE.CylinderGeometry(0.05, 0.07, 0.3);
-            const armL = new THREE.Mesh(armGeo, armMat);
-            armL.position.set(-0.5, 0.2, 0);
-            armL.rotation.z = -0.3;
-            armL.rotation.x = -0.2;
-            group.add(armL);
-            const armR = new THREE.Mesh(armGeo, armMat);
-            armR.position.set(0.5, 0.2, 0);
-            armR.rotation.z = 0.3;
-            armR.rotation.x = 0.2;
-            group.add(armR);
-            return group;
-        }
+                for (let i = 0; i < positions.length / 3; i++) {
+                    positions[i * 3 + 1] -= data.speeds[i] * 0.004;
+                    positions[i * 3] += Math.sin(time * data.speeds[i] * 0.5 + i * 1.5) * 0.003;
+                    positions[i * 3 + 2] += Math.cos(time * data.speeds[i] * 0.7 + i * 0.8) * 0.003;
 
-        const stitch = createStitch();
-        stitch.position.set(1.2, -1, -1.5);
-        stitch.scale.set(0.8, 0.8, 0.8);
-        scene.add(stitch);
+                    if (positions[i * 3 + 1] < -3) {
+                        const radius = 2.5 + Math.random() * 7;
+                        const theta = Math.random() * Math.PI * 2;
+                        const phi = Math.acos((Math.random() * 2) - 1);
+                        positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+                        positions[i * 3 + 1] = 3 + Math.random() * 3;
+                        positions[i * 3 + 2] = radius * Math.cos(phi);
+                    }
+                }
+                flowerSystem.geometry.attributes.position.needsUpdate = true;
+            }
 
-        // --- Animation Loop ---
-        function animate() {
-            const delta = clock.getDelta();
-            const elapsedTime = performance.now() / 1000;
+            // --- Floating Love Symbols ---
+            function createLoveSymbol(text, color = '#ff6b8a', size = 0.5) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 256;
+                canvas.height = 128;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = 'Bold 60px "Dancing Script", "Playfair Display", cursive';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(255, 105, 180, 0.8)';
+                ctx.shadowBlur = 30;
+                ctx.fillStyle = color;
+                ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+                const texture = new THREE.CanvasTexture(canvas);
+                const material = new THREE.SpriteMaterial({
+                    map: texture,
+                    transparent: true,
+                    depthTest: false,
+                    depthWrite: false,
+                    blending: THREE.AdditiveBlending,
+                });
+                const sprite = new THREE.Sprite(material);
+                sprite.scale.set(size * 2.5, size * 1.3, 1);
+                return sprite;
+            }
 
-            heart.rotation.y += 0.003;
-            heart.rotation.x = Math.sin(elapsedTime * 0.1) * 0.1;
-            heart.rotation.z = Math.cos(elapsedTime * 0.15) * 0.05;
-
-            animateFlowers(elapsedTime);
-
-            // Animate symbols
-            symbolSprites.forEach((sprite, index) => {
-                const data = sprite.userData;
-                data.angle += data.speed * delta * 30;
-                const floatY = Math.sin(elapsedTime * 0.8 + data.floatOffset) * 0.2;
+            const loveSymbols = ['❤️', '🌸', '💖', '✨', '🌹', '💝', '🌟', '💗', '😍', '💕'];
+            const symbolSprites = [];
+            loveSymbols.forEach((symbol, index) => {
+                const sprite = createLoveSymbol(symbol, '#ff6b8a', 0.5 + Math.random() * 0.5);
+                const radius = 2 + Math.random() * 5;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
                 sprite.position.set(
-                    data.radius * Math.sin(data.phi) * Math.cos(data.angle),
-                    data.radius * Math.sin(data.phi) * Math.sin(data.angle) * 0.8 + 0.5 + floatY,
-                    data.radius * Math.cos(data.phi)
+                    radius * Math.sin(phi) * Math.cos(theta),
+                    radius * Math.sin(phi) * Math.sin(theta) * 0.8 + 0.5,
+                    radius * Math.cos(phi)
                 );
-                const pulse = 1 + Math.sin(elapsedTime * 1.2 + index) * 0.05;
-                sprite.scale.set(
-                    sprite.scale.x * (0.99 + 0.01 * pulse),
-                    sprite.scale.y * (0.99 + 0.01 * pulse),
-                    1
-                );
+                sprite.userData = {
+                    angle: theta,
+                    phi: phi,
+                    radius: radius,
+                    speed: 0.002 + Math.random() * 0.005,
+                    floatOffset: Math.random() * Math.PI * 2,
+                };
+                scene.add(sprite);
+                symbolSprites.push(sprite);
             });
 
-            // Stitch animation
-            stitch.position.y = -1 + Math.sin(elapsedTime * 0.8) * 0.05;
-            stitch.rotation.z = Math.sin(elapsedTime * 0.5) * 0.02;
-            stitch.rotation.x = Math.sin(elapsedTime * 0.3) * 0.02;
-            const armL = stitch.children[10];
-            const armR = stitch.children[11];
-            if (armL && armR) {
-                armL.rotation.x = -0.2 + Math.sin(elapsedTime * 1.5) * 0.1;
-                armR.rotation.x = 0.2 + Math.sin(elapsedTime * 1.5 + 1) * 0.1;
+            // --- Stitch ---
+            function createStitch() {
+                const group = new THREE.Group();
+                const bodyMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0, shininess: 30 });
+                const body = new THREE.Mesh(new THREE.SphereGeometry(0.4, 16, 16), bodyMat);
+                body.scale.set(1, 1.1, 0.8);
+                body.position.y = 0.1;
+                group.add(body);
+                const head = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16), bodyMat);
+                head.position.y = 0.55;
+                head.scale.set(1, 0.9, 0.9);
+                group.add(head);
+                const earMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0 });
+                const earGeo = new THREE.SphereGeometry(0.15, 8, 8);
+                const earL = new THREE.Mesh(earGeo, earMat);
+                earL.position.set(-0.35, 0.65, 0);
+                earL.scale.set(0.7, 1.2, 0.6);
+                group.add(earL);
+                const earR = new THREE.Mesh(earGeo, earMat);
+                earR.position.set(0.35, 0.65, 0);
+                earR.scale.set(0.7, 1.2, 0.6);
+                group.add(earR);
+                const innerMat = new THREE.MeshPhongMaterial({ color: 0xffb6c1 });
+                const innerGeo = new THREE.SphereGeometry(0.08, 8, 8);
+                const innerL = new THREE.Mesh(innerGeo, innerMat);
+                innerL.position.set(-0.35, 0.65, 0.07);
+                innerL.scale.set(0.5, 0.8, 0.3);
+                group.add(innerL);
+                const innerR = new THREE.Mesh(innerGeo, innerMat);
+                innerR.position.set(0.35, 0.65, 0.07);
+                innerR.scale.set(0.5, 0.8, 0.3);
+                group.add(innerR);
+                const eyeWhite = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 80 });
+                const eyePupil = new THREE.MeshPhongMaterial({ color: 0x1a1a2a });
+                const eyeGeo = new THREE.SphereGeometry(0.09, 8, 8);
+                const pupilGeo = new THREE.SphereGeometry(0.05, 8, 8);
+                const eyeL = new THREE.Mesh(eyeGeo, eyeWhite);
+                eyeL.position.set(-0.14, 0.6, 0.3);
+                group.add(eyeL);
+                const pupilL = new THREE.Mesh(pupilGeo, eyePupil);
+                pupilL.position.set(-0.12, 0.58, 0.38);
+                group.add(pupilL);
+                const eyeR = new THREE.Mesh(eyeGeo, eyeWhite);
+                eyeR.position.set(0.14, 0.6, 0.3);
+                group.add(eyeR);
+                const pupilR = new THREE.Mesh(pupilGeo, eyePupil);
+                pupilR.position.set(0.16, 0.58, 0.38);
+                group.add(pupilR);
+                const nose = new THREE.Mesh(new THREE.SphereGeometry(0.04, 8, 8),
+                    new THREE.MeshPhongMaterial({ color: 0x1a1a2a }));
+                nose.position.set(0, 0.55, 0.35);
+                nose.scale.set(1.2, 0.8, 0.8);
+                group.add(nose);
+                const mouth = new THREE.Mesh(new THREE.TorusGeometry(0.06, 0.015, 4, 8),
+                    new THREE.MeshPhongMaterial({ color: 0x1a1a2a }));
+                mouth.position.set(0, 0.48, 0.35);
+                mouth.rotation.x = 0.2;
+                mouth.rotation.z = 0.1;
+                mouth.scale.set(1, 0.5, 0.5);
+                group.add(mouth);
+                const armMat = new THREE.MeshPhongMaterial({ color: 0x4a8fe0 });
+                const armGeo = new THREE.CylinderGeometry(0.05, 0.07, 0.3);
+                const armL = new THREE.Mesh(armGeo, armMat);
+                armL.position.set(-0.5, 0.2, 0);
+                armL.rotation.z = -0.3;
+                armL.rotation.x = -0.2;
+                group.add(armL);
+                const armR = new THREE.Mesh(armGeo, armMat);
+                armR.position.set(0.5, 0.2, 0);
+                armR.rotation.z = 0.3;
+                armR.rotation.x = 0.2;
+                group.add(armR);
+                return group;
             }
 
-            camera.position.x = Math.sin(elapsedTime * 0.05) * 1.2;
-            camera.position.y = 2 + Math.sin(elapsedTime * 0.1) * 0.3;
-            camera.lookAt(0, 0, 0);
+            const stitch = createStitch();
+            stitch.position.set(1.2, -1, -1.5);
+            stitch.scale.set(0.8, 0.8, 0.8);
+            scene.add(stitch);
 
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
+            // --- Animation Loop ---
+            let clock = new THREE.Clock();
+
+            function animate() {
+                const delta = clock.getDelta();
+                const elapsedTime = performance.now() / 1000;
+
+                heart.rotation.y += 0.003;
+                heart.rotation.x = Math.sin(elapsedTime * 0.1) * 0.1;
+                heart.rotation.z = Math.cos(elapsedTime * 0.15) * 0.05;
+
+                animateFlowers(elapsedTime);
+
+                symbolSprites.forEach((sprite, index) => {
+                    const data = sprite.userData;
+                    data.angle += data.speed * delta * 30;
+                    const floatY = Math.sin(elapsedTime * 0.8 + data.floatOffset) * 0.2;
+                    sprite.position.set(
+                        data.radius * Math.sin(data.phi) * Math.cos(data.angle),
+                        data.radius * Math.sin(data.phi) * Math.sin(data.angle) * 0.8 + 0.5 + floatY,
+                        data.radius * Math.cos(data.phi)
+                    );
+                    const pulse = 1 + Math.sin(elapsedTime * 1.2 + index) * 0.05;
+                    sprite.scale.set(
+                        sprite.scale.x * (0.99 + 0.01 * pulse),
+                        sprite.scale.y * (0.99 + 0.01 * pulse),
+                        1
+                    );
+                });
+
+                stitch.position.y = -1 + Math.sin(elapsedTime * 0.8) * 0.05;
+                stitch.rotation.z = Math.sin(elapsedTime * 0.5) * 0.02;
+                stitch.rotation.x = Math.sin(elapsedTime * 0.3) * 0.02;
+                const armL = stitch.children[10];
+                const armR = stitch.children[11];
+                if (armL && armR) {
+                    armL.rotation.x = -0.2 + Math.sin(elapsedTime * 1.5) * 0.1;
+                    armR.rotation.x = 0.2 + Math.sin(elapsedTime * 1.5 + 1) * 0.1;
+                }
+
+                camera.position.x = Math.sin(elapsedTime * 0.05) * 1.2;
+                camera.position.y = 2 + Math.sin(elapsedTime * 0.1) * 0.3;
+                camera.lookAt(0, 0, 0);
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            // --- Resize ---
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            console.log('✅ 3D Scene initialized successfully!');
         }
 
-        const clock = new THREE.Clock();
-        animate();
-
-        // --- Resize ---
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        // Start the scene
+        initScene();
 
         // --- Vinyl Player Logic ---
         const playBtn = document.getElementById('playBtn');
@@ -1649,35 +1624,46 @@
         const vinylRecord = document.getElementById('vinylRecord');
         let isPlaying = false;
 
-        playBtn.addEventListener('click', function() {
-            if (!isPlaying) {
-                isPlaying = true;
-                this.textContent = '⏹ Stop';
-                this.classList.add('playing');
-                recordDisc.classList.add('playing');
-                toneArm.classList.add('playing');
-                videoEmbed.classList.add('active');
-                const iframe = videoEmbed.querySelector('iframe');
-                const src = iframe.src;
-                if (!src.includes('autoplay=1')) {
-                    iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
+        if (playBtn) {
+            playBtn.addEventListener('click', function() {
+                if (!isPlaying) {
+                    isPlaying = true;
+                    this.textContent = '⏹ Stop';
+                    this.classList.add('playing');
+                    if (recordDisc) recordDisc.classList.add('playing');
+                    if (toneArm) toneArm.classList.add('playing');
+                    if (videoEmbed) videoEmbed.classList.add('active');
+                    const iframe = videoEmbed ? videoEmbed.querySelector('iframe') : null;
+                    if (iframe) {
+                        const src = iframe.src;
+                        if (!src.includes('autoplay=1')) {
+                            iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
+                        }
+                    }
+                    if (vinylRecord) {
+                        vinylRecord.style.transform = 'scale(1.02)';
+                        setTimeout(() => { vinylRecord.style.transform = 'scale(1)'; }, 300);
+                    }
+                } else {
+                    isPlaying = false;
+                    this.textContent = '▶ Play the Song';
+                    this.classList.remove('playing');
+                    if (recordDisc) recordDisc.classList.remove('playing');
+                    if (toneArm) toneArm.classList.remove('playing');
+                    if (videoEmbed) videoEmbed.classList.remove('active');
+                    const iframe = videoEmbed ? videoEmbed.querySelector('iframe') : null;
+                    if (iframe) {
+                        const src = iframe.src.replace('&autoplay=1', '').replace('autoplay=1&', '').replace('autoplay=1',
+                        '');
+                        iframe.src = src;
+                    }
                 }
-                vinylRecord.style.transform = 'scale(1.02)';
-                setTimeout(() => { vinylRecord.style.transform = 'scale(1)'; }, 300);
-            } else {
-                isPlaying = false;
-                this.textContent = '▶ Play the Song';
-                this.classList.remove('playing');
-                recordDisc.classList.remove('playing');
-                toneArm.classList.remove('playing');
-                videoEmbed.classList.remove('active');
-                const iframe = videoEmbed.querySelector('iframe');
-                const src = iframe.src.replace('&autoplay=1', '').replace('autoplay=1&', '').replace('autoplay=1', '');
-                iframe.src = src;
-            }
-        });
+            });
 
-        vinylRecord.addEventListener('click', () => playBtn.click());
+            if (vinylRecord) {
+                vinylRecord.addEventListener('click', () => playBtn.click());
+            }
+        }
 
         // --- Navigation ---
         const wishCardOverlay = document.getElementById('wish-card-overlay');
@@ -1704,18 +1690,30 @@
 
         // --- Memory Data ---
         const memoryData = [
-            { photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop', text: 'Our first date at the beach. The sunset was beautiful, but you were even more stunning. 🌅' },
-            { photo: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop', text: 'That time we got lost in the city and found this hidden cafe. Best coffee and even better company. ☕' },
-            { photo: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=400&fit=crop', text: 'Our first vacation together. You made every moment magical. ✈️' },
-            { photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop', text: 'Date night at the rooftop restaurant. The view was amazing, but you were the real star. 🌃' },
-            { photo: 'https://images.unsplash.com/photo-1558618666-fcd25c85f2d6?w=400&h=400&fit=crop', text: 'That rainy afternoon we spent dancing in the kitchen. My favorite kind of weather. 💃' },
-            { photo: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&h=400&fit=crop', text: 'Our first New Year\'s Eve together. You made my heart skip a beat at midnight. 🎆' },
-            { photo: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=400&fit=crop', text: 'Spring blossoms and your smile - the perfect combination. 🌸' },
-            { photo: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400&h=400&fit=crop', text: 'That spontaneous road trip we took. Best decision ever! 🚗' },
-            { photo: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=400&fit=crop', text: 'Cozy movie nights with you are my favorite thing in the world. 🎬' },
-            { photo: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop', text: 'You make even the ordinary days feel extraordinary. 🌟' },
-            { photo: 'https://images.unsplash.com/photo-1512389142860-9c449e58a714?w=400&h=400&fit=crop', text: 'Our first Christmas together. You made it so special. 🎄' },
-            { photo: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop', text: 'Every day with you is a new adventure. I love you endlessly. ❤️' }
+            { photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop',
+            text: 'Our first date at the beach. The sunset was beautiful, but you were even more stunning. 🌅' },
+            { photo: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop',
+                text: 'That time we got lost in the city and found this hidden cafe. Best coffee and even better company. ☕' },
+            { photo: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=400&fit=crop',
+                text: 'Our first vacation together. You made every moment magical. ✈️' },
+            { photo: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=400&fit=crop',
+                text: 'Date night at the rooftop restaurant. The view was amazing, but you were the real star. 🌃' },
+            { photo: 'https://images.unsplash.com/photo-1558618666-fcd25c85f2d6?w=400&h=400&fit=crop',
+                text: 'That rainy afternoon we spent dancing in the kitchen. My favorite kind of weather. 💃' },
+            { photo: 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=400&h=400&fit=crop',
+                text: 'Our first New Year\'s Eve together. You made my heart skip a beat at midnight. 🎆' },
+            { photo: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=400&fit=crop',
+                text: 'Spring blossoms and your smile - the perfect combination. 🌸' },
+            { photo: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400&h=400&fit=crop',
+                text: 'That spontaneous road trip we took. Best decision ever! 🚗' },
+            { photo: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=400&fit=crop',
+                text: 'Cozy movie nights with you are my favorite thing in the world. 🎬' },
+            { photo: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop',
+                text: 'You make even the ordinary days feel extraordinary. 🌟' },
+            { photo: 'https://images.unsplash.com/photo-1512389142860-9c449e58a714?w=400&h=400&fit=crop',
+                text: 'Our first Christmas together. You made it so special. 🎄' },
+            { photo: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&h=400&fit=crop',
+                text: 'Every day with you is a new adventure. I love you endlessly. ❤️' }
         ];
 
         let allMemories = [...memoryData];
@@ -1727,19 +1725,19 @@
             card.className = 'polaroid-card';
             card.dataset.index = index;
             card.innerHTML = `
-                <div class="polaroid-inner">
-                    <div class="polaroid-front">
-                        <div class="photo-container">
-                            <img src="${data.photo}" alt="Memory ${index + 1}" loading="lazy">
+                    <div class="polaroid-inner">
+                        <div class="polaroid-front">
+                            <div class="photo-container">
+                                <img src="${data.photo}" alt="Memory ${index + 1}" loading="lazy">
+                            </div>
+                            <div class="photo-caption">✧ Click to flip ✧</div>
                         </div>
-                        <div class="photo-caption">✧ Click to flip ✧</div>
+                        <div class="polaroid-back">
+                            <div class="memory-text">${data.text}</div>
+                            <div class="flip-hint">click to flip back</div>
+                        </div>
                     </div>
-                    <div class="polaroid-back">
-                        <div class="memory-text">${data.text}</div>
-                        <div class="flip-hint">click to flip back</div>
-                    </div>
-                </div>
-            `;
+                `;
             card.addEventListener('click', function(e) {
                 if (e.target.closest('.close-card-btn') || e.target.closest('.load-more-btn')) return;
                 this.classList.toggle('flipped');
@@ -1753,31 +1751,37 @@
             for (let i = startIndex; i < endIndex; i++) {
                 fragment.appendChild(createPolaroidCard(allMemories[i], i));
             }
-            memoryGrid.appendChild(fragment);
+            if (memoryGrid) memoryGrid.appendChild(fragment);
             if (endIndex >= allMemories.length) {
-                loadMoreBtn.textContent = '🎬 Watch Our Video 🎬';
-                loadMoreBtn.className = 'load-more-btn all-shown';
-                loadMoreBtn.dataset.allShown = 'true';
+                if (loadMoreBtn) {
+                    loadMoreBtn.textContent = '🎬 Watch Our Video 🎬';
+                    loadMoreBtn.className = 'load-more-btn all-shown';
+                    loadMoreBtn.dataset.allShown = 'true';
+                }
             } else {
-                loadMoreBtn.textContent = `🎀 Want More? (${allMemories.length - endIndex} more) 🎀`;
-                loadMoreBtn.className = 'load-more-btn';
-                loadMoreBtn.dataset.allShown = 'false';
+                if (loadMoreBtn) {
+                    loadMoreBtn.textContent = `🎀 Want More? (${allMemories.length - endIndex} more) 🎀`;
+                    loadMoreBtn.className = 'load-more-btn';
+                    loadMoreBtn.dataset.allShown = 'false';
+                }
             }
-            const newCards = memoryGrid.querySelectorAll('.polaroid-card:not(.animated)');
-            newCards.forEach((card, idx) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                setTimeout(() => {
-                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                    card.classList.add('animated');
-                }, 100 + idx * 80);
-            });
+            if (memoryGrid) {
+                const newCards = memoryGrid.querySelectorAll('.polaroid-card:not(.animated)');
+                newCards.forEach((card, idx) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                        card.classList.add('animated');
+                    }, 100 + idx * 80);
+                });
+            }
         }
 
         function handleLoadMore() {
-            if (loadMoreBtn.dataset.allShown === 'true') {
+            if (loadMoreBtn && loadMoreBtn.dataset.allShown === 'true') {
                 showVideoPage();
                 return;
             }
@@ -1795,91 +1799,110 @@
         }
 
         function showWishCard() {
-            wishCardOverlay.classList.add('active');
+            if (wishCardOverlay) wishCardOverlay.classList.add('active');
             import('https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js')
                 .then(module => {
                     const confetti = module.default;
-                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e'] });
-                    confetti({ particleCount: 100, spread: 100, origin: { y: 0.5, x: 0.3 }, colors: ['#ffaa88', '#ff3b6f', '#ffd166'] });
-                    confetti({ particleCount: 100, spread: 100, origin: { y: 0.5, x: 0.7 }, colors: ['#6c9eff', '#aa88ff', '#ff8a9e'] });
+                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 },
+                        colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e'] });
+                    confetti({ particleCount: 100, spread: 100, origin: { y: 0.5, x: 0.3 },
+                        colors: ['#ffaa88', '#ff3b6f', '#ffd166'] });
+                    confetti({ particleCount: 100, spread: 100, origin: { y: 0.5, x: 0.7 },
+                        colors: ['#6c9eff', '#aa88ff', '#ff8a9e'] });
                     setTimeout(() => {
-                        confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 }, colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e', '#ffffff'] });
+                        confetti({ particleCount: 200, spread: 120, origin: { y: 0.4 },
+                            colors: ['#ff3b6f', '#ffd166', '#6c9eff', '#aa88ff', '#ff8a9e', '#ffffff'] });
                     }, 200);
                 });
-            celebrateBtn.textContent = '🎉 Wishes Coming True! ✨';
-            celebrateBtn.style.background = 'linear-gradient(145deg, #ffd166, #ff3b6f)';
-            setTimeout(() => {
-                celebrateBtn.textContent = '🎉 Make a Wish!';
-                celebrateBtn.style.background = 'linear-gradient(145deg, #ff8a9e, #ff3b6f)';
-            }, 3000);
+            if (celebrateBtn) {
+                celebrateBtn.textContent = '🎉 Wishes Coming True! ✨';
+                celebrateBtn.style.background = 'linear-gradient(145deg, #ffd166, #ff3b6f)';
+                setTimeout(() => {
+                    celebrateBtn.textContent = '🎉 Make a Wish!';
+                    celebrateBtn.style.background = 'linear-gradient(145deg, #ff8a9e, #ff3b6f)';
+                }, 3000);
+            }
         }
 
         function showMemoryPage() {
-            wishCardOverlay.classList.remove('active');
+            if (wishCardOverlay) wishCardOverlay.classList.remove('active');
             if (currentBatch === 0) {
-                memoryGrid.innerHTML = '';
+                if (memoryGrid) memoryGrid.innerHTML = '';
                 allMemories = [...memoryData];
                 currentBatch = 0;
-                loadMoreBtn.textContent = '🎀 Want More? 🎀';
-                loadMoreBtn.className = 'load-more-btn';
-                loadMoreBtn.dataset.allShown = 'false';
+                if (loadMoreBtn) {
+                    loadMoreBtn.textContent = '🎀 Want More? 🎀';
+                    loadMoreBtn.className = 'load-more-btn';
+                    loadMoreBtn.dataset.allShown = 'false';
+                }
                 loadMore();
             }
-            memoryPage.classList.add('active');
-            remindersPage.classList.remove('active');
-            videoPage.classList.remove('active');
+            if (memoryPage) memoryPage.classList.add('active');
+            if (remindersPage) remindersPage.classList.remove('active');
+            if (videoPage) videoPage.classList.remove('active');
             document.body.style.overflow = 'hidden';
         }
 
         function showRemindersPage() {
-            memoryPage.classList.remove('active');
-            remindersPage.classList.add('active');
-            videoPage.classList.remove('active');
+            if (memoryPage) memoryPage.classList.remove('active');
+            if (remindersPage) remindersPage.classList.add('active');
+            if (videoPage) videoPage.classList.remove('active');
             document.body.style.overflow = 'hidden';
         }
 
         function showVideoPage() {
-            memoryPage.classList.remove('active');
-            remindersPage.classList.remove('active');
-            videoPage.classList.add('active');
+            if (memoryPage) memoryPage.classList.remove('active');
+            if (remindersPage) remindersPage.classList.remove('active');
+            if (videoPage) videoPage.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function hideAllPages() {
-            wishCardOverlay.classList.remove('active');
-            memoryPage.classList.remove('active');
-            remindersPage.classList.remove('active');
-            videoPage.classList.remove('active');
+            if (wishCardOverlay) wishCardOverlay.classList.remove('active');
+            if (memoryPage) memoryPage.classList.remove('active');
+            if (remindersPage) remindersPage.classList.remove('active');
+            if (videoPage) videoPage.classList.remove('active');
             document.body.style.overflow = 'hidden';
         }
 
         // --- Event Listeners ---
-        celebrateBtn.addEventListener('click', showWishCard);
-        closeCardBtn.addEventListener('click', showMemoryPage);
-        memoryBackBtn.addEventListener('click', hideAllPages);
-        loadMoreBtn.addEventListener('click', handleLoadMore);
-        remindersBackBtn.addEventListener('click', hideAllPages);
-        remindersToVideoBtn.addEventListener('click', showVideoPage);
-        videoBackBtn.addEventListener('click', hideAllPages);
-        videoToRemindersBtn.addEventListener('click', showRemindersPage);
-        videoToHeartBtn.addEventListener('click', hideAllPages);
+        if (celebrateBtn) celebrateBtn.addEventListener('click', showWishCard);
+        if (closeCardBtn) closeCardBtn.addEventListener('click', showMemoryPage);
+        if (memoryBackBtn) memoryBackBtn.addEventListener('click', hideAllPages);
+        if (loadMoreBtn) loadMoreBtn.addEventListener('click', handleLoadMore);
+        if (remindersBackBtn) remindersBackBtn.addEventListener('click', hideAllPages);
+        if (remindersToVideoBtn) remindersToVideoBtn.addEventListener('click', showVideoPage);
+        if (videoBackBtn) videoBackBtn.addEventListener('click', hideAllPages);
+        if (videoToRemindersBtn) videoToRemindersBtn.addEventListener('click', showRemindersPage);
+        if (videoToHeartBtn) videoToHeartBtn.addEventListener('click', hideAllPages);
 
-        reminderIcons.forEach(icon => {
-            icon.addEventListener('click', function() {
-                const section = this.dataset.section;
-                Object.values(reminderSections).forEach(el => el.classList.remove('active'));
-                if (reminderSections[section]) reminderSections[section].classList.add('active');
-                reminderIcons.forEach(i => i.style.borderColor = 'rgba(255,255,255,0.1)');
-                this.style.borderColor = 'rgba(255,105,180,0.5)';
+        if (reminderIcons) {
+            reminderIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const section = this.dataset.section;
+                    if (reminderSections) {
+                        Object.values(reminderSections).forEach(el => {
+                            if (el) el.classList.remove('active');
+                        });
+                        if (reminderSections[section]) reminderSections[section].classList.add('active');
+                    }
+                    reminderIcons.forEach(i => i.style.borderColor = 'rgba(255,255,255,0.1)');
+                    this.style.borderColor = 'rgba(255,105,180,0.5)';
+                });
             });
-        });
+        }
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                if (wishCardOverlay.classList.contains('active')) wishCardOverlay.classList.remove('active');
-                else if (videoPage.classList.contains('active')) hideAllPages();
-                else if (remindersPage.classList.contains('active')) hideAllPages();
-                else if (memoryPage.classList.contains('active')) hideAllPages();
+                if (wishCardOverlay && wishCardOverlay.classList.contains('active')) {
+                    wishCardOverlay.classList.remove('active');
+                } else if (videoPage && videoPage.classList.contains('active')) {
+                    hideAllPages();
+                } else if (remindersPage && remindersPage.classList.contains('active')) {
+                    hideAllPages();
+                } else if (memoryPage && memoryPage.classList.contains('active')) {
+                    hideAllPages();
+                }
             }
         });
 
