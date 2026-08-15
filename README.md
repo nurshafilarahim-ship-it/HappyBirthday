@@ -910,7 +910,6 @@
                 inset 0 0 80px rgba(0, 0, 0, 0.5);
             position: relative;
             transition: transform 0.1s linear;
-            animation: recordSpin 0s linear infinite;
         }
 
         .vinyl-record .record-disc.playing {
@@ -922,7 +921,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Record label in center */
         .vinyl-record .record-label {
             position: absolute;
             top: 50%;
@@ -954,7 +952,6 @@
             margin-top: 2px;
         }
 
-        /* Center hole */
         .vinyl-record .center-hole {
             position: absolute;
             top: 50%;
@@ -1050,7 +1047,7 @@
             50% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.6); }
         }
 
-        /* --- YouTube Embed (hidden initially) --- */
+        /* --- YouTube Embed --- */
         .vinyl-player .video-embed-container {
             display: none;
             margin-top: 20px;
@@ -1284,8 +1281,6 @@
             .video-nav-btn {
                 width: 80%;
             }
-
-            /* Vinyl responsive */
             .vinyl-record {
                 width: 220px;
                 height: 220px;
@@ -1493,9 +1488,15 @@
                 <!-- Play Button -->
                 <button class="play-btn" id="playBtn">▶ Play the Song</button>
 
-                <!-- YouTube Embed (hidden initially) -->
+                <!-- YouTube Embed -->
                 <div class="video-embed-container" id="videoEmbed">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/VR4UM-LsPiU?si=p4tay8ly2AJk1yCV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    <iframe 
+                        src="https://www.youtube.com/embed/VR4UM-LsPiU?si=p4tay8ly2AJk1yCV" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
                     </iframe>
                 </div>
             </div>
@@ -1910,7 +1911,6 @@
 
         playBtn.addEventListener('click', function() {
             if (!isPlaying) {
-                // Start playing
                 isPlaying = true;
                 this.textContent = '⏹ Stop';
                 this.classList.add('playing');
@@ -1918,22 +1918,18 @@
                 toneArm.classList.add('playing');
                 videoEmbed.classList.add('active');
                 
-                // Auto-play the YouTube video by loading it with autoplay
                 const iframe = videoEmbed.querySelector('iframe');
                 const src = iframe.src;
-                // Add autoplay parameter if not already there
                 if (!src.includes('autoplay=1')) {
                     iframe.src = src + (src.includes('?') ? '&' : '?') + 'autoplay=1';
                 }
                 
-                // Add visual feedback on the record
                 vinylRecord.style.transform = 'scale(1.02)';
                 setTimeout(() => {
                     vinylRecord.style.transform = 'scale(1)';
                 }, 300);
                 
             } else {
-                // Stop playing
                 isPlaying = false;
                 this.textContent = '▶ Play the Song';
                 this.classList.remove('playing');
@@ -1941,14 +1937,12 @@
                 toneArm.classList.remove('playing');
                 videoEmbed.classList.remove('active');
                 
-                // Reset the iframe to stop video
                 const iframe = videoEmbed.querySelector('iframe');
                 const src = iframe.src.replace('&autoplay=1', '').replace('autoplay=1&', '').replace('autoplay=1', '');
                 iframe.src = src;
             }
         });
 
-        // Also allow clicking on the record to toggle play
         vinylRecord.addEventListener('click', function() {
             playBtn.click();
         });
@@ -1957,7 +1951,6 @@
         // ====== PAGE NAVIGATION LOGIC ======
         // ==========================================
 
-        // DOM References
         const memoryPage = document.getElementById('memory-page');
         const videoPage = document.getElementById('video-page');
         const remindersPage = document.getElementById('reminders-page');
@@ -1973,7 +1966,6 @@
         const remindersBackBtn = document.getElementById('reminders-back-btn');
         const remindersBackToVideoBtn = document.getElementById('reminders-back-to-video-btn');
 
-        // Reminder icons
         const reminderIcons = document.querySelectorAll('.reminder-icon');
         const reminderSections = {
             music: document.getElementById('music-section'),
@@ -1981,7 +1973,6 @@
             place: document.getElementById('place-section')
         };
 
-        // --- Memory Data ---
         const memoryData = [
             {
                 photo: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=400&fit=crop',
@@ -2037,7 +2028,6 @@
         let currentBatch = 0;
         const perBatch = 6;
 
-        // --- Helper: Create a Polaroid Card ---
         function createPolaroidCard(data, index) {
             const card = document.createElement('div');
             card.className = 'polaroid-card';
@@ -2068,7 +2058,6 @@
             return card;
         }
 
-        // --- Render Batch ---
         function renderBatch(startIndex) {
             const endIndex = Math.min(startIndex + perBatch, allMemories.length);
             const fragment = document.createDocumentFragment();
@@ -2105,7 +2094,6 @@
             });
         }
 
-        // --- Load More / Navigate to Video ---
         function handleLoadMore() {
             if (loadMoreBtn.dataset.allShown === 'true') {
                 showVideoPage();
@@ -2120,7 +2108,6 @@
             currentBatch++;
         }
 
-        // --- Page Navigation Functions ---
         function showMemoryPage() {
             wishCardOverlay.classList.remove('active');
             if (currentBatch === 0) {
@@ -2267,7 +2254,6 @@
         loadMore();
 
         console.log('❤️ Happy Birthday! Made with love. ❤️');
-        console.log('🎵 Vinyl record player loaded! Click play to listen.');
     </script>
 </body>
 </html>
